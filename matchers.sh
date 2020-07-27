@@ -1,5 +1,3 @@
-import @expect/fail
-
 # TODO get rid of this, it only adds an additional layer of wtf
 expect._failureMessage() {
   local negateResults="$1"
@@ -13,7 +11,8 @@ expect._failureMessage() {
     toOrNotTo=" not to "
     butDidOrDidNot=", but did"
   fi
-  fail "Expected${toOrNotTo}${matcherDescription}${butDidOrDidNot}.\nActual: $actualResult\nExpected: $expectedResult"
+  echo "Expected${toOrNotTo}${matcherDescription}${butDidOrDidNot}.\nActual: $actualResult\nExpected: $expectedResult" >&2
+  exit 1
 }
 
 expect.matcher._toFail() {

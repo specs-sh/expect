@@ -15,6 +15,11 @@ expect._failureMessage() {
   exit 1
 }
 
+fail() {
+  echo "$*" >&2
+  exit 1
+}
+
 expect.matcher._toFail() {
   local negateResults="$1"; shift
   local errorMatcher="$1"; shift

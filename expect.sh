@@ -1,6 +1,8 @@
 expect() {
   local negateResults
 
+  # TODO (a) Manipulate "$@" as an array, much easier to keep what's between te { ... }
+  # TODO (b) add specs for expect AND make SURE they run in 3.2 as well as 5.0
   # For blocks, we need to preserve "$@" and shift/unshift to end up with $@ being the command
   if [ "$1" = "{" ]
   then

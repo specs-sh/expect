@@ -2,11 +2,13 @@ expect.matcher.toEqual() {
   local negateResults="$1"; shift
   local actualResult="$1";  shift
   local expectedResult="$@"
-  if [ "$( echo -e "$actualResult" | cat -A )" = "$( echo -e "$expectedResult" | cat -A )" ]
+  actualResult="$( echo "$actualResult" | cat -A )"
+  expectedResult="$( echo "$*" | cat -A )"
+  if [ "$actualResult" = "$expectedResult" ]
   then
-    [ "$negateResults" = "true" ] && expect._failureMessage "$negateResults" equal "$actualResult" "$@"
+    [ "$negateResults" = "true" ] && expect._failureMessage "$negateResults" equal "'$actualResult'" "'$expectedResult'"
   else
-    [ "$negateResults" != "true" ] && expect._failureMessage "$negateResults" equal "$actualResult" "$@"
+    [ "$negateResults" != "true" ] && expect._failureMessage "$negateResults" equal "'$actualResult'" "'$expectedResult'"
   fi
   return 0
 } 

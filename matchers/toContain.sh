@@ -1,13 +1,14 @@
 expect.matcher.toContain() {
-  local negateResults="$( echo -e "$1" | cat -A )"; shift
-  local actualResult="$( echo -e "$1" | cat -A )";  shift
+  local negateResults="$1"; shift
+  local actualResult="$( echo -ne "$1" | cat -A )";  shift
   for expected in "$@"
   do
-    if [[ "$actualResult" = *"$expected"* ]]
+    local expectedResult="$( echo -ne "$expected" | cat -A )"
+    if [[ "$actualResult" = *"$expectedResult"* ]]
     then
-      [ "$negateResults" = "true" ] && fail "Expected text not to contain '$expected'\nActual: $actualResult"
+      [ "$negateResults" = "true" ] && fail "Expected text not to contain '$expectedResult'\nActual: $actualResult"
     else
-      [ "$negateResults" != "true" ] && fail "Expected text to contain '$expected'\nActual: $actualResult"
+      [ "$negateResults" != "true" ] && fail "Expected text to contain '$expectedResult'\nActual: $actualResult"
     fi
   done
   return 0

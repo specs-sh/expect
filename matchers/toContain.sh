@@ -1,6 +1,6 @@
 expect.matcher.toContain() {
-  local negateResults="$1"; shift
-  local actualResult="$1";  shift
+  local negateResults="$( echo -e "$1" | cat -A )"; shift
+  local actualResult="$( echo -e "$1" | cat -A )";  shift
   for expected in "$@"
   do
     if [[ "$actualResult" = *"$expected"* ]]

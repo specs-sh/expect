@@ -82,3 +82,18 @@ expect.matcher.toDoSomething() {
 
   assert [ "$fn" = "expect.matcher.toDoSomething" ]
 }
+
+@spec.blockMatcher.can_customize_block_start_and_end_symbols() {
+  local block=""
+  local blockType=""
+  assert [ "$block" = "" ]
+  assert [ "$blockType" = "" ]
+
+  EXPECT_BLOCK_START_PATTERN='@@'
+  EXPECT_BLOCK_END_PATTERN='@@'
+
+  expect @@ Haha this works @@ toDoSomething
+
+  assert [ "$block" = "Haha this works" ]
+  assert [ "$blockType" = "@@" ]
+}

@@ -43,6 +43,6 @@ expect() {
 }
 EXPECTATION_FAILED="exit 1"
 expect.fail() {
-  echo "$*" >&2
+  echo -e "$*" >&2
   $EXPECTATION_FAILED
 }

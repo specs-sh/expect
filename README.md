@@ -385,9 +385,114 @@ However, right now, a test would not fail because the function does not `return 
 
 ## Exit on failure
 
+There are two common ways to "fail" an assertion or expectation in BASH test frameworks:
+
+1.  `return 1` _(or any non-zero code)_
+2.  `exit 1` _(or any non-zero code)_
+
+Test frameworks that fail whenever a command `return 1` usually do this via `set -e`.
+
+There are pros and cons to each approach.
+
+`expect` can be used in either type of framework by using `expect.fail()`.
+
+Here is the source code for the `expect.fail()` function from [`expect.sh`](https://github.com/bx-sh/expect.sh/blob/master/expect.sh):
+
+- ```sh
+  EXPECTATION_FAILED="exit 1"
+
+  expect.fail() {
+    echo -e "$*" >&2
+    $EXPECTATION_FAILED
+  }
+  ```
+
+By default, `expect` will `exit 1` whenever the `expect.fail()` function is called.
+
+> Note: if you test this in your BASH shell, your shell will close and exit!
+
+If you want to use `expect` in a framework like `Bats` which uses `set -e`:
+
+- ```sh
+  # Set the value of EXPECTATION_FAILED anywhere in your code before you use 'expect'
+  EXPECTATION_FAILED="return 1"
+  ```
+
+Now, update the **`expect.matcher.toEq()`** function to call `expect.fail` on failure:
+
+- ```sh
+  expect.matcher.toEq() {
+    local expectedResult="$1"
+    local actualResult="$EXPECT_ACTUAL_RESULT"
+
+    if [ "$EXPECT_NOT" = "true" ]
+    then
+      # Expect values NOT to be equal.
+      #
+      # If they are equal, show a failure message.
+      if [ "$actualResult" = "$expectedResult" ]
+      then
+        expect.fail "Expected values not to equal" \
+          "Actual: $actualResult"                  \
+          "Not Expected: $expectedResult"
+      fi
+    else
+      # Expect values to be equal.
+      #
+      # If they are not equal, show a failure message.
+      if [ "$actualResult" != "$expectedResult" ]
+      then
+        expect.fail "Expected values to equal" \
+          "Actual: $actualResult"              \
+          "Expected: $expectedResult"
+      fi
+    fi
+  }
+  ```
+
+In your shell, set `EXPECTATION_FAILED="return 1"` and then try the function:
+
+- ```sh
+  $ expect 42 toEq 42
+
+  $ echo $?
+  # 0
+
+  $ expect 42 toEq 42-42-42
+  # Expected values to equal
+  # Actual: 42
+  # Expected: 42-42-42
+
+  $ echo $?
+  # 1
+
+  $ expect 42 not toEq 42-42-42
+
+  $ echo $?
+  # 0
+
+  $ expect 42 not toEq 42
+  # Expected values not to equal
+  # Actual: 42
+  # Expected: 42
+
+  $ echo $?
+  # 1
+  ```
+
 ## Block values
 
 XXX
+
+limitation, one actual result argument
+
+what if you need multiple values?
+
+could try a 'string' to run but problems
+
+so use a block
+
+Note: these symbols are native to BASH and cannot be used <> `` '' "" () but {} and [] and others are free to be used
 
 ## Customize block styles
 

@@ -1,6 +1,6 @@
 import @expect/matchers/toOutput
 
-@spec.toOutput() {
+@pending.toOutput() {
   assert run expect { echo 5 } toOutput 5
   assert [ -z "$STDOUT" ]
   assert [ -z "$STDERR" ]

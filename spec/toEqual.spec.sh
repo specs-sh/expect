@@ -1,4 +1,4 @@
-@spec.toEqual() {
+@pending.toEqual() {
   assert run expect 5 toEqual 5
   assert [ -z "$STDOUT" ]
   assert [ -z "$STDERR" ]

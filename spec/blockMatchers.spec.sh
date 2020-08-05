@@ -97,3 +97,34 @@ expect.matcher.toDoSomething() {
   assert [ "$block" = "Haha this works" ]
   assert [ "$blockType" = "@@" ]
 }
+
+# move into another file
+
+## TODO !!! CHANGE BLOCK and NOT to EXPECT_BLOCK and EXPECT_NOT --- shared scope with things we run!!!
+
+custom.toBeCustom() {
+  foo="Well howdy! I'm pretty custom. Block is: ${BLOCK[@]}"
+}
+
+custom.not.toBeCustom() {
+  foo="Hey, look at that! A special 'not' version was called! Block is: ${BLOCK[@]}"
+}
+
+@pending.matchers.can_customize_matcher_function_name_lookup() {
+  local foo=""
+  assert [ -z "$foo" ]
+
+  EXPECT_MATCHER_
+
+  # more complex
+  EXPECT_MATCHER_FUNCTION_EVAL="
+    if [ -n \"$NOT\" ]
+    then
+      MATCHER_FUNCTION=\"custom.not.\$MATCHER_NAME\"
+    else
+      MATCHER_FUNCTION=\"custom.\$MATCHER_NAME\"
+    fi
+  "
+
+  expect { something in the block } toBeCustom
+}

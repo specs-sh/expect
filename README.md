@@ -109,8 +109,6 @@ Let's implement the following `toEq` "matcher function"
 expect "$answer" toEq 42
 ```
 
-#### No Matcher Defined
-
 First, try running the above code _without_ implementing the function:
 
 ```sh

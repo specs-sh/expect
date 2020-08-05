@@ -105,9 +105,9 @@ There are pros and cons to each, but at the end of the day it comes down to user
 
 Let's implement the following **`toEq`** "matcher function"
 
-- ```sh
-  expect "$answer" toEq 42
-  ```
+```sh
+expect "$answer" toEq 42
+```
 
 First, try running the above code _without_ implementing the function:
 

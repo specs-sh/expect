@@ -4,6 +4,8 @@ version "$( grep VERSION= expect.sh | sed 's/.*VERSION=\(.*\)/\1/' | sed 's/"//g
 
 description "🧐 Expectations"
 
+main expect.sh
+
 exclude spec/
 
 script shell    bx multi-bash run 3.2

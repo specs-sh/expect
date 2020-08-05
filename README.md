@@ -118,7 +118,7 @@ $ expect "$answer" toEq 42
 expect.matcher.toEq: command not found
 ```
 
-You'll see the error: **`expect.matcher.toEq: command not found`**
+You'll see an error: **`expect.matcher.toEq: command not found`**
 
 By default, `expect` expects a function to exist named `expect.matcher.[MATCHER_NAME]`
 
@@ -126,17 +126,19 @@ The name of the matcher in this case is: `toEq`.
 
 #### Implement the Matcher Function
 
-Next, add that function. To start with, just print out one thing:
+Next, add that function: **`expect.matcher.toEq()`**
+
+To start with, just print out one thing:
 
 1.  Information about the arguments being passed to the function
 
-```sh
-expect.matcher.toEq() {
-  echo "toEq called with $# arguments: $*"
-}
-```
+    ```sh
+    expect.matcher.toEq() {
+      echo "toEq called with $# arguments: $*"
+    }
+    ```
 
-> You can define the above function right in your BASH shell, just copy/paste it in!
+    > You can define the above function right in your BASH shell, just copy/paste it in!
 
 Now, try running the code again:
 

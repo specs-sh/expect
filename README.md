@@ -118,13 +118,13 @@ $ expect "$answer" toEq 42
 expect.matcher.toEq: command not found
 ```
 
-You'll see the error: `expect.matcher.toEq: command not found`
+You'll see the error: **`expect.matcher.toEq: command not found`**
 
 By default, `expect` expects a function to exist named `expect.matcher.[MATCHER_NAME]`
 
 The name of the matcher in this case is: `toEq`.
 
-#### Write Matcher Function
+#### Implement the Matcher Function
 
 Next, add that function. To start with, just print out one thing:
 

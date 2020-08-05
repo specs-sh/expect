@@ -61,16 +61,6 @@ The `expect` function provides a simple framework for authoring and using "expec
 
 ## Authoring Expectations
 
-> ```sh
-> expect [ACTUAL_RESULT] [MATCHER_NAME] [arguments]
->
-> # or
->
-> expect { [BLOCK] } [MATCHER_NAME] [arguments]
-> ```
-
----
-
 ### Expectations vs Assertions
 
 The two most common test assertion styles in programming languages are:

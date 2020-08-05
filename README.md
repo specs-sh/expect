@@ -40,7 +40,7 @@ The `expect` function provides a simple framework for authoring and using "expec
 #### Authoring Expectations
 
 - [Expectations vs Assertions](#expectations-vs-assertions)
-- [Creating a function](#creating-a-function)
+- [Writing a matcher function](#writing-your-first)
 - [Exiting on failure](#exiting-on-failure)
 - [Customizing function names](#customizing-function-names)
 - [Expected and Actual Values](#expected-and-actual-values)
@@ -101,9 +101,73 @@ There are pros and cons to each, but at the end of the day it comes down to user
 
 ---
 
-### Creating a function
+### Writing a matcher function
 
-XXX
+Let's implement the following `toEq` "matcher function"
+
+```sh
+expect "$answer" toEq 42
+```
+
+#### No Matcher Defined
+
+First, try running the above code _without_ implementing the function:
+
+```sh
+$ source "expect.sh"
+
+$ expect "$answer" toEq 42
+expect.matcher.toEq: command not found
+```
+
+You'll see the error: `expect.matcher.toEq: command not found`
+
+By default, `expect` expects a function to exist named `expect.matcher.[MATCHER_NAME]`
+
+The name of the matcher in this case is: `toEq`.
+
+#### Write Matcher Function
+
+Next, add that function. To start with, just print out one thing:
+
+1.  Information about the arguments being passed to the function
+
+```sh
+expect.matcher.toEq() {
+  echo "toEq called with $# arguments: $*"
+}
+```
+
+> You can define the above function right in your BASH shell, just copy/paste it in!
+
+Now, try running the code again:
+
+```
+$ source "expect.sh"
+
+$ expect "$answer" toEq 42
+toEq called with 1 arguments: 42
+```
+
+Wonderful! This time the command did not fail and the `toEq` function was called.
+
+As you can see, the `toEq` function received one positional argument: `42`
+
+> Try passing additional arguments to `toEq`
+>
+> ```sh
+> $ expect "$answer" toEq 42 another argument "hello, world!"
+> toEq called with 4 arguments: 42 another argument hello, world!
+> ```
+
+But what about `$result`?
+
+...
+
+Next, add that function. To start with, just print out two things:
+
+1.  Information about the arguments being passed to the function
+2.  All of the currently defined variables which start with `EXPECT_`
 
 ### Exiting on failure
 

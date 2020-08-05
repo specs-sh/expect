@@ -44,12 +44,12 @@ The `expect` function provides a simple framework for authoring and using "expec
 - [Write a matcher function](#writing-your-first)
 - [Get the actual result](#writing-your-first)
 - [Compare actual and expected results](#writing-your-first)
-- [Exit on failure](#exiting-on-failure)
-- [Customizing function names](#customizing-function-names)
-- [Expected and Actual Values](#expected-and-actual-values)
-- [Block Values](#block-values)
-- [Customizing block styles](#customizing-block-styles)
+- [Write failure messages](#exiting-on-failure)
 - [Negating with 'not'](#negagting-with-not)
+- [Exit on failure](#exiting-on-failure)
+- [Block values](#block-values)
+- [Customizing block styles](#customizing-block-styles)
+- [Customizing function names](#customizing-function-names)
 - [Supported `EXPECT` variables](#negagting-with-not)
 
 ### Provided Expectations
@@ -194,11 +194,11 @@ Now, try running the code again. This time, set a value for `$answer`:
 - ```
   $ source "expect.sh"
 
-  $ answer="The result we want to verify equals 42"
+  $ answer="This is the actual result"
 
   $ expect "$answer" toEq 42
   toEq called with 1 arguments: 42
-  declare -- EXPECT_ACTUAL_RESULT="The result we want to verify equals 42"
+  declare -- EXPECT_ACTUAL_RESULT="This is the actual result"
   declare -a EXPECT_BLOCK=()
   declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
   declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
@@ -213,34 +213,60 @@ As you can see, there a number of `EXPECT_` variables available to the function.
 The **"actual result"** is available in a variable named `EXPECT_ACTUAL_RESULT`:
 
 - ```
-  declare -- EXPECT_ACTUAL_RESULT="The result we want to verify equals 42"
+  declare -- EXPECT_ACTUAL_RESULT="This is the actual result"
   ```
 
 > A summary of all `EXPECT_` variables is [found below](#foo) under [Supported `EXPECT` variables](#foo)
 
 ## Compare actual and expected results
 
-## Exit on failure
+With access to both the **"expected result"** and **"actual result"**, update the function to compare them:
 
-XXX
+- ```sh
+  expect.matcher.toEq() {
+    local expectedResult="$1"                  # e.g. 42
+    local actualResult="$EXPECT_ACTUAL_RESULT" # e.g. "This is the actual result"
 
-## Customizing function names
+    if [ "$actualResult" = "$expectedResult" ]
+    then
+      echo "They match! This matcher should pass."
+    else
+      echo "Oh noes! They are not the same! This matcher should fail."
+    fi
+  }
+  ```
 
-XXX
+Now, run the function again providing a variety of expected and actual values:
 
-## Expected and Actual Values
+- ```sh
+  $ expect 42 toEq 42
+  They match! This matcher should pass.
 
-XXX
+  $ expect 42 toEq 42-42-42-42
+  Oh noes! They are not the same! This matcher should fail.2
+  ```
 
-## Block Values
-
-XXX
-
-## Customizing block styles
+## Write failure messages
 
 XXX
 
 ## Negating with 'not'
+
+XXX
+
+## Exit on failure
+
+XXX
+
+## Block values
+
+XXX
+
+## Customize block styles
+
+XXX
+
+## Customize function names
 
 XXX
 

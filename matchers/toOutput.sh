@@ -45,13 +45,13 @@ expect.matcher.toOutput() {
       then
         if [[ "$___expect___toOutput_STDOUT" != *"$___expect___toOutput_expected"* ]]
         then
-          echo "Expected STDOUT to contain text\nActual STDOUT: '$___expect___toOutput_STDOUT_actual'\nExpected text: '$___expect___toOutput_ExpectedResult'" >&2
+          echo "Expected STDOUT to contain text\nSTDOUT: '$___expect___toOutput_STDOUT_actual'\nExpected text: '$___expect___toOutput_ExpectedResult'" >&2
           return 1
         fi
       else
         if [[ "$___expect___toOutput_STDOUT" = *"$___expect___toOutput_expected"* ]]
         then
-          echo "Expected STDOUT not to contain text\nActual STDOUT: '$___expect___toOutput_STDOUT_actual'\nUnexpected text: '$___expect___toOutput_ExpectedResult'" >&2
+          echo "Expected STDOUT not to contain text\nSTDOUT: '$___expect___toOutput_STDOUT_actual'\nUnexpected text: '$___expect___toOutput_ExpectedResult'" >&2
           return 1
         fi
       fi
@@ -62,14 +62,14 @@ expect.matcher.toOutput() {
       then
         if [[ "$___expect___toOutput_STDERR" != *"$___expect___toOutput_expected"* ]]
         then
-          echo -e "Expected STDERR to contain text\nActual STDERR: '$___expect___toOutput_STDERR_actual'\nExpected text: '$___expect___toOutput_ExpectedResult'" >&2
-          return 1
+          echo -e "Expected STDERR to contain text\nSTDERR: '$___expect___toOutput_STDERR_actual'\nExpected text: '$___expect___toOutput_ExpectedResult'" >&2
+          exit 1
         fi
       else
         if [[ "$___expect___toOutput_STDERR" = *"$___expect___toOutput_expected"* ]]
         then
-          echo -e "Expected STDERR not to contain text\nActual STDERR: '$___expect___toOutput_STDERR_actual'\nUnexpected text: '$___expect___toOutput_ExpectedResult'" >&2
-          return 1
+          echo -e "Expected STDERR not to contain text\nSTDERR: '$___expect___toOutput_STDERR_actual'\nUnexpected text: '$___expect___toOutput_ExpectedResult'" >&2
+          exit 1
         fi
       fi
     # OUTPUT
@@ -79,13 +79,13 @@ expect.matcher.toOutput() {
         if [[ "$___expect___toOutput_OUTPUT" != *"$___expect___toOutput_expected"* ]]
         then
           echo -e "Expected output to contain text\nOutput: '$___expect___toOutput_OUTPUT_actual'\nExpected text: '$___expect___toOutput_ExpectedResult'" >&2
-          return 1
+          exit 1
         fi
       else
         if [[ "$___expect___toOutput_OUTPUT" = *"$___expect___toOutput_expected"* ]]
         then
           echo -e "Expected output not to contain text\nOutput: '$___expect___toOutput_OUTPUT_actual'\nUnexpected text: '$___expect___toOutput_ExpectedResult'" >&2
-          return 1
+          exit 1
         fi
       fi
     fi

@@ -1,22 +1,21 @@
 expect.matcher.toEqual() {
   [ $# -ne 1 ] && { echo "toEqual expects 1 argument (expected result), received $# [$*]" >&2; return 1; }
 
-  local actualResult="$( echo -e "$EXPECT_ACTUAL_RESULT" | cat -A )"
-
-  local expectedResult="$( echo -e "$1" | cat -A )"
+  local actualResultOutput="$( echo -ne "$EXPECT_ACTUAL_RESULT" | cat -A )"
+  local expectedResultOutput="$( echo -ne "$1" | cat -A )"
 
   if [ -z "$EXPECT_NOT" ]
   then
-    if [ "$actualResult" != "$expectedResult" ]
+    if [ "$EXPECT_ACTUAL_RESULT" != "$1" ]
     then
-      echo "Expected result to equal\nActual: '$EXPECT_ACTUAL_RESULT'\nExpected: '$expectedResult'" >&2
-      return 1
+      echo "Expected result to equal\nActual: '$actualResultOutput'\nExpected: '$expectedResultOutput'" >&2
+      exit 1
     fi
   else
-    if [ "$actualResult" = "$expectedResult" ]
+    if [ "$EXPECT_ACTUAL_RESULT" = "$1" ]
     then
-      echo "Expected result not to equal\nActual: '$EXPECT_ACTUAL_RESULT'\nExpected: '$expectedResult'" >&2
-      return 1
+      echo "Expected result not to equal\nActual: '$actualResultOutput'\nExpected: '$expectedResultOutput'" >&2
+      exit 1
     fi
   fi
 

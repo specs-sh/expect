@@ -40,6 +40,7 @@ The `expect` function provides a simple framework for authoring and using "expec
 ### Authoring Expectations
 
 - [Expectations vs Assertions](#expectations-vs-assertions)
+- [Matcher functions](#writing-your-first)
 - [Write a matcher function](#writing-your-first)
 - [Get the actual result](#writing-your-first)
 - [Compare actual and expected results](#writing-your-first)
@@ -49,6 +50,7 @@ The `expect` function provides a simple framework for authoring and using "expec
 - [Block Values](#block-values)
 - [Customizing block styles](#customizing-block-styles)
 - [Negating with 'not'](#negagting-with-not)
+- [Supported `EXPECT` variables](#negagting-with-not)
 
 ### Provided Expectations
 
@@ -103,7 +105,7 @@ There are pros and cons to each, but at the end of the day it comes down to user
 
 ---
 
-## Write a matcher function
+## Matcher functions
 
 Let's implement the following **`toEq`** "matcher function"
 
@@ -126,7 +128,7 @@ By default, `expect` expects a function to exist named `expect.matcher.[MATCHER_
 
 The name of the matcher in this case is: `toEq`.
 
-## Implement the Matcher Function
+## Write a matcher function
 
 Next, add that function: **`expect.matcher.toEq()`**
 
@@ -214,6 +216,8 @@ The **"actual result"** is available in a variable named `EXPECT_ACTUAL_RESULT`:
   declare -- EXPECT_ACTUAL_RESULT="The result we want to verify equals 42"
   ```
 
+> A summary of all `EXPECT_` variables is [found below](#foo) under [Supported `EXPECT` variables](#foo)
+
 ## Compare actual and expected results
 
 ## Exit on failure
@@ -240,7 +244,7 @@ XXX
 
 XXX
 
-## Supported `EXPECT_` variables
+## Supported `EXPECT` variables
 
 xxx document all of them in a table with small heading for each one too xxx
 

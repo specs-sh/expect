@@ -48,7 +48,7 @@ The `expect` function provides a simple framework for authoring and using "expec
 - [Customizing block styles](#customizing-block-styles)
 - [Negating with 'not'](#negagting-with-not)
 
-#### Build-in Expectations
+#### Provided Expectations
 
 - [`toEqual`](#expect)
 - [`toContain`](#expect)
@@ -141,7 +141,7 @@ XXX
 
 ---
 
-## Built-in Expectations
+## Provided Expectations
 
 ### `toEqual`
 

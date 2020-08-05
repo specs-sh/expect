@@ -1,6 +1,6 @@
 # 🧐 `expect.sh`
 
-Flexible testing expectation library in [< 50 LOC](https://github.com/bx-sh/expect.sh/blob/master/expect.sh)
+Flexible test expectation library in [< 50 LOC](https://github.com/bx-sh/expect.sh/blob/master/expect.sh)
 
 > ```sh
 > expect { BASH testing } toBe "wonderful"

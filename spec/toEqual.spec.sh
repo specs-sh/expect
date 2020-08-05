@@ -17,11 +17,14 @@ import @expect/matchers/toEqual
 
   refute run expect 5 toEqual "Wrong value"
   assert [ -z "$STDOUT" ]
-  assert [ "$STDERR" = "Expected results to equal\nActual: '5'\nExpected: 'Wrong value'" ]
+  assert [ "$STDERR" = "Expected results to equal\nActual: '5'\nExpected: 'Wrong value$'" ]
 }
 
-@pending.toEqual.newlines_and_tabs_etc() {
-  :
+@spec.toEqual.newlines_and_tabs_etc() {
+  refute run expect 5 toEqual "Hello\tI have\nnewlines\tand tabs"
+  assert [ -z "$STDOUT" ]
+  local expected="$( echo -e "Hello\tI have\nnewlines\tand tabs" | cat -A )"
+  assert [ "$STDERR" = "Expected results to equal\nActual: '5'\nExpected: '$expected'" ]
 }
 
 @spec.not.toEqual() {
@@ -31,5 +34,5 @@ import @expect/matchers/toEqual
 
   refute run expect 5 not toEqual 5
   assert [ -z "$STDOUT" ]
-  assert [ "$STDERR" = "Expected results not to equal\nActual: '5'\nExpected: '5'" ]
+  assert [ "$STDERR" = "Expected results not to equal\nActual: '5'\nExpected: '5$'" ]
 }

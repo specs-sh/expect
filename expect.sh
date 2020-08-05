@@ -1,8 +1,3 @@
-expect.fail() {
-  echo -e "$*" >&2
-  exit 1
-}
-
 expect() {
   [ $# -eq 0 ] && { echo "Missing required argument for 'expect': actual value or { code block } or {{ subshell code block }}" >&2; return 1; }
 

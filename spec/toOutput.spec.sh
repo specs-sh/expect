@@ -1,6 +1,10 @@
 import @expect/matchers/toOutput
 
 @spec.toOutput.noArguments() {
+  refute run -- expect "Whoops this requires a block" toOutput
+  assert [ -z "$STDOUT" ]
+  assert [ "$STDERR" = "toOutput requires a block" ]
+
   refute run -- expect { echo 5 } toOutput
   assert [ -z "$STDOUT" ]
   assert [ "$STDERR" = "toOutput expects 1 or more arguments, received 0" ]

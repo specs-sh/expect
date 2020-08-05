@@ -1,4 +1,6 @@
 expect.matcher.toOutput() {
+  [ "${#EXPECT_BLOCK[@]}" -lt 1 ] && { echo "toOutput requires a block" >&2; exit 1; }
+
   local ___expect___toOutput_Check_STDOUT=""
   local ___expect___toOutput_Check_STDERR=""
 

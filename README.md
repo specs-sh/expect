@@ -38,6 +38,7 @@ The `expect` function provides a simple framework for authoring and using "expec
 ---
 
 #### Authoring Expectations
+
 - [Expectations vs Assertions](#expectations-vs-assertions)
 - [Creating a function](#creating-a-function)
 - [Exiting on failure](#exiting-on-failure)
@@ -48,6 +49,7 @@ The `expect` function provides a simple framework for authoring and using "expec
 - [Negating with 'not'](#negagting-with-not)
 
 #### Build-in Expectations
+
 - [`toEqual`](#expect)
 - [`toContain`](#expect)
 - [`toBeEmpty`](#expect)
@@ -55,13 +57,59 @@ The `expect` function provides a simple framework for authoring and using "expec
 - [`toOutput`](#expect)
 - [`toFail`](#expect)
 
-----
+---
 
 ## Authoring Expectations
 
+> ```sh
+> expect [ACTUAL_RESULT] [MATCHER_NAME] [arguments]
+>
+> # or
+>
+> expect { [BLOCK] } [MATCHER_NAME] [arguments]
+> ```
+
+---
+
 ### Expectations vs Assertions
 
-XXX
+The two most common test assertion styles in programming languages are:
+
+> #### `assert`
+>
+> ```sh
+> assert_equal "ACTUAL", "EXPECTED"
+> ```
+
+> #### `expect`
+>
+> ```sh
+> expect "ACTUAL" equals "EXPECTED"
+> ```
+
+There are pros and cons to each, but at the end of the day it comes down to user preference.
+
+`assert`
+
+- Pros:
+  - Classic 🥂
+  - Easy to implement additional `assert_*` functions
+- Cons:
+  - Easy to forget which argument is `actual` and which is `expected`
+  - Requires many `assert_*` functions
+    > in BASH, these "pollute" the global namespace
+
+`expect`
+
+- Pros:
+  - Reads closer to normal language, e.g. _expect '\$result' to equal 'foo'_
+  - Only requires one top-level `expect` function
+    > in BASH, this means not "polluting" the global namespace with extra functions
+- Cons:
+  - Slightly more complicated to implement additional `expect` matchers
+    > ... as you'll see below! You'll implement a variety of matchers 🍻
+
+---
 
 ### Creating a function
 

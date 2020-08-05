@@ -287,7 +287,7 @@ That's more useful!
 
 ## Negating with 'not'
 
-What about handing when `not` is provided?
+What about handling when `not` is provided?
 
 ```sh
 $ expect "$answer" not toEq 42

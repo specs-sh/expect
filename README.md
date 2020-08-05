@@ -16,7 +16,7 @@ source "expect.sh"
 
 ---
 
-### `expect`
+## `expect`
 
 The `expect` function provides a simple framework for authoring and using "expectations"
 
@@ -37,7 +37,7 @@ The `expect` function provides a simple framework for authoring and using "expec
 
 ---
 
-#### Authoring Expectations
+### Authoring Expectations
 
 - [Expectations vs Assertions](#expectations-vs-assertions)
 - [Writing a matcher function](#writing-your-first)
@@ -48,7 +48,7 @@ The `expect` function provides a simple framework for authoring and using "expec
 - [Customizing block styles](#customizing-block-styles)
 - [Negating with 'not'](#negagting-with-not)
 
-#### Provided Expectations
+### Provided Expectations
 
 - [`toEqual`](#expect)
 - [`toContain`](#expect)
@@ -59,9 +59,9 @@ The `expect` function provides a simple framework for authoring and using "expec
 
 ---
 
-## Authoring Expectations
+# Authoring Expectations
 
-### Expectations vs Assertions
+## Expectations vs Assertions
 
 The two most common test assertion styles in programming languages are:
 
@@ -101,7 +101,7 @@ There are pros and cons to each, but at the end of the day it comes down to user
 
 ---
 
-### Writing a matcher function
+## Writing a matcher function
 
 Let's implement the following **`toEq`** "matcher function"
 
@@ -124,7 +124,7 @@ By default, `expect` expects a function to exist named `expect.matcher.[MATCHER_
 
 The name of the matcher in this case is: `toEq`.
 
-#### Implement the Matcher Function
+## Implement the Matcher Function
 
 Next, add that function: **`expect.matcher.toEq()`**
 
@@ -153,7 +153,7 @@ Wonderful! This time the command did not fail and the `toEq` function was called
 
 As you can see, the `toEq` function received one positional argument: `42`
 
-- > ##### Optional
+- > #### Optional
   >
   > Try passing additional arguments to `toEq`
   >
@@ -166,7 +166,7 @@ But what about the `$answer` variable which is the "actual result"?
 
 Rather than being passed as a positional argument, the "actual result" is available to matcher functions as a pre-defined variable.
 
-#### `EXPECT_` variables
+## `EXPECT_` variables
 
 Next, update the **`expect.matcher.toEq()`** function to print two things:
 
@@ -203,35 +203,35 @@ Now, try running the code again. This time, set a value for `$answer`:
 
 ...
 
-### Exiting on failure
+## Exiting on failure
 
 XXX
 
-### Customizing function names
+## Customizing function names
 
 XXX
 
-### Expected and Actual Values
+## Expected and Actual Values
 
 XXX
 
-### Block Values
+## Block Values
 
 XXX
 
-### Customizing block styles
+## Customizing block styles
 
 XXX
 
-### Negating with 'not'
+## Negating with 'not'
 
 XXX
 
 ---
 
-## Provided Expectations
+# Provided Expectations
 
-### `toEqual`
+## `toEqual`
 
 XXX
 
@@ -241,7 +241,7 @@ source "matchers/toEqual.sh"
 #
 ```
 
-### `toContain`
+## `toContain`
 
 XXX
 
@@ -251,7 +251,7 @@ source "matchers/toContain.sh"
 #
 ```
 
-### `toBeEmpty`
+## `toBeEmpty`
 
 XXX
 
@@ -261,7 +261,7 @@ source "matchers/toBeEmpty.sh"
 #
 ```
 
-### `toMatch`
+## `toMatch`
 
 XXX
 
@@ -271,7 +271,7 @@ source "matchers/toMatch.sh"
 #
 ```
 
-### `toOutput`
+## `toOutput`
 
 XXX
 
@@ -281,7 +281,7 @@ source "matchers/toOutput.sh"
 #
 ```
 
-### `toFail`
+## `toFail`
 
 XXX
 
@@ -291,7 +291,7 @@ source "matchers/toFail.sh"
 #
 ```
 
-### `toBeEmpty`
+## `toBeEmpty`
 
 XXX
 

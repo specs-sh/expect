@@ -536,9 +536,9 @@ This provides flexibility, e.g. if you want `{` and `{{` to behave differently.
 
 The matchers which come with `expect.sh` all support using `{` or `{{`
 
-When `{` is used, the block is executed
+When `{` is used, the block is executed to get the actual result
 
-When `{{` is used, the block is executed _in a subshell_
+When `{{` is used, the block is executed _in a subshell_ to get the actual result
 
 ## Support block syntax
 

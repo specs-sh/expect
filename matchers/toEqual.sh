@@ -63,13 +63,13 @@ expect.matcher.toEqual() {
 
   if [ -z "$EXPECT_NOT" ]
   then
-    if [ "$actualResult" != "$1" ]
+    if [ "$actualResultOutput" != "$expectedResultOutput" ]
     then
       echo "Expected result to equal\nActual: '$actualResultOutput'\nExpected: '$expectedResultOutput'" >&2
       exit 1
     fi
   else
-    if [ "$actualResult" = "$1" ]
+    if [ "$actualResultOutput" = "$expectedResultOutput" ]
     then
       echo "Expected result not to equal\nActual: '$actualResultOutput'\nExpected: '$expectedResultOutput'" >&2
       exit 1

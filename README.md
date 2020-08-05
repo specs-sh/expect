@@ -40,8 +40,10 @@ The `expect` function provides a simple framework for authoring and using "expec
 ### Authoring Expectations
 
 - [Expectations vs Assertions](#expectations-vs-assertions)
-- [Writing a matcher function](#writing-your-first)
-- [Exiting on failure](#exiting-on-failure)
+- [Write a matcher function](#writing-your-first)
+- [Get the actual result](#writing-your-first)
+- [Compare actual and expected results](#writing-your-first)
+- [Exit on failure](#exiting-on-failure)
 - [Customizing function names](#customizing-function-names)
 - [Expected and Actual Values](#expected-and-actual-values)
 - [Block Values](#block-values)
@@ -101,7 +103,7 @@ There are pros and cons to each, but at the end of the day it comes down to user
 
 ---
 
-## Writing a matcher function
+## Write a matcher function
 
 Let's implement the following **`toEq`** "matcher function"
 
@@ -153,6 +155,8 @@ Wonderful! This time the command did not fail and the `toEq` function was called
 
 As you can see, the `toEq` function received one positional argument: `42`
 
+This is considered the **"expected result"**.
+
 - > #### Optional
   >
   > Try passing additional arguments to `toEq`
@@ -162,11 +166,11 @@ As you can see, the `toEq` function received one positional argument: `42`
   > toEq called with 4 arguments: 42 another argument hello, world!
   > ```
 
-But what about the `$answer` variable which is the "actual result"?
+But what about the `$answer` variable which is the **"actual result"**?
 
 Instead of being provided as a positional argument, the "actual result" is available as a pre-defined variable.
 
-## `EXPECT_` variables
+## Get the actual result
 
 Next, update the **`expect.matcher.toEq()`** function to print two things:
 
@@ -202,9 +206,17 @@ Now, try running the code again. This time, set a value for `$answer`:
   declare -- EXPECT_VERSION="0.2.0"
   ```
 
-...
+As you can see, there a number of `EXPECT_` variables available to the function.
 
-## Exiting on failure
+The **"actual result"** is available in a variable named `EXPECT_ACTUAL_RESULT`:
+
+- ```
+  declare -- EXPECT_ACTUAL_RESULT="The result we want to verify equals 42"
+  ```
+
+## Compare actual and expected results
+
+## Exit on failure
 
 XXX
 
@@ -227,6 +239,10 @@ XXX
 ## Negating with 'not'
 
 XXX
+
+## Supported `EXPECT_` variables
+
+xxx document all of them in a table with small heading for each one too xxx
 
 ---
 

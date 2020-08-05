@@ -12,13 +12,13 @@ expect.matcher.toContain() {
     then
       if [[ "$EXPECT_ACTUAL_RESULT" != *"$expected"* ]]
       then
-        echo "Expected result to contain text\nActual text: '$actualResult'\nExpected text: '$expectedResult'" >&2
+        echo -e "Expected result to contain text\nActual text: '$actualResult'\nExpected text: '$expectedResult'" >&2
         return 1
       fi
     else
       if [[ "$EXPECT_ACTUAL_RESULT" = *"$expected"* ]]
       then
-        echo "Expected result not to contain text\nActual text: '$actualResult'\nUnexpected text: '$expectedResult'" >&2
+        echo -e "Expected result not to contain text\nActual text: '$actualResult'\nUnexpected text: '$expectedResult'" >&2
         return 1
       fi
     fi

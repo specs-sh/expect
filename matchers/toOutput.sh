@@ -5,7 +5,7 @@ expect.matcher.toOutput() {
   [ "$1" = "toStdout" ] || [ "$1" = "toSTDOUT" ] && { ___expect___toOutput_Check_STDOUT=true; shift; }
   [ "$1" = "toStderr" ] || [ "$1" = "toSTDERR" ] && { ___expect___toOutput_Check_STDERR=true; shift; }
 
-  [ $# -lt 1 ] && { echo "toOutput expects 1 or more arguments, received $#" >&2; return 1; }
+  [ $# -lt 1 ] && { echo "toOutput expects 1 or more arguments, received $#" >&2; exit 1; }
 
   local ___expect___toOutput_RunInSubshell=""
   [ "$EXPECT_BLOCK_TYPE" = "{{" ] && ___expect___toOutput_RunInSubshell=true
@@ -90,4 +90,6 @@ expect.matcher.toOutput() {
       fi
     fi
   done
+
+  return 0
 }

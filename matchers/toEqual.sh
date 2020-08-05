@@ -1,5 +1,5 @@
 expect.matcher.toEqual() {
-  [ $# -ne 1 ] && { echo "toEqual expects 1 argument (expected result), received $# [$*]" >&2; return 1; }
+  [ $# -ne 1 ] && { echo "toEqual expects 1 argument (expected result), received $# [$*]" >&2; exit 1; }
 
   local actualResultOutput="$( echo -ne "$EXPECT_ACTUAL_RESULT" | cat -A )"
   local expectedResultOutput="$( echo -ne "$1" | cat -A )"

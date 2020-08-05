@@ -1,5 +1,5 @@
 expect.matcher.toContain() {
-  [ $# -lt 1 ] && { echo "toContain expects 1 or more arguments, received $# [$*]" >&2; return 1; }
+  [ $# -lt 1 ] && { echo "toContain expects 1 or more arguments, received $# [$*]" >&2; exit 1; }
 
   local actualResultOutput="$( echo -ne "$EXPECT_ACTUAL_RESULT" | cat -A )"
 

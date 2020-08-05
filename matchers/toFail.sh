@@ -60,4 +60,6 @@ expect.matcher.toFail() {
       fi
     fi
   done
+
+  return 0
 }

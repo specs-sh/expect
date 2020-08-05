@@ -1,8 +1,4 @@
-# 🧐 `expect`
-
-```sh
-expect { BASH testing } toBe "wonderful"
-```
+# 🧐 `expect.sh`
 
 Flexible testing expectation library in [< 50 LOC](https://github.com/bx-sh/expect.sh/blob/master/expect.sh)
 
@@ -16,12 +12,8 @@ source "expect.sh"
 
 ---
 
-## Built-in Matchers
-
-### `toEqual`
-
 ```sh
-source "matchers/toEqual.sh"
-
-expect "$( echo "Hello" )" toEqual "Hello"
+expect { BASH testing } toBe "wonderful"
 ```
+
+---

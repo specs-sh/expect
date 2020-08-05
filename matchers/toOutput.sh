@@ -72,14 +72,12 @@ expect.matcher.toOutput() {
       then
         if [[ "$___expect___STDOUT" != *"$___expect___expected"* ]]
         then
-          echo "Expected STDOUT to contain text\nSTDOUT: '$___expect___STDOUT_actual'\nExpected text: '$___expect___ExpectedResult'" >&2
-          return 1
+          expect.fail "Expected STDOUT to contain text\nSTDOUT: '$___expect___STDOUT_actual'\nExpected text: '$___expect___ExpectedResult'"
         fi
       else
         if [[ "$___expect___STDOUT" = *"$___expect___expected"* ]]
         then
-          echo "Expected STDOUT not to contain text\nSTDOUT: '$___expect___STDOUT_actual'\nUnexpected text: '$___expect___ExpectedResult'" >&2
-          return 1
+          expect.fail "Expected STDOUT not to contain text\nSTDOUT: '$___expect___STDOUT_actual'\nUnexpected text: '$___expect___ExpectedResult'"
         fi
       fi
     # STDERR:
@@ -89,14 +87,12 @@ expect.matcher.toOutput() {
       then
         if [[ "$___expect___STDERR" != *"$___expect___expected"* ]]
         then
-          echo -e "Expected STDERR to contain text\nSTDERR: '$___expect___STDERR_actual'\nExpected text: '$___expect___ExpectedResult'" >&2
-          exit 1
+          expect.fail "Expected STDERR to contain text\nSTDERR: '$___expect___STDERR_actual'\nExpected text: '$___expect___ExpectedResult'"
         fi
       else
         if [[ "$___expect___STDERR" = *"$___expect___expected"* ]]
         then
-          echo -e "Expected STDERR not to contain text\nSTDERR: '$___expect___STDERR_actual'\nUnexpected text: '$___expect___ExpectedResult'" >&2
-          exit 1
+          expect.fail "Expected STDERR not to contain text\nSTDERR: '$___expect___STDERR_actual'\nUnexpected text: '$___expect___ExpectedResult'"
         fi
       fi
     # OUTPUT
@@ -105,14 +101,12 @@ expect.matcher.toOutput() {
       then
         if [[ "$___expect___OUTPUT" != *"$___expect___expected"* ]]
         then
-          echo -e "Expected output to contain text\nOutput: '$___expect___OUTPUT_actual'\nExpected text: '$___expect___ExpectedResult'" >&2
-          exit 1
+          expect.fail "Expected output to contain text\nOutput: '$___expect___OUTPUT_actual'\nExpected text: '$___expect___ExpectedResult'"
         fi
       else
         if [[ "$___expect___OUTPUT" = *"$___expect___expected"* ]]
         then
-          echo -e "Expected output not to contain text\nOutput: '$___expect___OUTPUT_actual'\nUnexpected text: '$___expect___ExpectedResult'" >&2
-          exit 1
+          expect.fail "Expected output not to contain text\nOutput: '$___expect___OUTPUT_actual'\nUnexpected text: '$___expect___ExpectedResult'"
         fi
       fi
     fi

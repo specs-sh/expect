@@ -64,14 +64,12 @@ expect.matcher.toBeEmpty() {
   then
     if [ -n "$actualResult" ]
     then
-      echo "Expected result to be empty\nActual: '$actualResultOutput'" >&2
-      exit 1
+      expect.fail "Expected result to be empty\nActual: '$actualResultOutput'"
     fi
   else
     if [ -z "$actualResult" ]
     then
-      echo "Expected result not to be empty\nActual: '$actualResultOutput'" >&2
-      exit 1
+      expect.fail "Expected result not to be empty\nActual: '$actualResultOutput'"
     fi
   fi
 

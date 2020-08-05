@@ -65,14 +65,12 @@ expect.matcher.toEqual() {
   then
     if [ "$actualResultOutput" != "$expectedResultOutput" ]
     then
-      echo "Expected result to equal\nActual: '$actualResultOutput'\nExpected: '$expectedResultOutput'" >&2
-      exit 1
+      expect.fail "Expected result to equal\nActual: '$actualResultOutput'\nExpected: '$expectedResultOutput'"
     fi
   else
     if [ "$actualResultOutput" = "$expectedResultOutput" ]
     then
-      echo "Expected result not to equal\nActual: '$actualResultOutput'\nExpected: '$expectedResultOutput'" >&2
-      exit 1
+      expect.fail "Expected result not to equal\nActual: '$actualResultOutput'\nExpected: '$expectedResultOutput'"
     fi
   fi
 

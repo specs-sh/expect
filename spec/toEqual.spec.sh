@@ -36,6 +36,19 @@ import @expect/matchers/toEqual
   assert [ "$STDERR" = "Expected result to equal\nActual: '5'\nExpected: 'Wrong value'" ]
 }
 
+@pending.toEqual.returnOne() {
+  EXPECTATION_FAILED="return 1"
+  set -e
+
+  expect 5 toEqual 5
+
+  # This should make the test fail when run (set @pending to @spec)
+  # Example of using EXPECTATION_FAILED to support set -e style testing frameworks
+  expect 5 toEqual "Wrong value"
+
+  set +e
+}
+
 @spec.toEqual.newlines_and_tabs_etc() {
   refute run -- expect 5 toEqual "Hello\tI\thave\ttabs"
   assert [ -z "$STDOUT" ]

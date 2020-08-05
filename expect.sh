@@ -14,19 +14,17 @@ expect() {
     while [ $# -gt 0 ]
     do
       # Not entirely sure why [[ "$1" =~ $EXPECT_BLOCK_END_PATTERN ]] doesn't work outside of 'eval' 🤷🏼‍♀️
-      eval "[[ \"$1\" =~ $EXPECT_BLOCK_END_PATTERN ]] && break"
+      eval "[[ \"$1\" =~ $EXPECT_BLOCK_END_PATTERN ]] && break" 
       EXPECT_BLOCK+=("$1")
       shift
     done
-    eval "
-      if [[ \"\$1\" =~ $EXPECT_BLOCK_END_PATTERN ]]
-      then
-        shift
-      else
-        echo \"Expected block closing braces but found none\" >&2
-        return 1
-      fi
-    "
+    eval "if [[ \"\$1\" =~ $EXPECT_BLOCK_END_PATTERN ]]
+          then
+            shift
+          else
+            echo \"Expected block closing braces but found none\" >&2
+            return 1
+          fi"
   else
     EXPECT_ACTUAL_RESULT="$1"
     shift
@@ -42,4 +40,9 @@ expect() {
   else
     "$___expect___ExpectedMatcherFunction" "$@"
   fi
+}
+EXPECTATION_FAILED="exit 1"
+expect.fail() {
+  echo "$*" >&2
+  $EXPECTATION_FAILED
 }

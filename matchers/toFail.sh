@@ -34,14 +34,12 @@ expect.matcher.toFail() {
   then
     if [ $___expect___ExitCode -eq 0 ]
     then
-      echo "Expected to fail, but passed\nCommand: ${EXPECT_BLOCK[@]}\nSTDOUT: $___expect___STDOUT\nSTDERR: $___expect___STDERR" >&2
-      exit 1
+      expect.fail "Expected to fail, but passed\nCommand: ${EXPECT_BLOCK[@]}\nSTDOUT: $___expect___STDOUT\nSTDERR: $___expect___STDERR"
     fi
   else
     if [ $___expect___ExitCode -ne 0 ]
     then
-      echo "Expected to pass, but failed\nCommand: ${EXPECT_BLOCK[@]}\nSTDOUT: $___expect___STDOUT\nSTDERR: $___expect___STDERR" >&2
-      exit 1
+      expect.fail "Expected to pass, but failed\nCommand: ${EXPECT_BLOCK[@]}\nSTDOUT: $___expect___STDOUT\nSTDERR: $___expect___STDERR"
     fi
   fi
 
@@ -53,14 +51,12 @@ expect.matcher.toFail() {
     then
       if [[ "$___expect___STDERR" != *"$___expect___expected"* ]]
       then
-        echo -e "Expected STDERR to contain text\nCommand: ${EXPECT_BLOCK[@]}\nSTDERR: '$___expect___STDERR_actual'\nExpected text: '$___expect___ExpectedResult'" >&2
-        exit 1
+        expect.fail "Expected STDERR to contain text\nCommand: ${EXPECT_BLOCK[@]}\nSTDERR: '$___expect___STDERR_actual'\nExpected text: '$___expect___ExpectedResult'"
       fi
     else
       if [[ "$___expect___STDERR" = *"$___expect___expected"* ]]
       then
-        echo -e "Expected STDERR not to contain text\nCommand: ${EXPECT_BLOCK[@]}\nSTDERR: '$___expect___STDERR_actual'\nUnexpected text: '$___expect___ExpectedResult'" >&2
-        exit 1
+        expect.fail "Expected STDERR not to contain text\nCommand: ${EXPECT_BLOCK[@]}\nSTDERR: '$___expect___STDERR_actual'\nUnexpected text: '$___expect___ExpectedResult'"
       fi
     fi
   done

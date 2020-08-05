@@ -67,14 +67,12 @@ expect.matcher.toMatch() {
     then
       if [[ ! "$actualResult" =~ $pattern ]]
       then
-        echo -e "Expected result to match\nActual text: '$actualResultOutput'\nPattern: '$pattern'" >&2
-        exit 1
+        expect.fail "Expected result to match\nActual text: '$actualResultOutput'\nPattern: '$pattern'"
       fi
     else
       if [[ "$actualResult" =~ $pattern ]]
       then
-        echo -e "Expected result not to match\nActual text: '$actualResultOutput'\nPattern: '$pattern'" >&2
-        exit 1
+        expect.fail "Expected result not to match\nActual text: '$actualResultOutput'\nPattern: '$pattern'"
       fi
     fi
   done

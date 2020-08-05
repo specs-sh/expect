@@ -20,19 +20,17 @@ source "expect.sh"
 
 The `expect` function provides a simple framework for authoring and using "expectations"
 
-> #### Usage Example
->
-> ```sh
-> local config="file.conf"
->
-> expect "$config" toBeValidConfig
->
-> expect { deployed --configs } not toContain "$config"
->
-> expect { deploy "$config" } toDeploySuccessfully
->
-> expect { deployed --configs } toContain "$config"
-> ```
+```sh
+local config="file.conf"
+
+expect "$config" toBeValidConfig
+
+expect { deployed --configs } not toContain "$config"
+
+expect { deploy "$config" } toDeploySuccessfully
+
+expect { deployed --configs } toContain "$config"
+```
 
 All applications and scripts are different.
 

@@ -44,6 +44,7 @@ The `expect` function provides a simple framework for authoring and using "expec
 - [Customizing function names](#customizing-function-names)
 - [Expected and Actual Values](#expected-and-actual-values)
 - [Block Values](#block-values)
+- [Customizing block styles](#customizing-block-styles)
 - [Negating with 'not'](#negagting-with-not)
 
 #### Build-in Expectations
@@ -79,6 +80,10 @@ XXX
 XXX
 
 ### Block Values
+
+XXX
+
+### Customizing block styles
 
 XXX
 

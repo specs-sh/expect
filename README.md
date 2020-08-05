@@ -32,7 +32,7 @@ expect { deploy "$config" } toDeploySuccessfully
 expect { deployed --configs } toContain "$config"
 ```
 
-> ℹ️ All applications and scripts are different.
+> ℹAll applications and scripts are different.
 >
 > Please use this to implement your own domain-specific expectations for your tests.
 

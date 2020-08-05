@@ -120,7 +120,7 @@ First, try running the above code _without_ implementing the function:
   $ source "expect.sh"
 
   $ expect "$answer" toEq 42
-  expect.matcher.toEq: command not found
+  # expect.matcher.toEq: command not found
   ```
 
 You'll see an error: **`expect.matcher.toEq: command not found`**
@@ -151,7 +151,7 @@ Now, try running the code again:
   $ source "expect.sh"
 
   $ expect "$answer" toEq 42
-  toEq called with 1 arguments: 42
+  # toEq called with 1 arguments: 42
   ```
 
 Wonderful! This time the command did not fail and the `toEq` function was called.
@@ -166,7 +166,7 @@ This is considered the **"expected result"**.
   >
   > ```sh
   > $ expect "$answer" toEq 42 another argument "hello, world!"
-  > toEq called with 4 arguments: 42 another argument hello, world!
+  > # toEq called with 4 arguments: 42 another argument hello, world!
   > ```
 
 But what about the `$answer` variable which is the **"actual result"**?
@@ -198,22 +198,22 @@ Now, try running the code again. This time, set a value for `$answer`:
   $ answer="This is the actual result"
 
   $ expect "$answer" toEq 42
-  toEq called with 1 arguments: 42
-  declare -- EXPECT_ACTUAL_RESULT="This is the actual result"
-  declare -a EXPECT_BLOCK=()
-  declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
-  declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
-  declare -- EXPECT_BLOCK_TYPE=""
-  declare -- EXPECT_MATCHER_NAME="toEq"
-  declare -- EXPECT_NOT=""
-  declare -- EXPECT_VERSION="0.2.0"
+  # toEq called with 1 arguments: 42
+  # declare -- EXPECT_ACTUAL_RESULT="This is the actual result"
+  # declare -a EXPECT_BLOCK=()
+  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
+  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_TYPE=""
+  # declare -- EXPECT_MATCHER_NAME="toEq"
+  # declare -- EXPECT_NOT=""
+  # declare -- EXPECT_VERSION="0.2.0"
   ```
 
   > A summary of all `EXPECT_` variables is [found below](#foo) under [Supported `EXPECT` variables](#foo)
 
 As you can see, there a number of `EXPECT_` variables available to the function.
 
-The **"actual result"** is available in a variable named `EXPECT_ACTUAL_RESULT`:
+The **"actual result"** is available in a variable named **`EXPECT_ACTUAL_RESULT`**:
 
 - ```
   declare -- EXPECT_ACTUAL_RESULT="This is the actual result"
@@ -221,7 +221,9 @@ The **"actual result"** is available in a variable named `EXPECT_ACTUAL_RESULT`:
 
 ## Compare actual and expected results
 
-With access to both the **"expected result"** and **"actual result"**, update the function to compare them:
+The `toEq` matcher function now has access to both the **"expected result"** and **"actual result"**.
+
+Update the function to compare the expected and actual retults:
 
 - ```sh
   expect.matcher.toEq() {
@@ -241,23 +243,45 @@ Now, run the function again providing a variety of expected and actual values:
 
 - ```sh
   $ expect 42 toEq 42
-  They match! This matcher should pass.
+  # They match! This matcher should pass.
 
   $ expect 42 toEq 42-42-42-42
-  Oh noes! They are not the same! This matcher should fail.
+  # Oh noes! They are not the same! This matcher should fail.
   ```
 
 ## Write failure messages
 
-It would be more useful if, when the function failed, it provided more info.
+It would be more useful if the matcher provided more info about failures when they occur.
 
 Update the function to print out the **"actual result"** and the **"expected result"** when it fails:
 
 - ```sh
-  ...
+  expect.matcher.toEq() {
+    local expectedResult="$1"
+    local actualResult="$EXPECT_ACTUAL_RESULT"
+
+    if [ "$actualResult" = "$expectedResult" ]
+    then
+      echo "They match! I guess we don't need to print anything when it passes..."
+    else
+      echo -e "Expected values to equal.\nActual: $actualResult\nExpected: $expectedResult"
+    fi
+  }
   ```
 
-XXX
+Now, run the function again providing a variety of expected and actual values:
+
+- ```sh
+  $ expect 42 toEq 42
+  # They match! I guess we don't need to print anything when it passes..
+
+  $ expect 42 toEq 42-42-42-42
+  # Expected values to equal.
+  # Actual: 42
+  # Expected: 42-42-42-42
+  ```
+
+That's more useful!
 
 ## Negating with 'not'
 

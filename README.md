@@ -532,13 +532,13 @@ By default, you can wrap your block in any number of curly braces or brackets:
 
 This provides flexibility, e.g. if you want `{` and `{{` to behave differently.
 
-> ### Example
->
-> The matchers which come with `expect.sh` all support using `{` or `{{`
->
-> When `{` is used, the block is executed
->
-> When `{{` is used, the block is executed _in a subshell_
+### Example
+
+The matchers which come with `expect.sh` all support using `{` or `{{`
+
+When `{` is used, the block is executed
+
+When `{{` is used, the block is executed _in a subshell_
 
 ## Support block syntax
 

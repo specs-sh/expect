@@ -14,14 +14,14 @@ expect.matcher.toOutput() {
   local ___expect___toOutput_STDERR_file="$( mktemp )"
 
   local ___expect___toOutput_RunInSubshell_
-  local ___expect___toOutput_RunInSubshell_ExitCode
+  local ___expect___toOutput_ExitCode
   if [ "$___expect___toOutput_RunInSubshell" = "true" ]
   then
     ___expect___toOutput_RunInSubshell_="$( "${EXPECT_BLOCK[@]}" 1>"$___expect___toOutput_STDOUT_file" 2>"$___expect___toOutput_STDERR_file" )"
-    ___expect___toOutput_RunInSubshell_ExitCode=$?
+    ___expect___toOutput_ExitCode=$?
   else
     "${EXPECT_BLOCK[@]}" 1>"$___expect___toOutput_STDOUT_file" 2>"$___expect___toOutput_STDERR_file"
-    ___expect___toOutput_RunInSubshell_ExitCode=$?
+    ___expect___toOutput_ExitCode=$?
   fi
 
   local ___expect___toOutput_STDOUT="$( cat "$___expect___toOutput_STDOUT_file" )"
@@ -55,7 +55,7 @@ expect.matcher.toOutput() {
           return 1
         fi
       fi
-    # STDERR
+    # STDERR:
     elif [ -n "$___expect___toOutput_Check_STDERR" ]
     then
       if [ -z "$EXPECT_NOT" ]

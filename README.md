@@ -432,9 +432,7 @@ Now, update the **`expect.matcher.toEq()`** function to call `expect.fail` on fa
       # If they are equal, show a failure message.
       if [ "$actualResult" = "$expectedResult" ]
       then
-        expect.fail "Expected values not to equal" \
-          "Actual: $actualResult"                  \
-          "Not Expected: $expectedResult"
+        expect.fail "Expected values not to equal\nActual: $actualResult\nNot Expected: $expectedResult"
       fi
     else
       # Expect values to be equal.
@@ -442,9 +440,7 @@ Now, update the **`expect.matcher.toEq()`** function to call `expect.fail` on fa
       # If they are not equal, show a failure message.
       if [ "$actualResult" != "$expectedResult" ]
       then
-        expect.fail "Expected values to equal" \
-          "Actual: $actualResult"              \
-          "Expected: $expectedResult"
+        expect.fail "Expected values to equal\nActual: $actualResult\nExpected: $expectedResult"
       fi
     fi
   }

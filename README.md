@@ -153,12 +153,14 @@ Wonderful! This time the command did not fail and the `toEq` function was called
 
 As you can see, the `toEq` function received one positional argument: `42`
 
-> Try passing additional arguments to `toEq`
->
-> ```sh
-> $ expect "$answer" toEq 42 another argument "hello, world!"
-> toEq called with 4 arguments: 42 another argument hello, world!
-> ```
+- > ##### Optional
+  >
+  > Try passing additional arguments to `toEq`
+  >
+  > ```sh
+  > $ expect "$answer" toEq 42 another argument "hello, world!"
+  > toEq called with 4 arguments: 42 another argument hello, world!
+  > ```
 
 But what about `$result`?
 

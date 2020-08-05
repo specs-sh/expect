@@ -162,14 +162,46 @@ As you can see, the `toEq` function received one positional argument: `42`
   > toEq called with 4 arguments: 42 another argument hello, world!
   > ```
 
-But what about `$result`?
+But what about the `$answer` variable which is the "actual result"?
 
-...
+Rather than being passed as a positional argument, the "actual result" is available to matcher functions as a pre-defined variable.
 
-Next, add that function. To start with, just print out two things:
+#### `EXPECT_` variables
+
+Next, update the **`expect.matcher.toEq()`** function to print two things:
 
 1.  Information about the arguments being passed to the function
 2.  All of the currently defined variables which start with `EXPECT_`
+
+    ```sh
+    expect.matcher.toEq() {
+      echo "toEq called with $# arguments: $*"
+      declare -p | grep EXPECT_
+    }
+    ```
+
+    > You can redefine the above function right in your BASH shell, just copy/paste it in! It will replace the previous function definition.
+
+Now, try running the code again. This time, set a value for `$answer`:
+
+- ```
+  $ source "expect.sh"
+
+  $ answer="The result we want to verify equals 42"
+
+  $ expect "$answer" toEq 42
+  toEq called with 1 arguments: 42
+  declare -- EXPECT_ACTUAL_RESULT="The result we want to verify equals 42"
+  declare -a EXPECT_BLOCK=()
+  declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
+  declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  declare -- EXPECT_BLOCK_TYPE=""
+  declare -- EXPECT_MATCHER_NAME="toEq"
+  declare -- EXPECT_NOT=""
+  declare -- EXPECT_VERSION="0.2.0"
+  ```
+
+...
 
 ### Exiting on failure
 

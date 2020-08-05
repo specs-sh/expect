@@ -20,6 +20,8 @@ expect.matcher.toFail() {
 
   local ___expect___STDOUT="$( cat "$___expect___STDOUT_file" )"
   local ___expect___STDERR="$( cat "$___expect___STDERR_file" )"
+  ___expect___STDOUT="${___expect___STDOUT/%"\n"}"
+  ___expect___STDERR="${___expect___STDERR/%"\n"}"
   local ___expect___OUTPUT="${___expect___STDOUT}\n${___expect___STDERR}"
   local ___expect___STDOUT_actual="$( echo -e "$___expect___STDOUT" | cat -A )"
   local ___expect___STDERR_actual="$( echo -e "$___expect___STDERR" | cat -A )"

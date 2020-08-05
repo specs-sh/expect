@@ -20,14 +20,6 @@ expect.matcher.toContain() {
 
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
-    local ___expect___Check_STDOUT=""
-    local ___expect___Check_STDERR=""
-
-    [ "$1" = "toStdout" ] || [ "$1" = "toSTDOUT" ] && { ___expect___Check_STDOUT=true; shift; }
-    [ "$1" = "toStderr" ] || [ "$1" = "toSTDERR" ] && { ___expect___Check_STDERR=true; shift; }
-
-    [ $# -lt 1 ] && { echo "toOutput expects 1 or more arguments, received $#" >&2; exit 1; }
-
     local ___expect___RunInSubshell=""
     [ "$EXPECT_BLOCK_TYPE" = "{{" ] && ___expect___RunInSubshell=true
 
@@ -61,7 +53,7 @@ expect.matcher.toContain() {
   
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
-    actualResult="$___expect___OUTPUT"
+    actualResult="${___expect___OUTPUT/%"\n"}"
   else
     actualResult="$EXPECT_ACTUAL_RESULT"
   fi

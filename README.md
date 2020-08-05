@@ -142,12 +142,12 @@ To start with, just print out one thing:
 
 Now, try running the code again:
 
-```
-$ source "expect.sh"
+- ```
+  $ source "expect.sh"
 
-$ expect "$answer" toEq 42
-toEq called with 1 arguments: 42
-```
+  $ expect "$answer" toEq 42
+  toEq called with 1 arguments: 42
+  ```
 
 Wonderful! This time the command did not fail and the `toEq` function was called.
 

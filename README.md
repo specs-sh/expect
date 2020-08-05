@@ -180,7 +180,8 @@ Next, update the **`expect.matcher.toEq()`** function to print two things:
     }
     ```
 
-    > You can redefine the above function right in your BASH shell, just copy/paste it in! It will replace the previous function definition.
+    > You can redefine the above function right in your BASH shell, just copy/paste it in!  
+    > It will replace the previous function definition.
 
 Now, try running the code again. This time, set a value for `$answer`:
 

@@ -209,6 +209,8 @@ Now, try running the code again. This time, set a value for `$answer`:
   declare -- EXPECT_VERSION="0.2.0"
   ```
 
+  > A summary of all `EXPECT_` variables is [found below](#foo) under [Supported `EXPECT` variables](#foo)
+
 As you can see, there a number of `EXPECT_` variables available to the function.
 
 The **"actual result"** is available in a variable named `EXPECT_ACTUAL_RESULT`:
@@ -216,8 +218,6 @@ The **"actual result"** is available in a variable named `EXPECT_ACTUAL_RESULT`:
 - ```
   declare -- EXPECT_ACTUAL_RESULT="This is the actual result"
   ```
-
-> A summary of all `EXPECT_` variables is [found below](#foo) under [Supported `EXPECT` variables](#foo)
 
 ## Compare actual and expected results
 

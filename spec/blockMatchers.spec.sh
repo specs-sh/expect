@@ -23,11 +23,10 @@
 }
 
 expect.matcher.toDoSomething() {
-  block="${BLOCK[@]}"
-  blockType="$BLOCK_TYPE"
-  not="$NOT"
-  name="$MATCHER_NAME"
-  fn="$MATCHER_FUNCTION"
+  block="${EXPECT_BLOCK[@]}"
+  blockType="$EXPECT_BLOCK_TYPE"
+  not="$EXPECT_NOT"
+  name="$EXPECT_MATCHER_NAME"
 }
 
 @spec.blockMatcher.block_available_to_matcher_as_BLOCK() {
@@ -39,7 +38,7 @@ expect.matcher.toDoSomething() {
   assert [ "$block" = "hello I am in the block" ]
 }
 
-@spec.blockMatcher.type_available_to_matcher_as_BLOCK_TYPE() {
+@spec.blockMatcher.type_available_to_matcher_as_EXPECT_BLOCK_TYPE() {
   local blockType=""
   assert [ "$blockType" = "" ]
 
@@ -65,22 +64,13 @@ expect.matcher.toDoSomething() {
   assert [ -n "$not" ]
 }
 
-@spec.blockMatcher.MATCHER_NAME_is_available() {
+@spec.blockMatcher.EXPECT_MATCHER_NAME_is_available() {
   local name=""
   assert [ -z "$name" ]
 
   expect { hello I am in the block } toDoSomething
 
   assert [ "$name" = "toDoSomething" ]
-}
-
-@spec.blockMatcher.MATCHER_FUNCTION_is_available() {
-  local fn=""
-  assert [ -z "$fn" ]
-
-  expect { hello I am in the block } toDoSomething
-
-  assert [ "$fn" = "expect.matcher.toDoSomething" ]
 }
 
 @spec.blockMatcher.can_customize_block_start_and_end_symbols() {
@@ -96,35 +86,4 @@ expect.matcher.toDoSomething() {
 
   assert [ "$block" = "Haha this works" ]
   assert [ "$blockType" = "@@" ]
-}
-
-# move into another file
-
-## TODO !!! CHANGE BLOCK and NOT to EXPECT_BLOCK and EXPECT_NOT --- shared scope with things we run!!!
-
-custom.toBeCustom() {
-  foo="Well howdy! I'm pretty custom. Block is: ${BLOCK[@]}"
-}
-
-custom.not.toBeCustom() {
-  foo="Hey, look at that! A special 'not' version was called! Block is: ${BLOCK[@]}"
-}
-
-@pending.matchers.can_customize_matcher_function_name_lookup() {
-  local foo=""
-  assert [ -z "$foo" ]
-
-  EXPECT_MATCHER_
-
-  # more complex
-  EXPECT_MATCHER_FUNCTION_EVAL="
-    if [ -n \"$NOT\" ]
-    then
-      MATCHER_FUNCTION=\"custom.not.\$MATCHER_NAME\"
-    else
-      MATCHER_FUNCTION=\"custom.\$MATCHER_NAME\"
-    fi
-  "
-
-  expect { something in the block } toBeCustom
 }

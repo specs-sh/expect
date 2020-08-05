@@ -103,7 +103,7 @@ There are pros and cons to each, but at the end of the day it comes down to user
 
 ### Writing a matcher function
 
-Let's implement the following `toEq` "matcher function"
+Let's implement the following **`toEq`** "matcher function"
 
 ```sh
 expect "$answer" toEq 42

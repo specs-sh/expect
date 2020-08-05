@@ -1,16 +1,12 @@
 expect() {
   [ $# -eq 0 ] && { echo "Missing required argument for 'expect': actual value or { code block } or {{ subshell code block }}" >&2; return 1; }
-
   EXPECT_VERSION=0.2.0
   [ $# -eq 1 ] && [ "$1" = "--version" ] && { echo "expect version $EXPECT_VERSION"; return 0; }
-
   [ -z "$EXPECT_BLOCK_START_PATTERN" ] && local EXPECT_BLOCK_START_PATTERN="^[\[{]+$"
   [ -z "$EXPECT_BLOCK_END_PATTERN"   ] && local EXPECT_BLOCK_END_PATTERN="^[\]}]+$"
-
   local EXPECT_BLOCK_TYPE=""
   local EXPECT_ACTUAL_RESULT=""
   declare -a EXPECT_BLOCK=()
-
   if [[ "$1" =~ $EXPECT_BLOCK_START_PATTERN ]]
   then
     EXPECT_BLOCK_TYPE="$1"

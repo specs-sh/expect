@@ -477,7 +477,7 @@ In your shell, set `EXPECTATION_FAILED="return 1"` and then try the function:
   # 1
   ```
 
-**Note:** your function will `return` the exit status of the last command or function executed.
+**Reminder:** your function will `return` the exit status of the last command or function executed.
 
 - If you plan to run any commands after you call `expect.fail()`, it is best practice to end your matcher with `return 0`
 - ```sh

@@ -49,6 +49,7 @@ expect { deployed --configs } toContain "$config"
 - [Negating with 'not'](#negagting-with-not)
 - [Exit on failure](#exiting-on-failure)
 - [Block values](#block-values)
+- [Support block syntax](#block-values)
 - [Customizing block styles](#customizing-block-styles)
 - [Customizing function names](#customizing-function-names)
 - [Supported `EXPECT` variables](#negagting-with-not)
@@ -476,19 +477,70 @@ In your shell, set `EXPECTATION_FAILED="return 1"` and then try the function:
   # 1
   ```
 
+**Note:** your function will `return` the exit status of the last command or function executed.
+
+- If you plan to run any commands after you call `expect.fail()`, it is best practice to end your matcher with `return 0`
+- ```sh
+  expect.matcher.toEq() {
+    local expectedResult="$1"
+    local actualResult="$EXPECT_ACTUAL_RESULT"
+
+    if [ "$EXPECT_NOT" = "true" ]
+    then
+      # Expect values NOT to be equal.
+      # <...>
+    else
+      # Expect values to be equal.
+      # <...>
+    fi
+
+    return 0
+  }
+  ```
+
 ## Block values
 
-XXX
+One limitation of using `expect "some value" toEq "another value"` is:
 
-limitation, one actual result argument
+- The **"actual result"** can only be _ony value_, e.g. "some value"
 
-what if you need multiple values?
+But what if the value you are testing against is multiple values?
 
-could try a 'string' to run but problems
+- You want to `expect "$@" toEq something"` (in BASH `"$@"` expands to multiple values)
+- You want a command and arguments which your matcher will execute
 
-so use a block
+If you want your matcher to take a command and arguments, you could try:
 
-Note: these symbols are native to BASH and cannot be used <> `` '' "" () but {} and [] and others are free to be used
+- `expect "command arg1 arg2" toRunSuccessfully`
+
+But this runs into problems if you need to quote argument values:
+
+- `expect "command 'Hello World' 'Value with spaces'" toRunSuccessfully`
+
+To solve this problem, `expect` provides **blocks**:
+
+- `expect { a list of things } toMeetMyExpectations`
+
+By default, you can wrap your block in any number of curly braces or brackets:
+
+- `expect { a list of things } toMeetMyExpectations`
+- `expect {{ a list of things }} toMeetMyExpectations`
+- `expect {{{ a list of things }}} toMeetMyExpectations`
+- `expect [ a list of things ] toMeetMyExpectations`
+- `expect [[ a list of things ]] toMeetMyExpectations`
+- `expect [[[ a list of things ]]] toMeetMyExpectations`
+
+This provides flexibility, e.g. if you want `{` and `{{` to behave differently.
+
+> ### Example
+>
+> The matchers which come with `expect.sh` all support using `{` or `{{`
+>
+> When `{` is used, the block is executed
+>
+> When `{{` is used, the block is executed _in a subshell_
+
+## Support block syntax
 
 ## Customize block styles
 

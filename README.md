@@ -111,12 +111,12 @@ expect "$answer" toEq 42
 
 First, try running the above code _without_ implementing the function:
 
-```sh
-$ source "expect.sh"
+- ```sh
+  $ source "expect.sh"
 
-$ expect "$answer" toEq 42
-expect.matcher.toEq: command not found
-```
+  $ expect "$answer" toEq 42
+  expect.matcher.toEq: command not found
+  ```
 
 You'll see an error: **`expect.matcher.toEq: command not found`**
 

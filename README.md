@@ -27,7 +27,7 @@ expect "$config" toBeValidConfig
 
 expect { deployed --configs } not toContain "$config"
 
-expect { deploy "$config" } toDeploySuccessfully
+expect {{ deploy "$config" }} toOutput "Successfully deployed $config"
 
 expect { deployed --configs } toContain "$config"
 ```

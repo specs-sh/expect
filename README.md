@@ -329,7 +329,7 @@ To see how to support the `not` case, print out the `EXPECT` variables again:
 
 When the `not` keyword comes before the name of the matcher `EXPECT_NOT` is set to `"true"`.
 
-Update the function to support the `not` case:
+Update the function to support when `not` is used:
 
 - ```sh
   expect.matcher.toEq() {

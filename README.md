@@ -506,8 +506,8 @@ One limitation of using `expect "some value" toEq "another value"` is:
 
 But what if the value you are testing against is multiple values?
 
-- You want to `expect "$@" toEq something"` (in BASH `"$@"` expands to multiple values)
-- You want a command and arguments which your matcher will execute
+- e.g. You want to `expect "$@" toEq something"` (in BASH `"$@"` expands to multiple values)
+- e.g. You want a command and arguments which your matcher will execute
 
 If you want your matcher to take a command and arguments, you could try:
 

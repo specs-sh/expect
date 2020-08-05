@@ -20,4 +20,17 @@ source "expect.sh"
 
 The `expect` function provides a simple framework for authoring and using "expectations"
 
+> ```sh
+> local filename="file.txt"
+>
+> expect { ls } toContain "$filename"
+> expect { cat "$filename" } not toBeEmpty
+>
+> rm "$filename"
+>
+> expect $? toEqual 0
+>
+> expect { ls } not toContain "$filename"
+> ```
+
 ---

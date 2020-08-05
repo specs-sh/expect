@@ -31,15 +31,11 @@ expect() {
     EXPECT_ACTUAL_RESULT="$1"
     shift
   fi
-
   local EXPECT_NOT=""
   [ "$1" = "not" ] && { EXPECT_NOT=true; shift; }
-
   local EXPECT_MATCHER_NAME="$1"
   shift
-
   local ___expect___ExpectedMatcherFunction="expect.matcher.$EXPECT_MATCHER_NAME"
-
   if [ -n "$EXPECT_MATCHER_FUNCTION" ]
   then
     "$EXPECT_MATCHER_FUNCTION" "$@"

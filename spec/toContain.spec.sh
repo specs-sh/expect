@@ -23,11 +23,17 @@ import @expect/matchers/toContain
   assert stderrContains "Actual text: 'Goodnight, moon!'"
   assert stderrContains "Expected text: 'world'"
 
-  assert run -- expect { echo Hi There } toContain Hi There
-  refute run -- expect { echo Hi There } not toContain Hi There
+  assert run -- expect { echo "Hi There" } toContain Hi There
+  refute run -- expect { echo "Hi There" } not toContain Hi There
 
-  assert run -- expect { echo Hi There } not toContain Foo Bar
-  refute run -- expect { echo Hi There } toContain Foo Bar
+  assert run -- expect { echo "Hi There" } not toContain Foo Bar
+  refute run -- expect { echo "Hi There" } toContain Foo Bar
+
+  assert run -- expect {{ echo "Hi There" }} toContain Hi There
+  refute run -- expect {{ echo "Hi There" }} not toContain Hi There
+
+  assert run -- expect {{ echo "Hi There" }} not toContain Foo Bar
+  refute run -- expect {{ echo "Hi There" }} toContain Foo Bar
 }
 
 @spec.toContain.newlines_and_tabs_etc() {

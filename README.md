@@ -23,17 +23,20 @@ The `expect` function provides a simple framework for authoring and using "expec
 > #### Usage Example
 >
 > ```sh
-> local filename="file.txt"
+> local config="file.conf"
 >
-> expect { ls } toContain "$filename"
-> expect { cat "$filename" } not toBeEmpty
+> expect "$config" toBeValidConfig
 >
-> rm "$filename"
+> expect { deployed --configs } not toContain "$config"
 >
-> expect $? toEqual 0
+> expect { deploy "$config" } toDeploySuccessfully
 >
-> expect { ls } not toContain "$filename"
+> expect { deployed --configs } toContain "$config"
 > ```
+
+All applications and scripts are different.
+
+Please use this to implement your own domain-specific expectations for your tests.
 
 ---
 

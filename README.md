@@ -147,7 +147,7 @@ To start with, just print out one thing:
 
 Now, try running the code again:
 
-- ```
+- ```sh
   $ source "expect.sh"
 
   $ expect "$answer" toEq 42
@@ -192,7 +192,7 @@ Next, update the **`expect.matcher.toEq()`** function to print two things:
 
 Now, try running the code again. This time, set a value for `$answer`:
 
-- ```
+- ```sh
   $ source "expect.sh"
 
   $ answer="This is the actual result"
@@ -215,7 +215,7 @@ As you can see, there a number of `EXPECT_` variables available to the function.
 
 The **"actual result"** is available in a variable named **`EXPECT_ACTUAL_RESULT`**:
 
-- ```
+- ```sh
   declare -- EXPECT_ACTUAL_RESULT="This is the actual result"
   ```
 
@@ -264,7 +264,9 @@ Update the function to print out the **"actual result"** and the **"expected res
     then
       echo "They match! I guess we don't need to print anything when it passes..."
     else
-      echo -e "Expected values to equal.\nActual: $actualResult\nExpected: $expectedResult"
+      echo "Expected values to equal"
+      echo "Actual: $actualResult"
+      echo "Expected: $expectedResult"
     fi
   }
   ```
@@ -276,7 +278,7 @@ Now, run the function again providing a variety of expected and actual values:
   # They match! I guess we don't need to print anything when it passes..
 
   $ expect 42 toEq 42-42-42-42
-  # Expected values to equal.
+  # Expected values to equal
   # Actual: 42
   # Expected: 42-42-42-42
   ```
@@ -285,11 +287,103 @@ That's more useful!
 
 ## Negating with 'not'
 
-XXX
+What about handing this use case?
+
+```sh
+$ expect "$answer" not toEq 42
+```
+
+Right now, the `expect.matcher.toEq()` function does not support `not`.
+
+To see how to support the `not` case, print out the `EXPECT` variables again:
+
+- ```sh
+  expect.matcher.toEq() {
+    echo "toEq called with $# arguments: $*"
+    declare -p | grep EXPECT_
+  }
+  ```
+- ```sh
+  $ expect "Hello" toEq "World"
+  # toEq called with 1 arguments: World
+  # declare -- EXPECT_ACTUAL_RESULT="Hello"
+  # declare -a EXPECT_BLOCK=()
+  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
+  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_TYPE=""
+  # declare -- EXPECT_MATCHER_NAME="toEq"
+  # declare -- EXPECT_NOT=""
+  # declare -- EXPECT_VERSION="0.2.0"
+
+  $ expect "Hello" not toEq "World"
+  # toEq called with 1 arguments: World
+  # declare -- EXPECT_ACTUAL_RESULT="Hello"
+  # declare -a EXPECT_BLOCK=()
+  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
+  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_TYPE=""
+  # declare -- EXPECT_MATCHER_NAME="toEq"
+  # declare -- EXPECT_NOT="true"
+  # declare -- EXPECT_VERSION="0.2.0"
+  ```
+
+When the `not` keyword comes before the name of the matcher `EXPECT_NOT` is set to `"true"`.
+
+Update the function to support the `not` case:
+
+- ```sh
+  expect.matcher.toEq() {
+    local expectedResult="$1"
+    local actualResult="$EXPECT_ACTUAL_RESULT"
+
+    if [ "$EXPECT_NOT" = "true" ]
+    then
+      # Expect values NOT to be equal.
+      #
+      # If they are equal, show a failure message.
+      if [ "$actualResult" = "$expectedResult" ]
+      then
+        echo "Expected values not to equal"
+        echo "Actual: $actualResult"
+        echo "Not Expected: $expectedResult"
+      fi
+    else
+      # Expect values to be equal.
+      #
+      # If they are not equal, show a failure message.
+      if [ "$actualResult" != "$expectedResult" ]
+      then
+        echo "Expected values to equal"
+        echo "Actual: $actualResult"
+        echo "Expected: $expectedResult"
+      fi
+    fi
+  }
+  ```
+
+Now run the function with and without the `not` keyword:
+
+- ```sh
+  $ expect 42 toEq 42
+
+  $ expect 42 toEq 42-42-42
+  # Expected values to equal
+  # Actual: 42
+  # Expected: 42-42-42
+
+  $ expect 42 not toEq 42-42-42
+
+  $ expect 42 not toEq 42
+  # Expected values not to equal
+  # Actual: 42
+  # Expected: 42
+  ```
+
+Wonderful! Looking great!
+
+However, right now, a test would not fail because the function does not `return 1` or `exit 1`.
 
 ## Exit on failure
-
-XXX
 
 ## Block values
 

@@ -164,7 +164,7 @@ As you can see, the `toEq` function received one positional argument: `42`
 
 But what about the `$answer` variable which is the "actual result"?
 
-Rather than being passed as a positional argument, the "actual result" is available to matcher functions as a pre-defined variable.
+Instead of being provided as a positional argument, the "actual result" is available as a pre-defined variable.
 
 ## `EXPECT_` variables
 

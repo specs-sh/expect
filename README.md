@@ -243,10 +243,18 @@ Now, run the function again providing a variety of expected and actual values:
   They match! This matcher should pass.
 
   $ expect 42 toEq 42-42-42-42
-  Oh noes! They are not the same! This matcher should fail.2
+  Oh noes! They are not the same! This matcher should fail.
   ```
 
 ## Write failure messages
+
+It would be more useful if, when the function failed, it provided more info.
+
+Update the function to print out the **"actual result"** and the **"expected result"** when it fails:
+
+- ```sh
+  ...
+  ```
 
 XXX
 

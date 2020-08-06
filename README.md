@@ -830,17 +830,17 @@ You can do matcher lookup however best works for you.
 
 ## Supported `EXPECT` variables
 
-| Variable Name              | Description                                                                    |
-| -------------------------- | ------------------------------------------------------------------------------ |
-| EXPECT_VERSION             | Returns version of `expect`                                                    |
-| EXPECT_MATCHER_NAME        | Name of matcher invoked, e.g. `toEq`                                           |
-| EXPECT_NOT                 | Set to `"true"` when `not` precedes matcher                                    |
-| EXPECT_ACTUAL_RESULT       | Contains actual result (_blank value if a block was provided_)                 |
-| EXPECT_BLOCK               | BASH Array containing block (_empty array if no block provided_)               |
-| EXPECT_BLOCK_TYPE          | Opening character used in block, e.g. `{` (_blank value is no block provided_) |
-| EXPECT_BLOCK_END_PATTERN   | Custom BASH regex pattern for detecting block start                            |
-| EXPECT_BLOCK_START_PATTERN | Custom BASH regex pattern for detecting block close                            |
-| EXPECT_MATCHER_FUNCTION    | If provided, `expect` will invoke this instead of `expect.matcher.[name]`      |
+| Variable Name              | Description                                                                 |
+| -------------------------- | --------------------------------------------------------------------------- |
+| EXPECT_VERSION             | Returns version of `expect`                                                 |
+| EXPECT_MATCHER_NAME        | Name of matcher invoked, e.g. `toEq`                                        |
+| EXPECT_NOT                 | Set to `"true"` when `not` precedes matcher                                 |
+| EXPECT_ACTUAL_RESULT       | Contains actual result (_blank value if a block was provided_)              |
+| EXPECT_BLOCK               | BASH Array containing block (_empty array if no block provided_)            |
+| EXPECT_BLOCK_TYPE          | Opening block character used, e.g. `{` (_blank value is no block provided_) |
+| EXPECT_BLOCK_END_PATTERN   | Custom BASH regex pattern for detecting block start                         |
+| EXPECT_BLOCK_START_PATTERN | Custom BASH regex pattern for detecting block close                         |
+| EXPECT_MATCHER_FUNCTION    | If provided, `expect` will invoke this instead of `expect.matcher.[name]`   |
 
 ---
 

@@ -658,11 +658,10 @@ expect.matcher.toEq() {
     # It is up to you. I will store the $? exit code but not use it.
     local ___expect___toEq_ReturnOrExitCode
 
-
     if [ "$___expect___toEq_RunInSubshell" = "true" ]
     then
       # Run the command in a $( subshell ) piping STDERR to STDOUT so they will be combined
-
+      #
       # Gotcha: this will NOT WORK if you try `local output="$( subshell )"`, the $? will not be correct.
       #         if you want to get the $? of the command, you need to define the local on a previous line.
       #
@@ -671,24 +670,12 @@ expect.matcher.toEq() {
       # Get the exit code or return code of the command or function that was run
       ___expect___toEq_ReturnOrExitCode=$?
     else
-      # Run the command regularly, not in a subshell, piping STDERR to STDOUT so they will be combined
-
-      # To support getting the output of a command run locally (no subshell), store output in file
-      local ___expect___toEq_outputTempFile="$( mktemp )"
-
-      "${EXPECT_BLOCK[@]}" 2>&1 >"$___expect___toEq_outputTempFile"
-
-      # Get the exit code or return code of the command or function that was run
-      ___expect___toEq_ReturnOrExitCode=$?
-
-      # Populate the result variable by cat'ing the temporary file (which will add an extra newline)
-      ___expect___toEq_ActualResult="$( cat "$___expect___toEq_outputTempFile" )"
-
-      # Remove the extra newline
-      ___expect___toEq_ActualResult="${___expect___toEq_ActualResult/%"\n"}"
-
-      # Cleanup the tempfile
-      rm -rf "$___expect___toEq_outputTempFile"
+      # Run the command regularly, not in a subshell, piping STDERR to STDOUT (and piping all to a variable)
+      #
+      # Gotcha: if you want to store STDOUT and STDERR separately, you need to use temporary files
+      #         e.g. using mktemp and then you can send 1>"$stdoutFile" and 2>"$stderrFile"
+      #
+      { read -d '' ___expect___toEq_ActualResult; }< <( "${EXPECT_BLOCK[@]}" 2>&1 )
     fi
   fi
 

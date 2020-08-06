@@ -634,7 +634,6 @@ For the block syntax, we will combine the command's `STDOUT` and `STDERR` and co
 #
 # see the matchers that come with expect.sh for similar examples
 ##
-
 expect.matcher.toEq() {
   # By default, use the "actual result" provided by this syntax: expect "actual result" toEq "something"
   local ___expect___toEq_ActualResult="$EXPECT_ACTUAL_RESULT"
@@ -666,7 +665,7 @@ expect.matcher.toEq() {
       # Gotcha: this will NOT WORK if you try `local output="$( subshell )"`, the $? will not be correct.
       #         if you want to get the $? of the command, you need to define the local on a previous line.
       #
-      ___expect___toEq_ActualResult="$( "$@" 2>&1 )"
+      ___expect___toEq_ActualResult="$( "${EXPECT_BLOCK[@]}" 2>&1 )"
 
       # Get the exit code or return code of the command or function that was run
       ___expect___toEq_ReturnOrExitCode=$?
@@ -676,7 +675,7 @@ expect.matcher.toEq() {
       # Gotcha: if you want to store STDOUT and STDERR separately, you need to use temporary files
       #         e.g. using mktemp and then you can send 1>"$stdoutFile" and 2>"$stderrFile"
       #
-      { read -d '' ___expect___toEq_ActualResult; }< <( "$@" 2>&1 )
+      { read -d '' ___expect___toEq_ActualResult; }< <( "${EXPECT_BLOCK[@]}" 2>&1 )
     fi
   fi
 

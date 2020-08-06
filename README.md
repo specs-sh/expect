@@ -709,6 +709,8 @@ expect.matcher.toEq() {
 }
 ```
 
+**Reminder:** before trying this in your local shell, set `EXPECTATION_FAILED="return 1"`
+
 ## Customize block styles
 
 XXX

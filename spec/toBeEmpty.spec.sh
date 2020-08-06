@@ -13,7 +13,8 @@ import @expect/matchers/toBeEmpty
 
   refute run -- expect "foo" toBeEmpty
   assert [ -z "$STDOUT" ]
-  assert [ "$STDERR" = "Expected result to be empty\nActual: 'foo'" ]
+  assert stderrContains "Expected result to be empty"
+  assert stderrContains "Actual: 'foo'"
 
   assert run -- expect { echo "" } toBeEmpty
   assert [ -z "$STDOUT" ]
@@ -21,7 +22,8 @@ import @expect/matchers/toBeEmpty
 
   refute run -- expect { echo "foo" } toBeEmpty
   assert [ -z "$STDOUT" ]
-  assert [ "$STDERR" = "Expected result to be empty\nActual: 'foo'" ]
+  assert stderrContains "Expected result to be empty"
+  assert stderrContains "Actual: 'foo'"
 
   assert run -- expect {{ echo "" }} toBeEmpty
   assert [ -z "$STDOUT" ]
@@ -29,7 +31,8 @@ import @expect/matchers/toBeEmpty
 
   refute run -- expect {{ echo "foo" }} toBeEmpty
   assert [ -z "$STDOUT" ]
-  assert [ "$STDERR" = "Expected result to be empty\nActual: 'foo'" ]
+  assert stderrContains "Expected result to be empty"
+  assert stderrContains "Actual: 'foo'"
 }
 
 
@@ -40,7 +43,8 @@ import @expect/matchers/toBeEmpty
 
   refute run -- expect "" not toBeEmpty
   assert [ -z "$STDOUT" ]
-  assert [ "$STDERR" = "Expected result not to be empty\nActual: ''" ]
+  assert stderrContains "Expected result not to be empty"
+  assert stderrContains "Actual: ''"
 
   assert run -- expect { echo "foo" } not toBeEmpty
   assert [ -z "$STDOUT" ]
@@ -48,7 +52,8 @@ import @expect/matchers/toBeEmpty
 
   refute run -- expect { echo "" } not toBeEmpty
   assert [ -z "$STDOUT" ]
-  assert [ "$STDERR" = "Expected result not to be empty\nActual: ''" ]
+  assert stderrContains "Expected result not to be empty"
+  assert stderrContains "Actual: ''"
 
   assert run -- expect {{ echo "foo" }} not toBeEmpty
   assert [ -z "$STDOUT" ]
@@ -56,5 +61,6 @@ import @expect/matchers/toBeEmpty
 
   refute run -- expect {{ echo "" }} not toBeEmpty
   assert [ -z "$STDOUT" ]
-  assert [ "$STDERR" = "Expected result not to be empty\nActual: ''" ]
+  assert stderrContains "Expected result not to be empty"
+  assert stderrContains "Actual: ''"
 }

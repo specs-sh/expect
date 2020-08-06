@@ -659,7 +659,7 @@ expect.matcher.toEq() {
     local ___expect___toEq_ReturnOrExitCode
 
 
-    if [ "$___expect___toEq_RunInSubshell" ]
+    if [ "$___expect___toEq_RunInSubshell" = "true" ]
     then
       # Run the command in a $( subshell ) piping STDERR to STDOUT so they will be combined
 

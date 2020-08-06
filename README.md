@@ -869,17 +869,17 @@ expect {{ echo "Hello" }} not toEqual "Hello"
 ```sh
 source "matchers/toContain.sh"
 
-# Assert content contains provided text
-expect "Hello, world!" toContain "Hello"
-expect "Hello, world!" not toContain "Hello"
+# Assert content contains all of the provided texts
+expect "Hello, world!" toContain "Hello" "world"
+expect "Hello, world!" not toContain "Hello" "world"
 
 # Runs provided block an asserts content of STDOUT and STDERR combined (does not run in subshell)
-expect { ls } toContain "myFile.txt"
-expect { ls } not toEqual "myFile.txt"
+expect { ls } toContain "myFile.txt" "anotherFile.png"
+expect { ls } not toEqual "myFile.txt" "anotherFile.png"
 
 # Runs provided block an asserts content of STDOUT and STDERR combined (runs in subshell)
-expect {{ ls }} toContain "myFile.txt"
-expect {{ ls }} not toEqual "myFile.txt"
+expect {{ ls }} toContain "myFile.txt" "anotherFile.png"
+expect {{ ls }} not toEqual "myFile.txt" "anotherFile.png"
 ```
 
 ## `toBeEmpty`

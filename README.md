@@ -41,27 +41,27 @@ expect { deployed --configs } toContain "$config"
 ### Authoring Expectations
 
 - [Expectations vs Assertions](#expectations-vs-assertions)
-- [Matcher functions](#writing-your-first)
-- [Write a matcher function](#writing-your-first)
-- [Get the actual result](#writing-your-first)
-- [Compare actual and expected results](#writing-your-first)
-- [Write failure messages](#exiting-on-failure)
-- [Negating with 'not'](#negagting-with-not)
-- [Exit on failure](#exiting-on-failure)
+- [Matcher functions](#matcher-functions)
+- [Write a matcher function](#write-a-matcher-function)
+- [Get the actual result](#get-the-actual-result)
+- [Compare actual and expected results](#compare-actual-and-expected-results)
+- [Write failure messages](#write-failure-messages)
+- [Negating with 'not'](#negating-with-not)
+- [Exit on failure](#exit-on-failure)
 - [Block values](#block-values)
-- [Support block syntax](#block-values)
-- [Customizing block styles](#customizing-block-styles)
-- [Customizing function names](#customizing-function-names)
-- [Supported `EXPECT` variables](#negagting-with-not)
+- [Support block syntax](#support-block-syntax)
+- [Customize block styles](#customize-block-styles)
+- [Customize function names](#customize-function-names)
+- [Supported `EXPECT` variables](#supported-expect-variables)
 
 ### Provided Expectations
 
-- [`toEqual`](#expect)
-- [`toContain`](#expect)
-- [`toBeEmpty`](#expect)
-- [`toMatch`](#expect)
-- [`toOutput`](#expect)
-- [`toFail`](#expect)
+- [`toEqual`](#toequal)
+- [`toContain`](#tocontain)
+- [`toBeEmpty`](#tobeempty)
+- [`toMatch`](#tomatch)
+- [`toOutput`](#tooutput)
+- [`toFail`](#tofail)
 
 ---
 

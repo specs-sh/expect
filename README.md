@@ -296,7 +296,7 @@ $ expect "$answer" not toEq 42
 
 Right now, the `expect.matcher.toEq()` function does not support `not`.
 
-To see how to support the `not` case, print out the `EXPECT` variables again:
+To see how to support using `not`, print out the `EXPECT` variables again:
 
 - ```sh
   expect.matcher.toEq() {
@@ -541,6 +541,49 @@ When `{` is used, the block is executed to get the actual result
 When `{{` is used, the block is executed _in a subshell_ to get the actual result
 
 ## Support block syntax
+
+To see how to support blocks, print out the `EXPECT` variables again:
+
+- ```sh
+  expect.matcher.toEq() {
+    echo "toEq called with $# arguments: $*"
+    declare -p | grep EXPECT_
+  }
+  ```
+- ```sh
+  $ expect "Hello" toEq "something"
+  # toEq called with 1 arguments: something
+  # declare -- EXPECT_ACTUAL_RESULT="Hello"
+  # declare -a EXPECT_BLOCK=()
+  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
+  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_TYPE=""
+  # declare -- EXPECT_MATCHER_NAME="toEq"
+  # declare -- EXPECT_NOT=""
+  # declare -- EXPECT_VERSION="0.2.2"
+
+  $ expect { "Hello" } toEq "something"
+  # toEq called with 1 arguments: something
+  # declare -- EXPECT_ACTUAL_RESULT=""
+  # declare -a EXPECT_BLOCK=([0]="Hello")
+  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
+  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_TYPE="{"
+  # declare -- EXPECT_MATCHER_NAME="toEq"
+  # declare -- EXPECT_NOT=""
+  # declare -- EXPECT_VERSION="0.2.2"
+
+  $ expect { "Hello" there, "how are" you? } toEq "something"
+  # toEq called with 1 arguments: something
+  # declare -- EXPECT_ACTUAL_RESULT=""
+  # declare -a EXPECT_BLOCK=([0]="Hello" [1]="there," [2]="how are" [3]="you?")
+  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
+  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_TYPE="{"
+  # declare -- EXPECT_MATCHER_NAME="toEq"
+  # declare -- EXPECT_NOT=""
+  # declare -- EXPECT_VERSION="0.2.2"
+  ```
 
 ## Customize block styles
 

@@ -658,7 +658,6 @@ expect.matcher.toEq() {
     # It is up to you. I will store the $? exit code but not use it.
     local ___expect___toEq_ReturnOrExitCode
 
-
     if [ "$___expect___toEq_RunInSubshell" = "true" ]
     then
       # Run the command in a $( subshell ) piping STDERR to STDOUT so they will be combined

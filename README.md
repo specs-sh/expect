@@ -746,7 +746,7 @@ echo "$x"
 # hello
 
 # This expectation will pass and it runs locally so it can change variable values
-expect {{ myFunction "haha I changed it" }} toEq "Set x to haha I changed it"
+expect { myFunction "haha I changed it" } toEq "Set x to haha I changed it"
 
 echo "$x"
 # haha I changed it

@@ -755,7 +755,52 @@ echo "$x"
 
 ## Customize block styles
 
-XXX
+The default supported block types are any number of `{` or `[` characters.
+
+> Note: `expect` does not verify that the closing character is the same as the open character
+
+In BASH you cannot/should not try to use any of these:
+
+- `< ... >`
+- `( ... )`
+- `` ` ... ` ``
+- `' ... '`
+- `" ... "`
+
+`expect` uses BASH regular expressions to determine when a block (a) starts (b) is closed
+
+The default regular expressions are:
+
+- Start: `^[\\[{]+\$`
+- End: `^[\\]}]+\$`
+
+You can change these by overriding the `EXPECT_BLOCK_START_PATTERN` and `EXPECT_BLOCK_END_PATTERN` variables.
+
+To also support wrapping blocks in any number of `@` or `%` characters, add these symbols to the `[ ]+` group:
+
+- Start: `^[\\[{@%]+\$`
+- End: `^[\\]}@%]+\$`
+
+You can test this in your shell:
+
+```sh
+EXPECT_BLOCK_START_PATTERN="^[\\[{@%]+\$"
+EXPECT_BLOCK_END_PATTERN="^[\\]}@%]+\$"
+
+
+expect.matcher.toTest() {
+  echo "Hi from 'toTest' here is the $EXPECT_BLOCK_TYPE block:"
+  echo "${EXPECT_BLOCK[@]}"
+}
+
+expect @ Cool I could use this syntax @ toTest
+# Hi from 'toTest' here is the @ block:
+# Cool I could use this syntax
+
+expect %% Or I could use this %% toTest
+# Hi from 'toTest' here is the %% block:
+# Or I could use this
+```
 
 ## Customize function names
 

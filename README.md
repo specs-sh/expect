@@ -848,12 +848,20 @@ You can do matcher lookup however best works for you.
 
 ## `toEqual`
 
-XXX
-
 ```sh
 source "matchers/toEqual.sh"
 
-#
+# Assert content equals provided text
+expect 5 toEqual 5
+expect 5 not toEqual 5
+
+# Runs provided block an asserts content of STDOUT and STDERR combined (does not run in subshell)
+expect { echo "Hello" } toEqual "Hello"
+expect { echo "Hello" } not toEqual "Hello"
+
+# Runs provided block an asserts content of STDOUT and STDERR combined (runs in subshell)
+expect {{ echo "Hello" }} toEqual "Hello"
+expect {{ echo "Hello" }} not toEqual "Hello"
 ```
 
 ## `toContain`
@@ -863,7 +871,17 @@ XXX
 ```sh
 source "matchers/toContain.sh"
 
-#
+# Assert content contains provided text
+expect "Hello, world!" toContain "Hello"
+expect "Hello, world!" not toContain "Hello"
+
+# Runs provided block an asserts content of STDOUT and STDERR combined (does not run in subshell)
+expect { ls } toContain "myFile.txt"
+expect { ls } not toEqual "myFile.txt"
+
+# Runs provided block an asserts content of STDOUT and STDERR combined (runs in subshell)
+expect {{ ls }} toContain "myFile.txt"
+expect {{ ls }} not toEqual "myFile.txt"
 ```
 
 ## `toBeEmpty`

@@ -618,6 +618,14 @@ The `expect.matcher.toEq()` function will support three types of syntax:
 - `expect { command args } toEq "something"` - run command and verify its output
 - `expect {{ command args }} toEq "something"` - run command in subshell and verify its output
 
+For the block syntax, we will combine the command's `STDOUT` and `STDERR` and compare against that.
+
+**Reminder:** functions will have access to all of the variables your matcher defines, including `local` variables!
+
+- When we run `command args`, if it is a function, it will have access to ALL variables
+- Because of this, we will prefix all of our variables with `___expect___toEq_`
+- If we use a variable like `command`, it could cause variable naming collisions with the function's variables
+
 ## Customize block styles
 
 XXX

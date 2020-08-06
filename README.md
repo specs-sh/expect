@@ -612,6 +612,12 @@ This provides one example implementation for how you may want to execute block c
   expect { ls } toEq "file1\nfile2"
   ```
 
+The `expect.matcher.toEq()` function will support three types of syntax:
+
+- `expect "simple value" toEq "something"`
+- `expect { command args } toEq "something"` - run command and verify its output
+- `expect {{ command args }} toEq "something"` - run command in subshell and verify its output
+
 ## Customize block styles
 
 XXX

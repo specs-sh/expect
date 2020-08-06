@@ -905,7 +905,17 @@ expect {{ cat somefile }} not toBeEmpty
 ```sh
 source "matchers/toMatch.sh"
 
-#
+# Assert content matches a provided BASH regex pattern, e.g. [[ "$x" =~ $pattern ]]
+expect "Hello 1.2.3" toMatch '[0-9]\.[0-9]\.[0-9]$'
+expect "Hello 1.2.3" not toMatch '[0-9]\.[0-9]\.[0-9]$'
+
+# Runs provided block an asserts content of STDOUT and STDERR combined (does not run in subshell)
+expect { cat version.txt } toMatch '[0-9]\.[0-9]\.[0-9]$'
+expect { cat version.txt } not toMatch '[0-9]\.[0-9]\.[0-9]$'
+
+# Runs provided block an asserts content of STDOUT and STDERR combined (runs in subshell)
+expect {{ cat version.txt }} toMatch '[0-9]\.[0-9]\.[0-9]$'
+expect {{ cat version.txt }} not toMatch '[0-9]\.[0-9]\.[0-9]$'
 ```
 
 ## `toOutput`

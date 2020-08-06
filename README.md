@@ -949,5 +949,21 @@ source "matchers/toFail.sh"
 
 # Requires { block } syntax
 
-#
+# Assert that the provided command fails
+expect { ls | grep foo } toFail
+
+# Assert that the provided command does not fail
+expect { ls | grep foo } not toFail
+
+# Assert that the provided command with STDERR containing the provided text
+expect { ls | grep foo } toFail "with this in STDERR" "and this"
+
+# Assert that the provided command does not fail and the STDERR does not contain the provided text
+expect { ls | grep foo } not toFail "and STDERR shouldn't contain this" "or this"
+
+# Like other matchers, using {{ two braces }} runs the command in a subshell
+expect {{ ls | grep foo }} toFail
+expect {{ ls | grep foo }} not toFail
+expect {{ ls | grep foo }} toFail "with this in STDERR" "and this"
+expect {{ ls | grep foo }} not toFail "and STDERR shouldn't contain this" "or this"
 ```

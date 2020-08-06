@@ -103,7 +103,7 @@ There are pros and cons to each, but at the end of the day it comes down to user
     > in BASH, this means not "polluting" the global namespace with extra functions
 - Cons:
   - Slightly more complicated to implement additional `expect` matchers
-    > ... as you'll see below! You'll implement a variety of matchers 🍻
+    > ... as you'll see below! You'll fully implement a matcher 🍻
 
 ---
 

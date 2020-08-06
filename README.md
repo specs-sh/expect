@@ -606,7 +606,7 @@ If you want to support executing commands, like the provided matchers, follow th
 
 ## Support block syntax
 
-This provides one example implementation for how you may want to execute block commands, e.g.
+This provides an example implementation for executing block commands in matchers, e.g.
 
 - ```sh
   expect { ls } toEq "file1\nfile2"

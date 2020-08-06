@@ -803,7 +803,30 @@ expect %% Or I could use this %% toTest
 
 ## Customize function names
 
-XXX
+By default, `expect` calls matcher functions in this format: `expect.matcher.[MATCHER_NAME]`
+
+You can completely customize how `expect` finds functions by implementing your own matcher function.
+
+To customize matcher invocation, define a function and set `EXPECT_MATCHER_FUNCTION=yourFunctionName`
+
+```sh
+EXPECT_MATCHER_FUNCTION=myExpectMatcherLookup
+
+myExpectMatcherLookup() {
+  echo "I should invoke a function which implements matcher: $EXPECT_MATCHER_NAME"
+}
+
+expect { hello world } toExecute OK
+# I should invoke a function which implements matcher: toExecute
+```
+
+This adds complete flexibility, you could do anything.
+
+You could use this to implement: `expect { ... } to be equalTo "something"`
+
+Or you could invoke different functions based on whether a block was passed or a simple value.
+
+You can do matcher lookup however best works for you.
 
 ## Supported `EXPECT` variables
 

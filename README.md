@@ -21,7 +21,7 @@ source "expect.sh"
 The `expect` function provides a simple framework for authoring and using "expectations"
 
 ```sh
-local config="file.conf"
+config="file.conf"
 
 expect "$config" toBeValidConfig
 

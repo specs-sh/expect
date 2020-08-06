@@ -540,7 +540,7 @@ When `{` is used, the block is executed to get the actual result
 
 When `{{` is used, the block is executed _in a subshell_ to get the actual result
 
-## Support block syntax
+### `EXPECT_BLOCK`
 
 To see how to support blocks, print out the `EXPECT` variables again:
 
@@ -573,16 +573,43 @@ To see how to support blocks, print out the `EXPECT` variables again:
   # declare -- EXPECT_NOT=""
   # declare -- EXPECT_VERSION="0.2.2"
 
-  $ expect { "Hello" there, "how are" you? } toEq "something"
+  $ expect [[ "Hello" there, "how are" you? ]] toEq "something"
   # toEq called with 1 arguments: something
   # declare -- EXPECT_ACTUAL_RESULT=""
   # declare -a EXPECT_BLOCK=([0]="Hello" [1]="there," [2]="how are" [3]="you?")
   # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
   # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
-  # declare -- EXPECT_BLOCK_TYPE="{"
+  # declare -- EXPECT_BLOCK_TYPE="[["
   # declare -- EXPECT_MATCHER_NAME="toEq"
   # declare -- EXPECT_NOT=""
   # declare -- EXPECT_VERSION="0.2.2"
+  ```
+
+As you can see, the content of the block is available in the `EXPECT_BLOCK` BASH array.
+
+The symbol used for the block is available as `EXPECT_BLOCK_TYPE`, e.g. `{` or `[[`.
+
+If your matcher does not require the block syntax, fail your matcher when a block is provided:
+
+- ```sh
+  expect.matcher.toEq() {
+    # If the block length is greater than one, fail the matcher with a message
+    if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
+    then
+      expect.fail "toEq does not support block syntax"
+    fi
+    # ...
+  }
+  ```
+
+If you want to support executing commands, like the provided matchers, follow the next section.
+
+## Support block syntax
+
+This provides one example implementation for how you may want to execute block commands, e.g.
+
+- ```sh
+  expect { ls } toEq "file1\nfile2"
   ```
 
 ## Customize block styles

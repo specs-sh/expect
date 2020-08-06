@@ -626,6 +626,89 @@ For the block syntax, we will combine the command's `STDOUT` and `STDERR` and co
 - Because of this, we will prefix all of our variables with `___expect___toEq_`
 - If we use a variable like `command`, it could cause variable naming collisions with the function's variables
 
+### The Code
+
+```sh
+##
+# expect.matcher.toEq: with block support
+#
+# see the matchers that come with expect.sh for similar examples
+##
+
+expect.matcher.toEq() {
+  # By default, use the "actual result" provided by this syntax: expect "actual result" toEq "something"
+  local ___expect___toEq_ActualResult="$EXPECT_ACTUAL_RESULT"
+
+  # If a block was provided, use it to get the "actual value" as: STDOUT + STDERR
+  if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
+  then
+    local ___expect___toEq_RunInSubshell=""
+
+    # If {  then do not run in subshell
+    [ "$EXPECT_BLOCK_TYPE" = "{" ] && ___expect___toEq_RunInSubshell="false"
+
+    # If {{ then run in subshell
+    [ "$EXPECT_BLOCK_TYPE" = "{{" ] && ___expect___toEq_RunInSubshell="true"
+
+    # If some other block type, give an error
+    [ "$EXPECT_BLOCK_TYPE" != "{" ] && [ "$EXPECT_BLOCK_TYPE" != "{{" ] && { expect.fail "toEq only supports { or {{ blocks"; return 1; }
+
+    # Do you want to fail the matcher if the command fails?
+    # Or ignore a failure to allow the following example?
+    # > expect { i fail } toEq "STDERR should equal this"
+    # It is up to you. I will store the $? exit code but not use it.
+    local ___expect___toEq_ReturnOrExitCode
+
+    if [ "$___expect___toEq_RunInSubshell" ]
+    then
+      # Run the command in a $( subshell ) piping STDERR to STDOUT so they will be combined
+      #
+      # Gotcha: this will NOT WORK if you try `local output="$( subshell )"`, the $? will not be correct.
+      #         if you want to get the $? of the command, you need to define the local on a previous line.
+      #
+      ___expect___toEq_ActualResult="$( "$@" 2>&1 )"
+
+      # Get the exit code or return code of the command or function that was run
+      ___expect___toEq_ReturnOrExitCode=$?
+    else
+      # Run the command regularly, not in a subshell, piping STDERR to STDOUT (and piping all to a variable)
+      #
+      # Gotcha: if you want to store STDOUT and STDERR separately, you need to use temporary files
+      #         e.g. using mktemp and then you can send 1>"$stdoutFile" and 2>"$stderrFile"
+      #
+      { read -d '' ___expect___toEq_ActualResult; }< <( "$@" 2>&1 )
+    fi
+  fi
+
+  # Now $___expect___toEq_ActualResult has been set from EITHER the block or regular `expect "simple" toEq "something"`
+  #
+  # The regular matcher code can go below! And because the command has already run, no reason to prefix variables
+  #
+  # Copy/pasted from the existing toEq function used in the previous examples
+  local expectedResult="$1"
+  local actualResult="$___expect___toEq_ActualResult"
+
+  if [ "$EXPECT_NOT" = "true" ]
+  then
+    # Expect values NOT to be equal.
+    #
+    # If they are equal, show a failure message.
+    if [ "$actualResult" = "$expectedResult" ]
+    then
+      expect.fail "Expected values not to equal\nActual: $actualResult\nNot Expected: $expectedResult"
+    fi
+  else
+    # Expect values to be equal.
+    #
+    # If they are not equal, show a failure message.
+    if [ "$actualResult" != "$expectedResult" ]
+    then
+      expect.fail "Expected values to equal\nActual: $actualResult\nExpected: $expectedResult"
+    fi
+  fi
+}
+```
+
 ## Customize block styles
 
 XXX

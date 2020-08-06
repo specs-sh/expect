@@ -923,13 +923,31 @@ expect {{ cat version.txt }} not toMatch '[0-9]\.[0-9]\.[0-9]$'
 ```sh
 source "matchers/toOutput.sh"
 
-#
+# Requires { block } syntax
+
+# Assert content is present in STDOUT or STDERR (combined)
+expect { ls } toOutput "should contain this" "and also this"
+expect { ls } not toOutput "should not contain this" "or this"
+
+# Assert content is present in STDOUT (supports either toSTDOUT or toStdout)
+expect { ls } toOutput toSTDOUT "should contain this" "and also this"
+expect { ls } not toOutput toSTDOUT "should not contain this" "or this"
+
+# Assert content is present in STDERR (supports either toSTDERR or toStderr)
+expect { ls } toOutput toSTDERR "should contain this" "and also this"
+expect { ls } not toOutput toSTDERR "should not contain this" "or this"
+
+# Like other matchers, using {{ two braces }} runs the command in a subshell
+expect {{ ls }} toOutput "should contain this" "and also this"
+expect {{ ls }} not toOutput "should not contain this" "or this"
 ```
 
 ## `toFail`
 
 ```sh
 source "matchers/toFail.sh"
+
+# Requires { block } syntax
 
 #
 ```

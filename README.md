@@ -8,7 +8,7 @@ Flexible test expectation library in [< 50 LOC](https://github.com/bx-sh/expect.
 
 ---
 
-Download the [latest release](https://github.com/bx-sh/expect.sh/archive/v0.2.2.tar.gz)
+Download the [latest release](https://github.com/bx-sh/expect.sh/archive/v0.2.3.tar.gz)
 
 ```sh
 source "expect.sh"

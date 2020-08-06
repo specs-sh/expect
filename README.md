@@ -851,7 +851,7 @@ You can do matcher lookup however best works for you.
 ```sh
 source "matchers/toEqual.sh"
 
-# Assert content equals provided text
+# Assert content equals provided text ( uses `cat -A` to include non-visible characters )
 expect 5 toEqual 5
 expect 5 not toEqual 5
 
@@ -865,8 +865,6 @@ expect {{ echo "Hello" }} not toEqual "Hello"
 ```
 
 ## `toContain`
-
-XXX
 
 ```sh
 source "matchers/toContain.sh"
@@ -886,17 +884,23 @@ expect {{ ls }} not toEqual "myFile.txt"
 
 ## `toBeEmpty`
 
-XXX
-
 ```sh
 source "matchers/toBeEmpty.sh"
 
-#
+# Assert content is an empty string, e.g. [ -z "" ]
+expect "" toBeEmpty
+expect " " not toBeEmpty
+
+# Runs provided block an asserts content of STDOUT and STDERR combined (does not run in subshell)
+expect { cat somefile } toBeEmpty
+expect { cat somefile } not toBeEmpty
+
+# Runs provided block an asserts content of STDOUT and STDERR combined (runs in subshell)
+expect {{ cat somefile }} toBeEmpty
+expect {{ cat somefile }} not toBeEmpty
 ```
 
 ## `toMatch`
-
-XXX
 
 ```sh
 source "matchers/toMatch.sh"
@@ -906,8 +910,6 @@ source "matchers/toMatch.sh"
 
 ## `toOutput`
 
-XXX
-
 ```sh
 source "matchers/toOutput.sh"
 
@@ -916,20 +918,8 @@ source "matchers/toOutput.sh"
 
 ## `toFail`
 
-XXX
-
 ```sh
 source "matchers/toFail.sh"
-
-#
-```
-
-## `toBeEmpty`
-
-XXX
-
-```sh
-source "matchers/toBeEmpty.sh"
 
 #
 ```

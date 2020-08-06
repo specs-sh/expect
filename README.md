@@ -787,7 +787,6 @@ You can test this in your shell:
 EXPECT_BLOCK_START_PATTERN="^[\\[{@%]+\$"
 EXPECT_BLOCK_END_PATTERN="^[\\]}@%]+\$"
 
-
 expect.matcher.toTest() {
   echo "Hi from 'toTest' here is the $EXPECT_BLOCK_TYPE block:"
   echo "${EXPECT_BLOCK[@]}"

@@ -103,7 +103,7 @@ There are pros and cons to each, but at the end of the day it comes down to user
     > in BASH, this means not "polluting" the global namespace with extra functions
 - Cons:
   - Slightly more complicated to implement additional `expect` matchers
-    > ... as you'll see below! You'll implement a variety of matchers 🍻
+    > ... as you'll see below! You'll fully implement a matcher 🍻
 
 ---
 
@@ -658,7 +658,6 @@ expect.matcher.toEq() {
     # It is up to you. I will store the $? exit code but not use it.
     local ___expect___toEq_ReturnOrExitCode
 
-
     if [ "$___expect___toEq_RunInSubshell" = "true" ]
     then
       # Run the command in a $( subshell ) piping STDERR to STDOUT so they will be combined
@@ -747,7 +746,7 @@ echo "$x"
 # hello
 
 # This expectation will pass and it runs locally so it can change variable values
-expect {{ myFunction "haha I changed it" }} toEq "Set x to haha I changed it"
+expect { myFunction "haha I changed it" } toEq "Set x to haha I changed it"
 
 echo "$x"
 # haha I changed it
@@ -869,17 +868,17 @@ expect {{ echo "Hello" }} not toEqual "Hello"
 ```sh
 source "matchers/toContain.sh"
 
-# Assert content contains provided text
-expect "Hello, world!" toContain "Hello"
-expect "Hello, world!" not toContain "Hello"
+# Assert content contains all of the provided texts
+expect "Hello, world!" toContain "Hello" "world"
+expect "Hello, world!" not toContain "Hello" "world"
 
 # Runs provided block an asserts content of STDOUT and STDERR combined (does not run in subshell)
-expect { ls } toContain "myFile.txt"
-expect { ls } not toEqual "myFile.txt"
+expect { ls } toContain "myFile.txt" "anotherFile.png"
+expect { ls } not toEqual "myFile.txt" "anotherFile.png"
 
 # Runs provided block an asserts content of STDOUT and STDERR combined (runs in subshell)
-expect {{ ls }} toContain "myFile.txt"
-expect {{ ls }} not toEqual "myFile.txt"
+expect {{ ls }} toContain "myFile.txt" "anotherFile.png"
+expect {{ ls }} not toEqual "myFile.txt" "anotherFile.png"
 ```
 
 ## `toBeEmpty` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toBeEmpty.sh))

@@ -845,7 +845,9 @@ You can do matcher lookup however best works for you.
 
 # Provided Expectations
 
-## `toEqual` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toEqual.sh))
+## `toEqual`
+
+> ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toEqual.sh))
 
 ```sh
 source "matchers/toEqual.sh"
@@ -863,7 +865,9 @@ expect {{ echo "Hello" }} toEqual "Hello"
 expect {{ echo "Hello" }} not toEqual "Hello"
 ```
 
-## `toContain` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toContain.sh))
+## `toContain`
+
+> ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toContain.sh))
 
 ```sh
 source "matchers/toContain.sh"
@@ -881,7 +885,9 @@ expect {{ ls }} toContain "myFile.txt" "anotherFile.png"
 expect {{ ls }} not toEqual "myFile.txt" "anotherFile.png"
 ```
 
-## `toBeEmpty` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toBeEmpty.sh))
+## `toBeEmpty`
+
+> ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toBeEmpty.sh))
 
 ```sh
 source "matchers/toBeEmpty.sh"
@@ -899,7 +905,9 @@ expect {{ cat somefile }} toBeEmpty
 expect {{ cat somefile }} not toBeEmpty
 ```
 
-## `toMatch` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toMatch.sh))
+## `toMatch`
+
+> ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toMatch.sh))
 
 ```sh
 source "matchers/toMatch.sh"
@@ -917,7 +925,9 @@ expect {{ cat version.txt }} toMatch '[0-9]\.[0-9]\.[0-9]$'
 expect {{ cat version.txt }} not toMatch '[0-9]\.[0-9]\.[0-9]$'
 ```
 
-## `toOutput` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toOutput.sh))
+## `toOutput`
+
+> ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toOutput.sh))
 
 ```sh
 source "matchers/toOutput.sh"
@@ -941,7 +951,9 @@ expect {{ ls }} toOutput "should contain this" "and also this"
 expect {{ ls }} not toOutput "should not contain this" "or this"
 ```
 
-## `toFail` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toFail.sh))
+## `toFail`
+
+> ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toFail.sh))
 
 ```sh
 source "matchers/toFail.sh"

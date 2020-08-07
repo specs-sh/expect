@@ -2,23 +2,6 @@ expect.matcher.toOutput() {
 
   [ "${#EXPECT_BLOCK[@]}" -lt 1 ] && { echo "toOutput requires a block" >&2; exit 1; }
 
-  ##
-  # ------------------------------------------------------------
-  ##
-
-  ##
-  # Run block.
-  #
-  # { No subshell }
-  # {{ Subshell }}
-  #
-  # Available variables:
-  # - ___expect___ExitCode
-  # - ___expect___STDOUT
-  # - ___expect___STDERR
-  # - ___expect___OUTPUT
-  ##
-
   local ___expect___Check_STDOUT=""
   local ___expect___Check_STDERR=""
 

@@ -1,23 +1,6 @@
 expect.matcher.toContain() {
   [ "${#EXPECT_BLOCK[@]}" -eq 0 ] && [ $# -eq 0 ] && { echo "toContain expects 1 or more arguments, received $# [$*]" >&2; exit 1; }
 
-  ##
-  # ------------------------------------------------------------
-  ##
-
-  ##
-  # Run block.
-  #
-  # { No subshell }
-  # {{ Subshell }}
-  #
-  # Available variables:
-  # - ___expect___ExitCode
-  # - ___expect___STDOUT
-  # - ___expect___STDERR
-  # - ___expect___OUTPUT
-  ##
-
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     local ___expect___RunInSubshell=""

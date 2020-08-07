@@ -846,7 +846,7 @@ You can do matcher lookup however best works for you.
 
 # Provided Expectations
 
-## `toEqual`
+## `toEqual` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toEqual.sh))
 
 ```sh
 source "matchers/toEqual.sh"
@@ -864,7 +864,7 @@ expect {{ echo "Hello" }} toEqual "Hello"
 expect {{ echo "Hello" }} not toEqual "Hello"
 ```
 
-## `toContain`
+## `toContain` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toContain.sh))
 
 ```sh
 source "matchers/toContain.sh"
@@ -882,7 +882,7 @@ expect {{ ls }} toContain "myFile.txt"
 expect {{ ls }} not toEqual "myFile.txt"
 ```
 
-## `toBeEmpty`
+## `toBeEmpty` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toBeEmpty.sh))
 
 ```sh
 source "matchers/toBeEmpty.sh"
@@ -900,7 +900,7 @@ expect {{ cat somefile }} toBeEmpty
 expect {{ cat somefile }} not toBeEmpty
 ```
 
-## `toMatch`
+## `toMatch` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toMatch.sh))
 
 ```sh
 source "matchers/toMatch.sh"
@@ -918,7 +918,7 @@ expect {{ cat version.txt }} toMatch '[0-9]\.[0-9]\.[0-9]$'
 expect {{ cat version.txt }} not toMatch '[0-9]\.[0-9]\.[0-9]$'
 ```
 
-## `toOutput`
+## `toOutput` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toOutput.sh))
 
 ```sh
 source "matchers/toOutput.sh"
@@ -942,7 +942,7 @@ expect {{ ls }} toOutput "should contain this" "and also this"
 expect {{ ls }} not toOutput "should not contain this" "or this"
 ```
 
-## `toFail`
+## `toFail` ([source code](https://github.com/bx-sh/expect.sh/blob/master/matchers/toFail.sh))
 
 ```sh
 source "matchers/toFail.sh"

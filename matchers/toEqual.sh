@@ -1,23 +1,6 @@
 expect.matcher.toEqual() {
   [ "${#EXPECT_BLOCK[@]}" -eq 0 ] && [ $# -ne 1 ] && { echo "toEqual expects 1 argument (expected result), received $# [$*]" >&2; exit 1; }
 
-  ##
-  # ------------------------------------------------------------
-  ##
-
-  ##
-  # Run block.
-  #
-  # { No subshell }
-  # {{ Subshell }}
-  #
-  # Available variables:
-  # - ___expect___ExitCode
-  # - ___expect___STDOUT
-  # - ___expect___STDERR
-  # - ___expect___OUTPUT
-  ##
-
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     local ___expect___RunInSubshell=""

@@ -850,7 +850,7 @@ You can do matcher lookup however best works for you.
 ```sh
 source "matchers/toEqual.sh"
 
-# Assert content equals provided text ( uses `cat -A` to include non-visible characters )
+# Assert content equals provided text ( uses `cat -vet` to include non-visible characters )
 expect 5 toEqual 5
 expect 5 not toEqual 5
 

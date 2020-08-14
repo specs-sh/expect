@@ -41,12 +41,12 @@ expect.matcher.toContain() {
     actualResult="$EXPECT_ACTUAL_RESULT"
   fi
 
-  local actualResultOutput="$( echo -ne "$actualResult" | cat -A )"
+  local actualResultOutput="$( echo -ne "$actualResult" | cat -vet )"
 
   local expected
   for expected in "$@"
   do
-    local expectedResultOutput="$( echo -ne "$expected" | cat -A )"
+    local expectedResultOutput="$( echo -ne "$expected" | cat -vet )"
 
     if [ -z "$EXPECT_NOT" ]
     then

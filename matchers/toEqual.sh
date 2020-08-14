@@ -41,8 +41,8 @@ expect.matcher.toEqual() {
     actualResult="$EXPECT_ACTUAL_RESULT"
   fi
 
-  local actualResultOutput="$( echo -ne "$actualResult" | cat -A )"
-  local expectedResultOutput="$( echo -ne "$1" | cat -A )"
+  local actualResultOutput="$( echo -ne "$actualResult" | cat -vet )"
+  local expectedResultOutput="$( echo -ne "$1" | cat -vet )"
 
   if [ -z "$EXPECT_NOT" ]
   then

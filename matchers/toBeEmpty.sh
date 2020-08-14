@@ -41,7 +41,7 @@ expect.matcher.toBeEmpty() {
     actualResult="$EXPECT_ACTUAL_RESULT"
   fi
 
-  local actualResultOutput="$( echo -ne "$actualResult" | cat -A )"
+  local actualResultOutput="$( echo -ne "$actualResult" | cat -vet )"
 
   if [ -z "$EXPECT_NOT" ]
   then

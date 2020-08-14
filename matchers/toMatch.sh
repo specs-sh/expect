@@ -41,7 +41,7 @@ expect.matcher.toMatch() {
     actualResult="$EXPECT_ACTUAL_RESULT"
   fi
 
-  local actualResultOutput="$( echo -ne "$actualResult" | cat -A )"
+  local actualResultOutput="$( echo -ne "$actualResult" | cat -vet )"
 
   local pattern
   for pattern in "$@"

@@ -1,4 +1,4 @@
-name: CI
+name: 🐧 Ubuntu
 
 on:
   push:
@@ -8,12 +8,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        os:
-         - ubuntu-latest
-         - macOS-latest
-    runs-on: ${{matrix.os}}
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - uses: bx-sh/setup-bx@master

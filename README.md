@@ -1,4 +1,5 @@
-[![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fbx-sh%2Fexpect.sh%2Fbadge&label=build&logo=none)](https://actions-badge.atrox.dev/bx-sh/expect.sh/goto)
+[![🍏 Mac OS X](https://github.com/bx-sh/expect.sh/workflows/%F0%9F%8D%8F%20Mac%20OS%20X/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22%F0%9F%8D%8F+Mac+OS+X%22)
+[![🐧 Ubuntu](https://github.com/bx-sh/expect.sh/workflows/%F0%9F%90%A7%20Ubuntu/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22%F0%9F%90%A7+Ubuntu%22)
 
 # 🧐 `expect.sh`
 

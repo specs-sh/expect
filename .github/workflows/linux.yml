@@ -1,4 +1,4 @@
-name: 🐧 Linux
+name: Ubuntu
 
 on:
   push:
@@ -12,6 +12,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: bx-sh/setup-bx@master
+      - run: "bash --version | head -1"
+        shell: bash
       - run: echo "::add-path::packages/bin"
         shell: bash
       - run: bx spec

@@ -1,6 +1,6 @@
 [![GitHub Actions](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fbx-sh%2Fexpect.sh%2Fbadge&label=build&logo=none)](https://actions-badge.atrox.dev/bx-sh/expect.sh/goto)
 
-# `expect.sh`
+# 🧐 `expect.sh`
 
 ```sh
 expect { BASH testing } toBe "wonderful"

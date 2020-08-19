@@ -1,5 +1,5 @@
-[![🍏 Mac OS X](https://github.com/bx-sh/expect.sh/workflows/%F0%9F%8D%8F%20Mac%20OS%20X/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22%F0%9F%8D%8F+Mac+OS+X%22)
-[![🐧 Ubuntu](https://github.com/bx-sh/expect.sh/workflows/%F0%9F%90%A7%20Ubuntu/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22%F0%9F%90%A7+Ubuntu%22)
+[![Mac (BASH 3.2)](https://github.com/bx-sh/expect.sh/workflows/Mac%20(BASH%203.2)/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22Mac+%28BASH+3.2%29%22) [![BASH 4.4](https://github.com/bx-sh/expect.sh/workflows/BASH%204.4/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22BASH+4.4%22) [![BASH 5.0](https://github.com/bx-sh/expect.sh/workflows/BASH%205.0/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22BASH+5.0%22)
+
 
 # 🧐 `expect.sh`
 

@@ -63,3 +63,19 @@ setAndEchoXAndFail() {
 
   assert [ "$x" = 5 ] # value was not updated
 }
+
+@spec.singleBracketsRunLocally() {
+  local x=5
+
+  expect [ setAndEchoXAndFail 42 ] toFail "42"
+
+  assert [ "$x" = 42 ] # value was updated
+}
+
+@spec.doubleBracketsRunInSubshell() {
+  local x=5
+
+  expect [[ setAndEchoXAndFail 42 ]] toFail "42"
+
+  assert [ "$x" = 5 ] # value was not updated
+}

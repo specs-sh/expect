@@ -11,15 +11,23 @@
 @spec.blockMatcher.error_if_braces_not_closed() {
   refute run expect { hello there
   assert [ "$STDOUT" = "" ]
-  assert [ "$STDERR" = "Expected block closing braces but found none" ]
+  assert [ "$STDERR" = "Expected '{' block to be closed with '}' but no '}' provided" ]
 
   refute run expect {{ hello there
   assert [ "$STDOUT" = "" ]
-  assert [ "$STDERR" = "Expected block closing braces but found none" ]
+  assert [ "$STDERR" = "Expected '{{' block to be closed with '}}' but no '}}' provided" ]
 
   refute run expect [[[ hello there
   assert [ "$STDOUT" = "" ]
-  assert [ "$STDERR" = "Expected block closing braces but found none" ]
+  assert [ "$STDERR" = "Expected '[[[' block to be closed with ']]]' but no ']]]' provided" ]
+
+  refute run expect [ echo closed with wrong type }
+  assert [ "$STDOUT" = "" ]
+  assert [ "$STDERR" = "Expected '[' block to be closed with ']' but no ']' provided" ]
+
+  refute run expect [[ echo closed with wrong type ]
+  assert [ "$STDOUT" = "" ]
+  assert [ "$STDERR" = "Expected '[[' block to be closed with ']]' but no ']]' provided" ]
 }
 
 expect.matcher.toDoSomething() {
@@ -79,11 +87,21 @@ expect.matcher.toDoSomething() {
   assert [ "$block" = "" ]
   assert [ "$blockType" = "" ]
 
-  EXPECT_BLOCK_START_PATTERN='@@'
-  EXPECT_BLOCK_END_PATTERN='@@'
+  EXPECT_BLOCK_PAIRS="$EXPECT_BLOCK_PAIRS@@\n@@\n"
 
   expect @@ Haha this works @@ toDoSomething
 
   assert [ "$block" = "Haha this works" ]
   assert [ "$blockType" = "@@" ]
+
+  block=""
+  blockType=""
+  assert [ "$block" = "" ]
+  assert [ "$blockType" = "" ]
+
+  # But the regular supported ones still work too
+  expect {{ Haha this works }} toDoSomething
+
+  assert [ "$block" = "Haha this works" ]
+  assert [ "$blockType" = "{{" ]
 }

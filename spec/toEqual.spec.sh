@@ -43,7 +43,7 @@ import @expect/matchers/toEqual
 }
 
 @pending.toEqual.returnOne() {
-  EXPECTATION_FAILED="return 1"
+  EXPECT_FAIL="return 1"
   set -e
 
   expect 5 toEqual 5
@@ -93,4 +93,41 @@ import @expect/matchers/toEqual
   assert stderrContains "Expected result not to equal"
   assert stderrContains "Actual: '5'"
   assert stderrContains "Expected: '5'"
+}
+
+setAndEchoX() {
+  x="$1"
+  echo "$x"
+}
+
+@spec.singleCurliesRunLocally() {
+  local x=5
+
+  expect { setAndEchoX 42 } toEqual "42"
+
+  assert [ "$x" = 42 ] # value was updated
+}
+
+@spec.doubleCurliesRunInSubshell() {
+  local x=5
+
+  expect {{ setAndEchoX 42 }} toEqual "42"
+
+  assert [ "$x" = 5 ] # value was not updated
+}
+
+@spec.singleBracketsRunLocally() {
+  local x=5
+
+  expect [ setAndEchoX 42 ] toEqual "42"
+
+  assert [ "$x" = 42 ] # value was updated
+}
+
+@spec.doubleBracketsRunInSubshell() {
+  local x=5
+
+  expect [[ setAndEchoX 42 ]] toEqual "42"
+
+  assert [ "$x" = 5 ] # value was not updated
 }

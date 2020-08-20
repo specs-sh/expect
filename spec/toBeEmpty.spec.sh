@@ -64,3 +64,39 @@ import @expect/matchers/toBeEmpty
   assert stderrContains "Expected result not to be empty"
   assert stderrContains "Actual: ''"
 }
+
+setAndEchoX() {
+  x="$1"
+}
+
+@spec.singleCurliesRunLocally() {
+  local x=5
+
+  expect { setAndEchoX 42 } toBeEmpty
+
+  assert [ "$x" = 42 ] # value was updated
+}
+
+@spec.doubleCurliesRunInSubshell() {
+  local x=5
+
+  expect {{ setAndEchoX 42 }} toBeEmpty
+
+  assert [ "$x" = 5 ] # value was not updated
+}
+
+@spec.singleBracketsRunLocally() {
+  local x=5
+
+  expect [ setAndEchoX 42 ] toBeEmpty
+
+  assert [ "$x" = 42 ] # value was updated
+}
+
+@spec.doubleBracketsRunInSubshell() {
+  local x=5
+
+  expect [[ setAndEchoX 42 ]] toBeEmpty
+
+  assert [ "$x" = 5 ] # value was not updated
+}

@@ -55,3 +55,40 @@ import @expect/matchers/toContain
   assert stderrContains "Actual text: 'Hello, world!'"
   assert stderrContains "Unexpected text: 'world'"
 }
+
+setAndEchoX() {
+  x="$1"
+  echo "$x"
+}
+
+@spec.singleCurliesRunLocally() {
+  local x=5
+
+  expect { setAndEchoX 42 } toContain "42"
+
+  assert [ "$x" = 42 ] # value was updated
+}
+
+@spec.doubleCurliesRunInSubshell() {
+  local x=5
+
+  expect {{ setAndEchoX 42 }} toContain "42"
+
+  assert [ "$x" = 5 ] # value was not updated
+}
+
+@spec.singleBracketsRunLocally() {
+  local x=5
+
+  expect [ setAndEchoX 42 ] toContain "42"
+
+  assert [ "$x" = 42 ] # value was updated
+}
+
+@spec.doubleBracketsRunInSubshell() {
+  local x=5
+
+  expect [[ setAndEchoX 42 ]] toContain "42"
+
+  assert [ "$x" = 5 ] # value was not updated
+}

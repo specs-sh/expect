@@ -11,7 +11,7 @@ expect.matcher.toOutput() {
   [ $# -lt 1 ] && { echo "toOutput expects 1 or more arguments, received $#" >&2; exit 1; }
 
   local ___expect___RunInSubshell=""
-  [ "$EXPECT_BLOCK_TYPE" = "{{" ] && ___expect___RunInSubshell=true
+  [ "$EXPECT_BLOCK_TYPE" = "{{" ] || [ "$EXPECT_BLOCK_TYPE" = "[[" ] && ___expect___RunInSubshell=true
 
   local ___expect___STDOUT_file="$( mktemp )"
   local ___expect___STDERR_file="$( mktemp )"

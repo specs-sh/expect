@@ -4,7 +4,7 @@ expect.matcher.toContain() {
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     local ___expect___RunInSubshell=""
-    [ "$EXPECT_BLOCK_TYPE" = "{{" ] && ___expect___RunInSubshell=true
+    [ "$EXPECT_BLOCK_TYPE" = "{{" ] || [ "$EXPECT_BLOCK_TYPE" = "[[" ] && ___expect___RunInSubshell=true
 
     local ___expect___STDOUT_file="$( mktemp )"
     local ___expect___STDERR_file="$( mktemp )"

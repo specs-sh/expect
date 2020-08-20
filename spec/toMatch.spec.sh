@@ -59,3 +59,40 @@ import @expect/matchers/toMatch
   assert stderrContains "Actual text: 'Hello there 123"
   assert stderrContains "Pattern: 'there[[:space:]][0-9][0-9][0-9]'"
 }
+
+setAndEchoX() {
+  x="$1"
+  echo "$x"
+}
+
+@spec.singleCurliesRunLocally() {
+  local x=5
+
+  expect { setAndEchoX 42 } toMatch "42"
+
+  assert [ "$x" = 42 ] # value was updated
+}
+
+@spec.doubleCurliesRunInSubshell() {
+  local x=5
+
+  expect {{ setAndEchoX 42 }} toMatch "42"
+
+  assert [ "$x" = 5 ] # value was not updated
+}
+
+@spec.singleBracketsRunLocally() {
+  local x=5
+
+  expect [ setAndEchoX 42 ] toMatch "42"
+
+  assert [ "$x" = 42 ] # value was updated
+}
+
+@spec.doubleBracketsRunInSubshell() {
+  local x=5
+
+  expect [[ setAndEchoX 42 ]] toMatch "42"
+
+  assert [ "$x" = 5 ] # value was not updated
+}

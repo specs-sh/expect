@@ -1,9 +1,4 @@
----
----
-
-{% raw %}
-
-# Authoring Expectations
+# 🎓 Authoring Expectations
 
 - [Expectations vs Assertions](#expectations-vs-assertions)
 - [Matcher functions](#matcher-functions)
@@ -261,8 +256,7 @@ To see how to support using `not`, print out the `EXPECT` variables again:
   # toEq called with 1 arguments: World
   # declare -- EXPECT_ACTUAL_RESULT="Hello"
   # declare -a EXPECT_BLOCK=()
-  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
-  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_PAIRS="{\\n}\\n{{\\n}}\\n{{{\\n}}}\\n[\\n]\\n[[\\n]]\\n[[[\\n]]]\\n"
   # declare -- EXPECT_BLOCK_TYPE=""
   # declare -- EXPECT_MATCHER_NAME="toEq"
   # declare -- EXPECT_NOT=""
@@ -272,8 +266,7 @@ To see how to support using `not`, print out the `EXPECT` variables again:
   # toEq called with 1 arguments: World
   # declare -- EXPECT_ACTUAL_RESULT="Hello"
   # declare -a EXPECT_BLOCK=()
-  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
-  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_PAIRS="{\\n}\\n{{\\n}}\\n{{{\\n}}}\\n[\\n]\\n[[\\n]]\\n[[[\\n]]]\\n"
   # declare -- EXPECT_BLOCK_TYPE=""
   # declare -- EXPECT_MATCHER_NAME="toEq"
   # declare -- EXPECT_NOT="true"
@@ -352,11 +345,11 @@ There are pros and cons to each approach.
 Here is the source code for the `expect.fail()` function from [`expect.sh`](https://github.com/bx-sh/expect.sh/blob/master/expect.sh):
 
 - ```sh
-  EXPECTATION_FAILED="exit 1"
+  EXPECT_FAIL="exit 1"
 
   expect.fail() {
     echo -e "$*" >&2
-    $EXPECTATION_FAILED
+    $EXPECT_FAIL
   }
   ```
 
@@ -367,8 +360,8 @@ By default, `expect` will `exit 1` whenever the `expect.fail()` function is call
 If you want to use `expect` in a framework like `Bats` which uses `set -e`:
 
 - ```sh
-  # Set the value of EXPECTATION_FAILED anywhere in your code before you use 'expect'
-  EXPECTATION_FAILED="return 1"
+  # Set the value of EXPECT_FAIL anywhere in your code before you use 'expect'
+  EXPECT_FAIL="return 1"
   ```
 
 Now, update the **`expect.matcher.toEq()`** function to call `expect.fail` on failure:
@@ -399,7 +392,7 @@ Now, update the **`expect.matcher.toEq()`** function to call `expect.fail` on fa
   }
   ```
 
-In your shell, set `EXPECTATION_FAILED="return 1"` and then try the function:
+In your shell, set `EXPECT_FAIL="return 1"` and then try the function:
 
 - ```sh
   $ expect 42 toEq 42
@@ -473,7 +466,7 @@ To solve this problem, `expect` provides **blocks**:
 
 - `expect { a list of things } toMeetMyExpectations`
 
-By default, you can wrap your block in any number of curly braces or brackets:
+By default, you can wrap your block in one, two, or three curly braces or brackets:
 
 - `expect { a list of things } toMeetMyExpectations`
 - `expect {{ a list of things }} toMeetMyExpectations`
@@ -482,15 +475,15 @@ By default, you can wrap your block in any number of curly braces or brackets:
 - `expect [[ a list of things ]] toMeetMyExpectations`
 - `expect [[[ a list of things ]]] toMeetMyExpectations`
 
-This provides flexibility, e.g. if you want `{` and `{{` to behave differently.
+This provides flexibility, e.g. if you want `{` or `{{` or `{{{` etc to behave differently.
 
-### Example
-
-The matchers which come with `expect.sh` all support using `{` or `{{`
-
-When `{` is used, the block is executed to get the actual result
-
-When `{{` is used, the block is executed _in a subshell_ to get the actual result
+> ### Example
+> 
+> Provided matchers behave differently when using one -vs- two braces or brackets
+> 
+> When `{` or `[` is used, the block is executed to get the actual result
+> 
+> When `{{` or `[[` is used, the block is executed _in a subshell_ to get the actual result
 
 ### `EXPECT_BLOCK`
 
@@ -507,8 +500,7 @@ To see how to support blocks, print out the `EXPECT` variables again:
   # toEq called with 1 arguments: something
   # declare -- EXPECT_ACTUAL_RESULT="Hello"
   # declare -a EXPECT_BLOCK=()
-  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
-  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_PAIRS="{\\n}\\n{{\\n}}\\n{{{\\n}}}\\n[\\n]\\n[[\\n]]\\n[[[\\n]]]\\n"
   # declare -- EXPECT_BLOCK_TYPE=""
   # declare -- EXPECT_MATCHER_NAME="toEq"
   # declare -- EXPECT_NOT=""
@@ -518,8 +510,7 @@ To see how to support blocks, print out the `EXPECT` variables again:
   # toEq called with 1 arguments: something
   # declare -- EXPECT_ACTUAL_RESULT=""
   # declare -a EXPECT_BLOCK=([0]="Hello")
-  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
-  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_PAIRS="{\\n}\\n{{\\n}}\\n{{{\\n}}}\\n[\\n]\\n[[\\n]]\\n[[[\\n]]]\\n"
   # declare -- EXPECT_BLOCK_TYPE="{"
   # declare -- EXPECT_MATCHER_NAME="toEq"
   # declare -- EXPECT_NOT=""
@@ -529,8 +520,7 @@ To see how to support blocks, print out the `EXPECT` variables again:
   # toEq called with 1 arguments: something
   # declare -- EXPECT_ACTUAL_RESULT=""
   # declare -a EXPECT_BLOCK=([0]="Hello" [1]="there," [2]="how are" [3]="you?")
-  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
-  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_PAIRS="{\\n}\\n{{\\n}}\\n{{{\\n}}}\\n[\\n]\\n[[\\n]]\\n[[[\\n]]]\\n"
   # declare -- EXPECT_BLOCK_TYPE="[["
   # declare -- EXPECT_MATCHER_NAME="toEq"
   # declare -- EXPECT_NOT=""
@@ -558,7 +548,7 @@ If you want to support executing commands, like the provided matchers, follow th
 
 ## Support block syntax
 
-This provides an example implementation for executing block commands in matchers, e.g.
+This demonstrates an example implementation for executing block commands in matchers, e.g.
 
 - ```sh
   expect { ls } toEq "file1\nfile2"
@@ -578,7 +568,9 @@ For the block syntax, we will combine the command's `STDOUT` and `STDERR` and co
 - Because of this, we will prefix all of our variables with `___expect___toEq_`
 - If we use a variable like `command`, it could cause variable naming collisions with the function's variables
 
-### The Code
+### The Code (unabridged)
+
+> _This shows an extended example, see `expect.execute_block` helper below for simpler version_
 
 ```sh
 ##
@@ -672,7 +664,7 @@ expect.matcher.toEq() {
 }
 ```
 
-**Reminder:** before trying this in your local shell, set `EXPECTATION_FAILED="return 1"`
+**Reminder:** before trying this in your local shell, set `EXPECT_FAIL="return 1"`
 
 Give it a shot!
 
@@ -704,53 +696,110 @@ echo "$x"
 # haha I changed it
 ```
 
+## `expect.execute_block`
+
+Because executing the command inside a block is a common usage of blocks, `expect` provides a helper method for executing the code: `expect.execute_block`
+
+- Runs the command in the `EXPECT_BLOCK`
+- Sets `EXPECT_EXITCODE`, `EXPECT_STDOUT`, and `EXPECT_STDERR`
+
+### The Code (using `expect.execute_block`)
+
+```sh
+##
+# expect.matcher.toEq: with block support
+#
+# using `expect.execute_block` built-in helper function
+##
+expect.matcher.toEq() {
+  if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
+  then
+    expect.execute_block
+    local actualResult="${EXPECT_STDOUT}${EXPECT_STDERR}"
+    # You can check EXPECT_EXITCODE to see if the command succeeded
+  else
+    local actualResult="$EXPECT_ACTUAL_RESULT"
+  fi
+
+  # Now $actualResult has been set from EITHER the block or regular `expect "simple" toEq "something"`
+  local expectedResult="$1"
+  local actualResult="$actualResult"
+
+  if [ "$EXPECT_NOT" = "true" ]
+  then
+    # Expect values NOT to be equal.
+    #
+    # If they are equal, show a failure message.
+    if [ "$actualResult" = "$expectedResult" ]
+    then
+      expect.fail "Expected values not to equal\nActual: $actualResult\nNot Expected: $expectedResult"
+    fi
+  else
+    # Expect values to be equal.
+    #
+    # If they are not equal, show a failure message.
+    if [ "$actualResult" != "$expectedResult" ]
+    then
+      expect.fail "Expected values to equal\nActual: $actualResult\nExpected: $expectedResult"
+    fi
+  fi
+}
+```
+
 ## Customize block styles
 
-The default supported block types are any number of `{` or `[` characters.
+The default supported block types are 1-3 curly braces or brackets:
 
-> Note: `expect` does not verify that the closing character is the same as the open character
+ - `{ ... }` `{{ ... }}` `{{{ ... }}}`
+ - `[ ... ]` `[[ ... ]]` `[[[ ... ]]]`
 
-In BASH you cannot/should not try to use any of these:
+You can change these by overriding or extending the `EXPECT_BLOCK_PAIRS` variable.
 
-- `< ... >`
-- `( ... )`
-- `` ` ... ` ``
-- `' ... '`
-- `" ... "`
+The `EXPECT_BLOCK_PAIRS` variable contains pairs of open/close strings delimited by `\n` newlines.
 
-`expect` uses BASH regular expressions to determine when a block (a) starts (b) is closed
+To also support wrapping blocks with `OPEN` and `CLOSE`:
 
-The default regular expressions are:
+```sh
+source "expect.sh"
 
-- Start: `^[\\[{]+\$`
-- End: `^[\\]}]+\$`
-
-You can change these by overriding the `EXPECT_BLOCK_START_PATTERN` and `EXPECT_BLOCK_END_PATTERN` variables.
-
-To also support wrapping blocks in any number of `@` or `%` characters, add these symbols to the `[ ]+` group:
-
-- Start: `^[\\[{@%]+\$`
-- End: `^[\\]}@%]+\$`
+EXPECT_BLOCK_PAIRS="${EXPECT_BLOCK_PAIRS}\nOPEN\nCLOSE"
+```
 
 You can test this in your shell:
 
 ```sh
-EXPECT_BLOCK_START_PATTERN="^[\\[{@%]+\$"
-EXPECT_BLOCK_END_PATTERN="^[\\]}@%]+\$"
-
 expect.matcher.toTest() {
   echo "Hi from 'toTest' here is the $EXPECT_BLOCK_TYPE block:"
   echo "${EXPECT_BLOCK[@]}"
+  declare -p | grep EXPECT_
 }
 
-expect @ Cool I could use this syntax @ toTest
-# Hi from 'toTest' here is the @ block:
+expect OPEN Cool I could use this syntax CLOSE toTest
+# Hi from 'toTest' here is the OPEN block:
 # Cool I could use this syntax
-
-expect %% Or I could use this %% toTest
-# Hi from 'toTest' here is the %% block:
-# Or I could use this
+# declare -- EXPECT_ACTUAL_RESULT=""
+# declare -a EXPECT_BLOCK=([0]="Cool" [1]="I" [2]="could" [3]="use" [4]="this" [5]="syntax")
+# declare -- EXPECT_BLOCK_CLOSE="CLOSE"
+# declare -- EXPECT_BLOCK_OPEN="OPEN"
+# declare -- EXPECT_BLOCK_PAIRS="{\\n}\\n{{\\n}}\\n{{{\\n}}}\\n[\\n]\\n[[\\n]]\\n[[[\\n]]]\\n\\nOPEN\\nCLOSE"
+# declare -- EXPECT_BLOCK_TYPE="OPEN"
+# declare -- EXPECT_FAIL="return 1"
+# declare -- EXPECT_MATCHER_NAME="toTest"
+# declare -- EXPECT_NOT=""
+# declare -- EXPECT_VERSION="0.5.0"x
 ```
+
+When a block is provided, matchers have access to these extra 2 variables:
+ - `EXPECT_BLOCK_OPEN`
+ - `EXPECT_BLOCK_CLOSE`
+
+> In BASH you cannot/should not try to use any of these:
+> 
+> - `< ... >`
+> - `( ... )`
+> - `` ` ... ` ``
+> - `' ... '`
+> - `" ... "`
 
 ## Customize function names
 
@@ -792,7 +841,3 @@ You can do matcher lookup however best works for you.
 | EXPECT_BLOCK_END_PATTERN   | Custom BASH regex pattern for detecting block start                         |
 | EXPECT_BLOCK_START_PATTERN | Custom BASH regex pattern for detecting block close                         |
 | EXPECT_MATCHER_FUNCTION    | If provided, `expect` will invoke this instead of `expect.matcher.[name]`   |
-
----
-
-{% endraw %}

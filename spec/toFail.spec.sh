@@ -12,29 +12,29 @@ thisPasses() {
 }
 
 @spec.toFail() {
-  refute run -- expect "Forgot to pass a block" toFail
+  refute run [[ expect "Forgot to pass a block" toFail ]]
   assert [ -z "$STDOUT" ]
   assert [ "$STDERR" = "toFail requires a block" ]
 
-  refute run -- expect { thisPasses } toFail
+  refute run [[ expect { thisPasses } toFail ]]
   assert [ -z "$STDOUT" ]
   assert stderrContains "Expected to fail, but passed"
   assert stderrContains "Command: thisPasses"
   assert stderrContains "STDOUT: Hello from a passing function!"
 
-  assert run -- expect { thisFails } toFail
+  assert run [[ expect { thisFails } toFail ]]
   assert [ -z "$STDOUT" ]
   assert [ -z "$STDERR" ]
 
-  assert run -- expect { thisFails } toFail "Hello"
+  assert run [[ expect { thisFails } toFail "Hello" ]]
   assert [ -z "$STDOUT" ]
   assert [ -z "$STDERR" ]
 
-  assert run -- expect { thisFails } toFail "Hello" "world"
+  assert run [[ expect { thisFails } toFail "Hello" "world" ]]
   assert [ -z "$STDOUT" ]
   assert [ -z "$STDERR" ]
 
-  refute run -- expect { thisFails } toFail "Hello" "moon"
+  refute run [[ expect { thisFails } toFail "Hello" "moon" ]]
   assert [ -z "$STDOUT" ]
   assert stderrContains "Expected STDERR to contain text"
   assert stderrContains "Command: thisFails"

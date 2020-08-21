@@ -3,7 +3,7 @@
 PACKAGE_PATH=.:packages/
 
 import @assert
-import @run-command
+import @run
 import @expect
 
 stderrContains() {

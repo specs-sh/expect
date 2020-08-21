@@ -6,7 +6,7 @@ description "🧐 Expectations"
 
 main expect.sh
 
-exclude spec/
+exclude spec/ docs/ script/
 
 devDependency spec
 devDependency assert

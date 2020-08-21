@@ -33,23 +33,25 @@ expect { ls } toContain "$filename"
 
 The provided matchers that come with `expect.sh` use these conventions:
 
-If no `{ ... }` block is provided, the first argument is the "actual result"
+- The first argument is the "actual result"
+  ```sh
+  expect "Hello, world" toContain "Hello"
+  ```
 
-```sh
-expect "$( ls )" toContain "filename"
-```
+- e.g. to get the output of a command:
+  ```sh
+  expect "$( ls )" toContain "filename"
+  ```
 
-If `{ ... }` block is provided, the code inside is evaluated (_without a subshell_)
+- If `{ ... }` block is provided, the code is evaluated (_without a subshell_)
+  ```sh
+  expect { ls } toContain "filename"
+  ```
 
-```sh
-expect { ls } toContain "filename"
-```
-
-If `{{ ... }}` block is provided, the code inside is evaluated (_in a subshell_)
-
-```sh
-expect {{ ls } toContain "filename"
-```
+- If `{{ ... }}` block is provided, the code is evaluated (_in a subshell_)
+  ```sh
+  expect {{ ls }} toContain "filename"
+  ```
 
 ---
 

@@ -149,8 +149,7 @@ Now, try running the code again. This time, set a value for `$answer`:
   # toEq called with 1 arguments: 42
   # declare -- EXPECT_ACTUAL_RESULT="This is the actual result"
   # declare -a EXPECT_BLOCK=()
-  # declare -- EXPECT_BLOCK_END_PATTERN="^[\\]}]+\$"
-  # declare -- EXPECT_BLOCK_START_PATTERN="^[\\[{]+\$"
+  # declare -- EXPECT_BLOCK_PAIRS="{\\n}\\n{{\\n}}\\n{{{\\n}}}\\n[\\n]\\n[[\\n]]\\n[[[\\n]]]\\n"
   # declare -- EXPECT_BLOCK_TYPE=""
   # declare -- EXPECT_MATCHER_NAME="toEq"
   # declare -- EXPECT_NOT=""
@@ -838,6 +837,5 @@ You can do matcher lookup however best works for you.
 | EXPECT_ACTUAL_RESULT       | Contains actual result (_blank value if a block was provided_)              |
 | EXPECT_BLOCK               | BASH Array containing block (_empty array if no block provided_)            |
 | EXPECT_BLOCK_TYPE          | Opening block character used, e.g. `{` (_blank value is no block provided_) |
-| EXPECT_BLOCK_END_PATTERN   | Custom BASH regex pattern for detecting block start                         |
-| EXPECT_BLOCK_START_PATTERN | Custom BASH regex pattern for detecting block close                         |
+| EXPECT_BLOCK_PAIRS         | Custom text pairs for detecting block open and close                        |
 | EXPECT_MATCHER_FUNCTION    | If provided, `expect` will invoke this instead of `expect.matcher.[name]`   |

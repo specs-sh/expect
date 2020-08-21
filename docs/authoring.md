@@ -842,7 +842,7 @@ You can do matcher lookup however best works for you.
 | EXPECT_ACTUAL_RESULT       | Contains actual result (_blank value if a block was provided_)              |
 | EXPECT_BLOCK               | BASH Array containing block (_empty array if no block provided_)            |
 | EXPECT_BLOCK_TYPE          | Opening block character used, e.g. `{` (_blank value is no block provided_) |
-| EXPECT_BLOCK_PAIRS         | Custom text pairs for detecting block open and close                        |
+| EXPECT_BLOCK_PAIRS         | Newline `\n`-delimited text pairs for detecting block open and close        |
 | EXPECT_MATCHER_FUNCTION    | If provided, `expect` will invoke this instead of `expect.matcher.[name]`   |
 
 ---

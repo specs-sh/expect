@@ -81,7 +81,7 @@ testOne() {
 }
 ```
 
-For details, see the 🎓 [Authoring Expectations Tutorial](AUTHORING)
+For details, see the 🎓 [Authoring Expectations Tutorial](AUTHORING.md)
 
 ---
 

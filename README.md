@@ -57,7 +57,7 @@ expect {{ ls } toContain "filename"
 
 _Every project is different, you should author your own expectations!_
 
-If you have a common set of assertions which you perform in your tests
+If you have a common set of assertions which you perform in your tests:
 
 ```sh
 checkIfConfigIsValid() {
@@ -70,9 +70,16 @@ testOne() {
   local config="$( config --new )"
   checkIfConfigFileIsValid "$config"
 }
+
+testTwo() {
+  local config="$( config --get different )"
+  checkIfConfigFileIsValid "$config"
+}
+
+# ...
 ```
 
-You might want to consider authoring your own expectation(s) for your tests
+You might want to consider authoring your own expectation(s) for your tests:
 
 ```sh
 testOne() {

@@ -3,8 +3,10 @@
 PACKAGE_PATH=.:packages/
 
 import @assert
-import @run-command
-import @expect
+import @run
+
+# Just core
+import @expect/core
 
 stderrContains() {
   if [[ "$STDERR" != *"$1"* ]]

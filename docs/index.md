@@ -9,15 +9,15 @@ expect { BASH testing } toBe "wonderful"
 
 ---
 
-Download the [latest release](https://github.com/bx-sh/expect.sh/archive/v0.2.3.tar.gz)
+Download the [latest version](https://github.com/bx-sh/expect.sh/archive/v0.5.0.tar.gz) by clicking one of the download links above or:
 
 ```sh
-source "expect.sh"
+curl -o- https://expectations.sh/installer.sh | bash
 ```
 
 ---
 
-`expect.sh` is a flexible test expectation library (_written in [< 50 LOC](https://github.com/bx-sh/expect.sh/blob/master/expect.sh)_)
+`expect.sh` is a flexible test expectation library
 
 
 ```sh
@@ -225,8 +225,8 @@ expect {{ grep pattern file.txt }} not toFail "and STDERR shouldn't contain this
 
 ## Related Projects
 
- - 🧐 [`assert.sh`](https://assert.sh) for `assert [ 1 -eq 42 ]` style assertions
- - 🚀 [`run-command.sh`](https://run-command.pages.sh) for `run ls && echo "$STDOUT"` helper function
+ - ☑️ [`assert.sh`](https://assert.sh) for `assert [ 1 -eq 42 ]` style assertions
+ - 🚀 [`run.sh`](https://run.assert.sh) for `run ls && echo "$STDOUT"` helper function
  - 🔬 [`spec.sh`](https://specs.sh) for a lovely shell specification testing framework
 
 ---

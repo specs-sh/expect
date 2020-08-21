@@ -2,7 +2,7 @@
 
 expect() {
   [ $# -eq 0 ] && { echo "Missing required argument for 'expect': actual value or { code block } or {{ subshell code block }}" >&2; return 1; }
-  EXPECT_VERSION=0.4.0
+  EXPECT_VERSION=0.5.0
   [ $# -eq 1 ] && [ "$1" = "--version" ] && { echo "expect version $EXPECT_VERSION"; return 0; }
   local ___expect___BlockPairsArray
   IFS=$'\n' read -d '' -ra ___expect___BlockPairsArray < <(printf "$EXPECT_BLOCK_PAIRS")

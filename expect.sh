@@ -85,7 +85,7 @@ expect.matcher.toBeEmpty() {
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     expect.execute_block
-    ___expect___actualResult="${EXPECT_STDOUT}${EXPECT_STDERR/%"\n"}"
+    ___expect___actualResult="${EXPECT_STDOUT}${EXPECT_STDERR}"
   else
     ___expect___actualResult="$EXPECT_ACTUAL_RESULT"
   fi
@@ -114,7 +114,7 @@ expect.matcher.toContain() {
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     expect.execute_block
-    ___expect___actualResult="${EXPECT_STDOUT}${EXPECT_STDERR/%"\n"}"
+    ___expect___actualResult="${EXPECT_STDOUT}${EXPECT_STDERR}"
   else
     ___expect___actualResult="$EXPECT_ACTUAL_RESULT"
   fi
@@ -148,7 +148,7 @@ expect.matcher.toEqual() {
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     expect.execute_block
-    local actualResult="${EXPECT_STDOUT}${EXPECT_STDERR/%"\n"}"
+    local actualResult="${EXPECT_STDOUT}${EXPECT_STDERR}"
   else
     local actualResult="$EXPECT_ACTUAL_RESULT"
   fi
@@ -218,7 +218,7 @@ expect.matcher.toMatch() {
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     expect.execute_block
-    actualResult="${EXPECT_STDOUT}${EXPECT_STDERR/%"\n"}"
+    actualResult="${EXPECT_STDOUT}${EXPECT_STDERR}"
   else
     actualResult="$EXPECT_ACTUAL_RESULT"
   fi

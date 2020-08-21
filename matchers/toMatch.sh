@@ -5,7 +5,7 @@ expect.matcher.toMatch() {
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     expect.execute_block
-    actualResult="${EXPECT_STDOUT}${EXPECT_STDERR/%"\n"}"
+    actualResult="${EXPECT_STDOUT}${EXPECT_STDERR}"
   else
     actualResult="$EXPECT_ACTUAL_RESULT"
   fi

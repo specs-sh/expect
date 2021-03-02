@@ -1,5 +1,4 @@
-[![Mac (BASH 3.2)](https://github.com/bx-sh/expect.sh/workflows/Mac%20(BASH%203.2)/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22Mac+%28BASH+3.2%29%22) [![BASH 4.3](https://github.com/bx-sh/expect.sh/workflows/BASH%204.3/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22BASH+4.3%22) [![BASH 4.4](https://github.com/bx-sh/expect.sh/workflows/BASH%204.4/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22BASH+4.4%22) [![BASH 5.0](https://github.com/bx-sh/expect.sh/workflows/BASH%205.0/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22BASH+5.0%22)  
-[![Mac (Installer)](https://github.com/bx-sh/expect.sh/workflows/Mac%20(Installer)/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22Mac+%28Installer%29%22) [![Linux (Installer)](https://github.com/bx-sh/expect.sh/workflows/Linux%20(Installer)/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22Linux+%28Installer%29%22)
+[![Mac (BASH 3.2)](<https://github.com/bx-sh/expect.sh/workflows/Mac%20(BASH%203.2)/badge.svg>)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22Mac+%28BASH+3.2%29%22) [![BASH 4.3](https://github.com/bx-sh/expect.sh/workflows/BASH%204.3/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22BASH+4.3%22) [![BASH 4.4](https://github.com/bx-sh/expect.sh/workflows/BASH%204.4/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22BASH+4.4%22) [![BASH 5.0](https://github.com/bx-sh/expect.sh/workflows/BASH%205.0/badge.svg)](https://github.com/bx-sh/expect.sh/actions?query=workflow%3A%22BASH+5.0%22)
 
 ---
 
@@ -19,7 +18,6 @@ Download the [latest release](https://github.com/bx-sh/expect.sh/archive/v0.5.0.
 
 `expect.sh` is a flexible test expectation library
 
-
 ```sh
 expect { ls } not toContain "$filename"
 
@@ -34,16 +32,19 @@ expect { ls } toContain "$filename"
 The provided matchers that come with `expect.sh` use these conventions:
 
 - The first argument is the "actual result"
+
   ```sh
   expect "Hello, world" toContain "Hello"
   ```
 
 - e.g. to get the output of a command:
+
   ```sh
   expect "$( ls )" toContain "filename"
   ```
 
 - If `{ ... }` block is provided, the code is evaluated (_without a subshell_)
+
   ```sh
   expect { ls } toContain "filename"
   ```
@@ -234,9 +235,9 @@ expect {{ grep pattern file.txt }} not toFail "and STDERR shouldn't contain this
 
 ## Related Projects
 
- - ☑️ [`assert.sh`](https://assert.sh) for `assert [ 1 -eq 42 ]` style assertions
- - 🚀 [`run.sh`](https://run.assert.sh) for `run ls && echo "$STDOUT"` helper function
- - 🔬 [`spec.sh`](https://specs.sh) for a lovely shell specification testing framework
+- ☑️ [`assert.sh`](https://assert.sh) for `assert [ 1 -eq 42 ]` style assertions
+- 🚀 [`run.sh`](https://run.assert.sh) for `run ls && echo "$STDOUT"` helper function
+- 🔬 [`spec.sh`](https://specs.sh) for a lovely shell specification testing framework
 
 ---
 

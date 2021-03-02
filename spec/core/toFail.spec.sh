@@ -1,4 +1,5 @@
-import @expect/matchers/toFail
+# GENERATED - DO NOT EDIT
+source matchers/toFail.sh
 
 thisFails() {
   echo "I am the STDERR! Hello, world!" >&2

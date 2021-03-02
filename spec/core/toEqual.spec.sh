@@ -1,4 +1,5 @@
-import @expect/matchers/toEqual
+# GENERATED - DO NOT EDIT
+source matchers/toEqual.sh
 
 @spec.toEqual.wrong_number_of_arguments() {
   refute run [[ expect 5 toEqual ]]

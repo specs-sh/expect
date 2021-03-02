@@ -1,4 +1,5 @@
-import @expect/matchers/toOutput
+# GENERATED - DO NOT EDIT
+source matchers/toOutput.sh
 
 @spec.toOutput.noArguments() {
   refute run [[ expect "Whoops this requires a block" toOutput ]]

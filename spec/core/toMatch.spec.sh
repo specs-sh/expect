@@ -1,4 +1,5 @@
-import @expect/matchers/toMatch
+# GENERATED - DO NOT EDIT
+source matchers/toMatch.sh
 
 @spec.toMatch.wrong_number_of_arguments() {
   refute run [[ expect "Hello" toMatch ]]

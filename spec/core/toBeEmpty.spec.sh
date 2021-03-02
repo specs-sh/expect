@@ -1,4 +1,5 @@
-import @expect/matchers/toBeEmpty
+# GENERATED - DO NOT EDIT
+source matchers/toBeEmpty.sh
 
 @spec.toBeEmpty.wrong_number_of_arguments() {
   refute run [[ expect 5 toBeEmpty arg ]]

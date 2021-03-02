@@ -1,4 +1,5 @@
-import @expect/matchers/toContain
+# GENERATED - DO NOT EDIT
+source matchers/toContain.sh
 
 @spec.toContain.wrong_number_of_arguments() {
   refute run [[ expect "Hi" toContain ]]

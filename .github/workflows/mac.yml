@@ -2,9 +2,9 @@ name: Mac (BASH 3.2)
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
@@ -12,11 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: bx-sh/setup-bx@master
-      - run: "bash --version | head -1"
+      - run: 'bash --version | head -1'
         shell: bash
-      - run: echo "::add-path::packages/bin"
-        shell: bash
-      - run: bx spec
+      - run: bin/spec spec/
         shell: bash
         env:
           VERBOSE: true

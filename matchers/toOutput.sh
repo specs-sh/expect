@@ -7,7 +7,7 @@ expect.matcher.toOutput() {
   [ "$1" = "toStderr" ] || [ "$1" = "toSTDERR" ] && { ___expect___ShouldCheckSTDERR=true; shift; }
   [ $# -lt 1 ] && { echo "toOutput expects 1 or more arguments, received $#" >&2; exit 1; }
 
-  expect.execute_block
+  expect.execute_block || return 1
 
   local EXPECT_STDOUT_actual="$( echo -e "$EXPECT_STDOUT" | cat -vet )"
   local EXPECT_STDERR_actual="$( echo -e "$EXPECT_STDERR" | cat -vet )"

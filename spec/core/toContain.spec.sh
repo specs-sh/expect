@@ -1,4 +1,5 @@
-import @expect/matchers/toContain
+# GENERATED - DO NOT EDIT
+source matchers/toContain.sh
 
 @spec.toContain.wrong_number_of_arguments() {
   refute run [[ expect "Hi" toContain ]]
@@ -67,6 +68,11 @@ setAndEchoX() {
   expect { setAndEchoX 42 } toContain "42"
 
   assert [ "$x" = 42 ] # value was updated
+
+  # Fails if the command fails (even though it does return 'empty')
+  run expect { thisCommandDoesNotExist &>/dev/null } toContain ""
+  assert [ $EXITCODE -eq 1 ]
+  [[ $STDERR = *"thisCommandDoesNotExist: command not found"* ]] || { echo "Command did not output expected error text" >&2; return 1; }
 }
 
 @spec.doubleCurliesRunInSubshell() {
@@ -75,6 +81,11 @@ setAndEchoX() {
   expect {{ setAndEchoX 42 }} toContain "42"
 
   assert [ "$x" = 5 ] # value was not updated
+
+  # Fails if the command fails (even though it does return 'empty')
+  run expect {{ thisCommandDoesNotExist &>/dev/null }} toContain ""
+  assert [ $EXITCODE -eq 1 ]
+  [[ $STDERR = *"thisCommandDoesNotExist: command not found"* ]] || { echo "Command did not output expected error text" >&2; return 1; }
 }
 
 @spec.singleBracketsRunLocally() {
@@ -83,6 +94,11 @@ setAndEchoX() {
   expect [ setAndEchoX 42 ] toContain "42"
 
   assert [ "$x" = 42 ] # value was updated
+
+  # Fails if the command fails (even though it does return 'empty')
+  run expect [ thisCommandDoesNotExist &>/dev/null ] toContain ""
+  assert [ $EXITCODE -eq 1 ]
+  [[ $STDERR = *"thisCommandDoesNotExist: command not found"* ]] || { echo "Command did not output expected error text" >&2; return 1; }
 }
 
 @spec.doubleBracketsRunInSubshell() {
@@ -91,4 +107,9 @@ setAndEchoX() {
   expect [[ setAndEchoX 42 ]] toContain "42"
 
   assert [ "$x" = 5 ] # value was not updated
+
+  # Fails if the command fails (even though it does return 'empty')
+  run expect [[ thisCommandDoesNotExist &>/dev/null ]] toContain ""
+  assert [ $EXITCODE -eq 1 ]
+  [[ $STDERR = *"thisCommandDoesNotExist: command not found"* ]] || { echo "Command did not output expected error text" >&2; return 1; }
 }

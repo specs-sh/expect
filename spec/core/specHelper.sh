@@ -1,12 +1,4 @@
-. "$( bx BxSH )"
-
-PACKAGE_PATH=.:packages/
-
-import @assert
-import @run
-
-# Just core
-import @expect/core
+source core.sh
 
 stderrContains() {
   if [[ "$STDERR" != *"$1"* ]]

@@ -1,4 +1,5 @@
-import @expect/matchers/toFail
+# GENERATED - DO NOT EDIT
+source matchers/toFail.sh
 
 thisFails() {
   echo "I am the STDERR! Hello, world!" >&2
@@ -54,6 +55,10 @@ setAndEchoXAndFail() {
   expect { setAndEchoXAndFail 42 } toFail "42"
 
   assert [ "$x" = 42 ] # value was updated
+
+  # Works fine with failing commands!
+  run expect { thisCommandDoesNotExist &>/dev/null } toFail ""
+  assert [ $EXITCODE -eq 0 ]
 }
 
 @spec.doubleCurliesRunInSubshell() {
@@ -62,6 +67,10 @@ setAndEchoXAndFail() {
   expect {{ setAndEchoXAndFail 42 }} toFail "42"
 
   assert [ "$x" = 5 ] # value was not updated
+
+  # Works fine with failing commands!
+  run expect {{ thisCommandDoesNotExist &>/dev/null }} toFail ""
+  assert [ $EXITCODE -eq 0 ]
 }
 
 @spec.singleBracketsRunLocally() {
@@ -70,6 +79,10 @@ setAndEchoXAndFail() {
   expect [ setAndEchoXAndFail 42 ] toFail "42"
 
   assert [ "$x" = 42 ] # value was updated
+
+  # Works fine with failing commands!
+  run expect [ thisCommandDoesNotExist &>/dev/null ] toFail ""
+  assert [ $EXITCODE -eq 0 ]
 }
 
 @spec.doubleBracketsRunInSubshell() {
@@ -78,4 +91,8 @@ setAndEchoXAndFail() {
   expect [[ setAndEchoXAndFail 42 ]] toFail "42"
 
   assert [ "$x" = 5 ] # value was not updated
+
+  # Works fine with failing commands!
+  run expect [[ thisCommandDoesNotExist &>/dev/null ]] toFail ""
+  assert [ $EXITCODE -eq 0 ]
 }

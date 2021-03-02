@@ -19,7 +19,6 @@ curl -o- https://expectations.sh/installer.sh | bash
 
 `expect.sh` is a flexible test expectation library
 
-
 ```sh
 expect { ls } not toContain "$filename"
 
@@ -34,16 +33,19 @@ expect { ls } toContain "$filename"
 The provided matchers that come with `expect.sh` use these conventions:
 
 - The first argument is the "actual result"
+
   ```sh
   expect "Hello, world" toContain "Hello"
   ```
 
 - e.g. to get the output of a command:
+
   ```sh
   expect "$( ls )" toContain "filename"
   ```
 
 - If `{ ... }` block is provided, the code is evaluated (_without a subshell_)
+
   ```sh
   expect { ls } toContain "filename"
   ```
@@ -55,42 +57,11 @@ The provided matchers that come with `expect.sh` use these conventions:
 
 ---
 
-## Authoring Expectations
+## Related Projects
 
-_Every project is different, you should author your own expectations!_
-
-If you have a common set of assertions which you perform in your tests:
-
-```sh
-checkIfConfigIsValid() {
-  local configFile="$1"
-  [ -f "$configFile" ] || { echo "Not found" >&2; return 1; }
-  lint "$configFile"   || { echo "Invalid"   >&2; return 1  }
-}
-
-testOne() {
-  local config="$( config --new )"
-  checkIfConfigFileIsValid "$config"
-}
-
-testTwo() {
-  local config="$( config --get different )"
-  checkIfConfigFileIsValid "$config"
-}
-
-# ...
-```
-
-You might want to consider authoring your own expectation(s) for your tests:
-
-```sh
-testOne() {
-  local config="$( config --new )"
-  expect "$config" toBeValidConfig
-}
-```
-
-For details, see the 🎓 [Authoring Expectations Tutorial](authoring)
+- 🔬 [`spec.sh`](https://specs.sh) for a lovely shell specification testing framework
+- ☑️ [`assert.sh`](https://assert.sh) for `assert [ 1 -eq 42 ]` style assertions
+- 🚀 [`run.sh`](https://run.assert.sh) for `run ls && echo "$STDOUT"` helper function
 
 ---
 
@@ -232,18 +203,48 @@ expect {{ grep pattern file.txt }} not toFail "and STDERR shouldn't contain this
 
 ---
 
-## Related Projects
+## Authoring Expectations
 
- - ☑️ [`assert.sh`](https://assert.sh) for `assert [ 1 -eq 42 ]` style assertions
- - 🚀 [`run.sh`](https://run.assert.sh) for `run ls && echo "$STDOUT"` helper function
- - 🔬 [`spec.sh`](https://specs.sh) for a lovely shell specification testing framework
+_Every project is different, you should author your own expectations!_
 
----
+If you have a common set of assertions which you perform in your tests:
+
+```sh
+checkIfConfigIsValid() {
+  local configFile="$1"
+  [ -f "$configFile" ] || { echo "Not found" >&2; return 1; }
+  lint "$configFile"   || { echo "Invalid"   >&2; return 1  }
+}
+
+testOne() {
+  local config="$( config --new )"
+  checkIfConfigFileIsValid "$config"
+}
+
+testTwo() {
+  local config="$( config --get different )"
+  checkIfConfigFileIsValid "$config"
+}
+
+# ...
+```
+
+You might want to consider authoring your own expectation(s) for your tests:
+
+```sh
+testOne() {
+  expect { config --new } toBeValidConfig
+}
+```
+
+For details, see the 🎓 [Authoring Expectations Tutorial](authoring)
 
 #### Test Framework Compatibility
 
 - [Bats](https://github.com/bats-core/bats-core)
 - [shUnit2](https://github.com/kward/shunit2/)
 - [roundup](http://bmizerany.github.io/roundup/roundup.1.html)
+
+---
 
 {% endraw %}

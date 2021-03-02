@@ -73,6 +73,11 @@ setAndEchoX() {
   expect { setAndEchoX 42 } toBeEmpty
 
   assert [ "$x" = 42 ] # value was updated
+
+  # Fails if the command fails (even though it does return 'empty')
+  run expect { thisCommandDoesNotExist &>/dev/null } toBeEmpty
+  assert [ $EXITCODE -eq 1 ]
+  [[ $STDERR = *"thisCommandDoesNotExist: command not found"* ]] || { echo "Command did not output expected error text" >&2; return 1; }
 }
 
 @spec.doubleCurliesRunInSubshell() {
@@ -81,6 +86,11 @@ setAndEchoX() {
   expect {{ setAndEchoX 42 }} toBeEmpty
 
   assert [ "$x" = 5 ] # value was not updated
+
+  # Fails if the command fails (even though it does return 'empty')
+  run expect {{ thisCommandDoesNotExist &>/dev/null }} toBeEmpty
+  assert [ $EXITCODE -eq 1 ]
+  [[ $STDERR = *"thisCommandDoesNotExist: command not found"* ]] || { echo "Command did not output expected error text" >&2; return 1; }
 }
 
 @spec.singleBracketsRunLocally() {
@@ -89,6 +99,11 @@ setAndEchoX() {
   expect [ setAndEchoX 42 ] toBeEmpty
 
   assert [ "$x" = 42 ] # value was updated
+
+  # Fails if the command fails (even though it does return 'empty')
+  run expect [ thisCommandDoesNotExist &>/dev/null ] toBeEmpty
+  assert [ $EXITCODE -eq 1 ]
+  [[ $STDERR = *"thisCommandDoesNotExist: command not found"* ]] || { echo "Command did not output expected error text" >&2; return 1; }
 }
 
 @spec.doubleBracketsRunInSubshell() {
@@ -97,4 +112,9 @@ setAndEchoX() {
   expect [[ setAndEchoX 42 ]] toBeEmpty
 
   assert [ "$x" = 5 ] # value was not updated
+
+  # Fails if the command fails (even though it does return 'empty')
+  run expect [[ thisCommandDoesNotExist &>/dev/null ]] toBeEmpty
+  assert [ $EXITCODE -eq 1 ]
+  [[ $STDERR = *"thisCommandDoesNotExist: command not found"* ]] || { echo "Command did not output expected error text" >&2; return 1; }
 }

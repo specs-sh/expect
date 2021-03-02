@@ -1,4 +1,4 @@
-[ -z "$EXPECT_BLOCK_PAIRS" ] && EXPECT_BLOCK_PAIRS="{\n}\n{{\n}}\n{{{\n}}}\n[\n]\n[[\n]]\n[[[\n]]]\n"
+[ -z "$EXPECT_BLOCK_PAIRS" ] && EXPECT_BLOCK_PAIRS="{\n}\n{{\n}}\n[\n]\n[[\n]]\n"
 EXPECT_BLOCK_SUBSHELL_TYPES="{{\n[[\n"
 
 expect() {

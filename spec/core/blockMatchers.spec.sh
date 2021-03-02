@@ -17,10 +17,6 @@
   assert [ "$STDOUT" = "" ]
   assert [ "$STDERR" = "Expected '{{' block to be closed with '}}' but no '}}' provided" ]
 
-  refute run expect [[[ hello there
-  assert [ "$STDOUT" = "" ]
-  assert [ "$STDERR" = "Expected '[[[' block to be closed with ']]]' but no ']]]' provided" ]
-
   refute run expect [ echo closed with wrong type }
   assert [ "$STDOUT" = "" ]
   assert [ "$STDERR" = "Expected '[' block to be closed with ']' but no ']' provided" ]
@@ -58,9 +54,9 @@ expect.matcher.toRunSomething() {
 
   assert [ "$blockType" = "{" ]
 
-  expect {{{ hello I am in the block }}} toDoSomething
+  expect {{ hello I am in the block }} toDoSomething
 
-  assert [ "$blockType" = "{{{" ]
+  assert [ "$blockType" = "{{" ]
 }
 
 @spec.blockMatcher.NOT_is_available() {

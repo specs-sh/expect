@@ -17,10 +17,6 @@
   assert [ "$STDOUT" = "" ]
   assert [ "$STDERR" = "Expected '{{' block to be closed with '}}' but no '}}' provided" ]
 
-  refute run expect [[[ hello there
-  assert [ "$STDOUT" = "" ]
-  assert [ "$STDERR" = "Expected '[[[' block to be closed with ']]]' but no ']]]' provided" ]
-
   refute run expect [ echo closed with wrong type }
   assert [ "$STDOUT" = "" ]
   assert [ "$STDERR" = "Expected '[' block to be closed with ']' but no ']' provided" ]
@@ -35,6 +31,10 @@ expect.matcher.toDoSomething() {
   blockType="$EXPECT_BLOCK_TYPE"
   not="$EXPECT_NOT"
   name="$EXPECT_MATCHER_NAME"
+}
+
+expect.matcher.toRunSomething() {
+  expect.execute_block || return 1
 }
 
 @spec.blockMatcher.block_available_to_matcher_as_BLOCK() {
@@ -54,9 +54,9 @@ expect.matcher.toDoSomething() {
 
   assert [ "$blockType" = "{" ]
 
-  expect {{{ hello I am in the block }}} toDoSomething
+  expect {{ hello I am in the block }} toDoSomething
 
-  assert [ "$blockType" = "{{{" ]
+  assert [ "$blockType" = "{{" ]
 }
 
 @spec.blockMatcher.NOT_is_available() {
@@ -104,4 +104,20 @@ expect.matcher.toDoSomething() {
 
   assert [ "$block" = "Haha this works" ]
   assert [ "$blockType" = "{{" ]
+
+  # Can even configure if they run in subshells
+
+  local var=5
+  expect @@ updateVar @@ toRunSomething
+  assert [ "$var" = "changed" ]
+
+  # But not configure it to run in a subshell:
+  var="don't change me"
+  EXPECT_BLOCK_SUBSHELL_TYPES="${EXPECT_BLOCK_SUBSHELL_TYPES}@@\n"
+  expect @@ updateVar @@ toRunSomething
+  assert [ "$var" = "don't change me" ]
+}
+
+updateVar() {
+  var="changed"
 }

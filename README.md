@@ -10,7 +10,7 @@ expect { BASH testing } toBe "wonderful"
 
 ---
 
-Download the [latest release](https://github.com/bx-sh/expect.sh/archive/v0.5.0.tar.gz) or install via:
+Download the [latest release](https://github.com/bx-sh/expect.sh/archive/v0.6.0.tar.gz) or install via:
 
 #### `curl -o- https://expectations.sh/installer.sh | bash`
 

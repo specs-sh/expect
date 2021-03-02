@@ -4,7 +4,7 @@ expect.matcher.toContain() {
   local ___expect___actualResult
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
-    expect.execute_block
+    expect.execute_block || return 1
     ___expect___actualResult="${EXPECT_STDOUT}${EXPECT_STDERR}"
   else
     ___expect___actualResult="$EXPECT_ACTUAL_RESULT"

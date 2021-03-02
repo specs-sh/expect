@@ -3,7 +3,7 @@ expect.matcher.toEqual() {
 
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
-    expect.execute_block
+    expect.execute_block || return 1
     local actualResult="${EXPECT_STDOUT}${EXPECT_STDERR}"
   else
     local actualResult="$EXPECT_ACTUAL_RESULT"

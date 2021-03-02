@@ -1,3 +1,4 @@
+# TODO refactor this into 2 much simpler native arrays to represent pairs - no string separator - and remove the 3x
 [ -z "$EXPECT_BLOCK_PAIRS" ] && EXPECT_BLOCK_PAIRS="{\n}\n{{\n}}\n{{{\n}}}\n[\n]\n[[\n]]\n[[[\n]]]\n"
 
 expect() {
@@ -56,25 +57,55 @@ EXPECT_FAIL="exit 1"
 
 expect.fail() { echo -e "$*" >&2; $EXPECT_FAIL; }
 
+# TODO move this into expect under -- to note add another function into the scope!
 expect.execute_block() {
+  local ___expect___allowFailure=""
+  [ "$1" = allowFailure ] && { ___expect___allowFailure=true; shift; }
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     local ___expect___RunInSubshell=""
+    # TODO define the subshell -vs- not subshell types in a configurable variable
     [ "$EXPECT_BLOCK_TYPE" = "{{" ] || [ "$EXPECT_BLOCK_TYPE" = "[[" ] && ___expect___RunInSubshell=true
     local ___expect___stdout_file="$( mktemp )"
     local ___expect___stderr_file="$( mktemp )"
     if [ "$___expect___RunInSubshell" = "true" ]
     then
+      # TODO pipe aliases instead of temporary files
       local ___expect___UnusedVariable
       ___expect___UnusedVariable="$( "${EXPECT_BLOCK[@]}" 1>"$___expect___stdout_file" 2>"$___expect___stderr_file" )"
+      # Rename EXITCODE to STATUS
       EXPECT_EXITCODE=$?
     else
-      "${EXPECT_BLOCK[@]}" 1>"$___expect___stdout_file" 2>"$___expect___stderr_file"
-      EXPECT_EXITCODE=$?
+      if [[ "$SHELLOPTS" = *"errexit"* ]]
+      then
+        set +e
+        "${EXPECT_BLOCK[@]}" 1>"$___expect___stdout_file" 2>"$___expect___stderr_file"
+        EXPECT_EXITCODE=$?
+        set -e
+      else
+        "${EXPECT_BLOCK[@]}" 1>"$___expect___stdout_file" 2>"$___expect___stderr_file"
+        EXPECT_EXITCODE=$?
+      fi
     fi
     EXPECT_STDOUT="$( < "$___expect___stdout_file" )"
     EXPECT_STDERR="$( < "$___expect___stderr_file" )"
     rm -rf "$___expect___stdout_file"
     rm -rf "$___expect___stderr_file"
+    if [ $EXPECT_EXITCODE -ne 0 ]  && [ -z "$___expect___allowFailure" ]
+    then
+      echo "'expect' command failed unexpectedly: ${EXPECT_BLOCK[*]}" >&2
+      [ -n "$EXPECT_STDOUT" ] && echo " Output:  $EXPECT_STDOUT" >&2
+      if shopt -q extglob
+      then
+        [ -n "$EXPECT_STDERR" ] && echo "Command output: ${EXPECT_STDERR/expect.sh: line +([[:digit:]]): }" >&2
+      else
+        shopt -s extglob
+        [ -n "$EXPECT_STDERR" ] && echo "Command error: ${EXPECT_STDERR/expect.sh: line +([[:digit:]]): }" >&2
+        shopt -u extglob
+      fi
+      return 1
+    else
+      return 0
+    fi
   fi
 }

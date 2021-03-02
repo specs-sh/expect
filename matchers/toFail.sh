@@ -1,7 +1,7 @@
 expect.matcher.toFail() {
   [ "${#EXPECT_BLOCK[@]}" -lt 1 ] && { echo "toFail requires a block" >&2; exit 1; }
 
-  expect.execute_block
+  expect.execute_block allowFailure
 
   if [ -z "$EXPECT_NOT" ]
   then

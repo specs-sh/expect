@@ -1,5 +1,5 @@
-# TODO refactor this into 2 much simpler native arrays to represent pairs - no string separator - and remove the 3x
 [ -z "$EXPECT_BLOCK_PAIRS" ] && EXPECT_BLOCK_PAIRS="{\n}\n{{\n}}\n{{{\n}}}\n[\n]\n[[\n]]\n[[[\n]]]\n"
+EXPECT_BLOCK_SUBSHELL_TYPES="{{\n[[\n"
 
 expect() {
   [ $# -eq 0 ] && { echo "Missing required argument for 'expect': actual value or { code block } or {{ subshell code block }}" >&2; return 1; }
@@ -64,8 +64,17 @@ expect.execute_block() {
   if [ "${#EXPECT_BLOCK[@]}" -gt 0 ]
   then
     local ___expect___RunInSubshell=""
-    # TODO define the subshell -vs- not subshell types in a configurable variable
-    [ "$EXPECT_BLOCK_TYPE" = "{{" ] || [ "$EXPECT_BLOCK_TYPE" = "[[" ] && ___expect___RunInSubshell=true
+    local ___expect___SubshellBlockTypes
+    IFS=$'\n' read -d '' -ra ___expect___SubshellBlockTypes < <(printf "$EXPECT_BLOCK_SUBSHELL_TYPES")
+    local ___expect___SubshellBlockType
+    for ___expect___SubshellBlockType in "${___expect___SubshellBlockTypes[@]}"
+    do
+      if [ "$EXPECT_BLOCK_TYPE" = "$___expect___SubshellBlockType" ]
+      then
+        ___expect___RunInSubshell=true
+        break
+      fi
+    done
     local ___expect___stdout_file="$( mktemp )"
     local ___expect___stderr_file="$( mktemp )"
     if [ "$___expect___RunInSubshell" = "true" ]
@@ -73,7 +82,6 @@ expect.execute_block() {
       # TODO pipe aliases instead of temporary files
       local ___expect___UnusedVariable
       ___expect___UnusedVariable="$( "${EXPECT_BLOCK[@]}" 1>"$___expect___stdout_file" 2>"$___expect___stderr_file" )"
-      # Rename EXITCODE to STATUS
       EXPECT_EXITCODE=$?
     else
       if [[ "$SHELLOPTS" = *"errexit"* ]]

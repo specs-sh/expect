@@ -37,6 +37,10 @@ expect.matcher.toDoSomething() {
   name="$EXPECT_MATCHER_NAME"
 }
 
+expect.matcher.toRunSomething() {
+  expect.execute_block || return 1
+}
+
 @spec.blockMatcher.block_available_to_matcher_as_BLOCK() {
   local block=""
   assert [ "$block" = "" ]
@@ -104,4 +108,20 @@ expect.matcher.toDoSomething() {
 
   assert [ "$block" = "Haha this works" ]
   assert [ "$blockType" = "{{" ]
+
+  # Can even configure if they run in subshells
+
+  local var=5
+  expect @@ updateVar @@ toRunSomething
+  assert [ "$var" = "changed" ]
+
+  # But not configure it to run in a subshell:
+  var="don't change me"
+  EXPECT_BLOCK_SUBSHELL_TYPES="${EXPECT_BLOCK_SUBSHELL_TYPES}@@\n"
+  expect @@ updateVar @@ toRunSomething
+  assert [ "$var" = "don't change me" ]
+}
+
+updateVar() {
+  var="changed"
 }

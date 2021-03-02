@@ -470,23 +470,21 @@ To solve this problem, `expect` provides **blocks**:
 
 - `expect { a list of things } toMeetMyExpectations`
 
-By default, you can wrap your block in one, two, or three curly braces or brackets:
+By default, you can wrap your block in brackets or braces:
 
 - `expect { a list of things } toMeetMyExpectations`
 - `expect {{ a list of things }} toMeetMyExpectations`
-- `expect {{{ a list of things }}} toMeetMyExpectations`
 - `expect [ a list of things ] toMeetMyExpectations`
 - `expect [[ a list of things ]] toMeetMyExpectations`
-- `expect [[[ a list of things ]]] toMeetMyExpectations`
 
-This provides flexibility, e.g. if you want `{` or `{{` or `{{{` etc to behave differently.
+💡 **Note:** Built-in matchers execute `{{` and `[[` blocks inside subshells but execute `{` and `[[` locally (_not in subshells_))
 
 > ### Example
-> 
+>
 > Provided matchers behave differently when using one -vs- two braces or brackets
-> 
+>
 > When `{` or `[` is used, the block is executed to get the actual result
-> 
+>
 > When `{{` or `[[` is used, the block is executed _in a subshell_ to get the actual result
 
 ### `EXPECT_BLOCK`
@@ -754,8 +752,8 @@ expect.matcher.toEq() {
 
 The default supported block types are 1-3 curly braces or brackets:
 
- - `{ ... }` `{{ ... }}` `{{{ ... }}}`
- - `[ ... ]` `[[ ... ]]` `[[[ ... ]]]`
+- `{ ... }` `{{ ... }}` `{{{ ... }}}`
+- `[ ... ]` `[[ ... ]]` `[[[ ... ]]]`
 
 You can change these by overriding or extending the `EXPECT_BLOCK_PAIRS` variable.
 
@@ -794,11 +792,12 @@ expect OPEN Cool I could use this syntax CLOSE toTest
 ```
 
 When a block is provided, matchers have access to these extra 2 variables:
- - `EXPECT_BLOCK_OPEN`
- - `EXPECT_BLOCK_CLOSE`
+
+- `EXPECT_BLOCK_OPEN`
+- `EXPECT_BLOCK_CLOSE`
 
 > In BASH you cannot/should not try to use any of these:
-> 
+>
 > - `< ... >`
 > - `( ... )`
 > - `` ` ... ` ``
@@ -834,16 +833,16 @@ You can do matcher lookup however best works for you.
 
 ## Supported `EXPECT` variables
 
-| Variable Name              | Description                                                                 |
-| -------------------------- | --------------------------------------------------------------------------- |
-| EXPECT_VERSION             | Returns version of `expect`                                                 |
-| EXPECT_MATCHER_NAME        | Name of matcher invoked, e.g. `toEq`                                        |
-| EXPECT_NOT                 | Set to `"true"` when `not` precedes matcher                                 |
-| EXPECT_ACTUAL_RESULT       | Contains actual result (_blank value if a block was provided_)              |
-| EXPECT_BLOCK               | BASH Array containing block (_empty array if no block provided_)            |
-| EXPECT_BLOCK_TYPE          | Opening block character used, e.g. `{` (_blank value is no block provided_) |
-| EXPECT_BLOCK_PAIRS         | Newline `\n`-delimited text pairs for detecting block open and close        |
-| EXPECT_MATCHER_FUNCTION    | If provided, `expect` will invoke this instead of `expect.matcher.[name]`   |
+| Variable Name           | Description                                                                 |
+| ----------------------- | --------------------------------------------------------------------------- |
+| EXPECT_VERSION          | Returns version of `expect`                                                 |
+| EXPECT_MATCHER_NAME     | Name of matcher invoked, e.g. `toEq`                                        |
+| EXPECT_NOT              | Set to `"true"` when `not` precedes matcher                                 |
+| EXPECT_ACTUAL_RESULT    | Contains actual result (_blank value if a block was provided_)              |
+| EXPECT_BLOCK            | BASH Array containing block (_empty array if no block provided_)            |
+| EXPECT_BLOCK_TYPE       | Opening block character used, e.g. `{` (_blank value is no block provided_) |
+| EXPECT_BLOCK_PAIRS      | Newline `\n`-delimited text pairs for detecting block open and close        |
+| EXPECT_MATCHER_FUNCTION | If provided, `expect` will invoke this instead of `expect.matcher.[name]`   |
 
 ---
 

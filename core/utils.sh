@@ -1,5 +1,5 @@
 ExpectMatchers.utils.inspect() {
-  printf "'%s'" "$( echo -ne "$1" | cat -vET )"
+  printf "'%s'" "$( printf '%s' "$1" | cat -vET )"
 }
 
 ExpectMatchers.utils.inspectList() {

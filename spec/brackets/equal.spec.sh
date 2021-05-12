@@ -14,6 +14,5 @@ spec.value.should.not.equal.value() {
   assert run { [: "Hello" != "World" ] }
   refute run { [: "Hello" != "Hello" ] }
   [[ "$STDERR" = *"Expected results not to equal"* ]]
-  [[ "$STDERR" = *"Actual: 'Hello"* ]]
-  [[ "$STDERR" = *"Expected: 'Hello"* ]]
+  [[ "$STDERR" = *"Value: 'Hello"* ]]
 }

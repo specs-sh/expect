@@ -1,0 +1,18 @@
+- [x] Equal
+- [x] Command Result Equal
+- [x] Fail
+- [x] Fail with EXITCODE
+- [x] Fail with STDOUT
+- [x] Fail with STDERR
+- [x] Fail with EXITCODE and STDOUT and STDERR
+- [ ] Contain
+- [ ] Empty
+- [ ] Length
+- [ ] Array Equal
+- [ ] Array Contain
+- [ ] Array Empty
+- [ ] Array Length
+- [ ] Match
+- [ ] File
+- [ ] Directory
+- [ ] Executable

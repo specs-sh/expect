@@ -1,1 +1,0 @@
-- [ ] `expect { ... } toFail withStatus 42` or similar

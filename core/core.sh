@@ -22,8 +22,9 @@ Expect.core.assert() {
   while (( $# > 0 )) && ! declare -F "$EXPECT_MATCHER" &>/dev/null; do
     case "$1" in
       not) EXPECT_NOT=true; shift ;;
-      to) shift ;;
       should) shift ;;
+      be) shift ;;
+      to) shift ;;
       *) EXPECT_MATCHER+=".$1"; shift ;;
     esac
   done
@@ -34,6 +35,6 @@ Expect.core.assert() {
     "$EXPECT_MATCHER" "$@"
   else
       echo "No matcher found for arguments: ${EXPECT_ARGUMENTS[*]}" >&2
-      return 3
+      return 44
   fi
 }

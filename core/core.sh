@@ -1,9 +1,9 @@
 set -uo pipefail # Remove when ready for production
 source core/utils.sh # Switch to compilation when ready for production
 
-Expect.core.assert() {
+Expect.assert() {
   local -a EXPECT_ORIGINAL_ARGUMENTS=("$@") EXPECT_ARGUMENTS=() EXPECT_COMMAND=()
-  local EXPECT_TYPE="${1:-expect}" EXPECT_ACTUAL= EXPECT_MATCHER= EXPECT_NOT= \
+  local EXPECT_TYPE="${1:-expect}" EXPECT_ACTUAL= EXPECT_MATCHER= EXPECT_NOT= EXPECT_IS_ARRAY= \
         EXPECT_BLOCK_OPEN= EXPECT_BLOCK_CLOSE= \
         EXPECT_COMMAND_STDOUT= EXPECT_COMMAND_STDERR= \
         EXPECT_BASH_ASSOCIATIVE_ARRAYS= EXPECT_BASH_NAME_REFERENCES= \

@@ -10,7 +10,7 @@ Assertions.assertExpectedAndActual() {
   esac
 }
 
-assertEqual() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.core.assert assertions "$2" equal "$1"; }
-assertEquals() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.core.assert assertions "$2" equal "$1"; }
-assertNotEqual() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.core.assert assertions "$2" not equal "$1"; }
-assertNotEquals() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.core.assert assertions "$2" not equal "$1"; }
+assertEqual() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" equal "$1"; }
+assertEquals() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" equal "$1"; }
+assertNotEqual() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not equal "$1"; }
+assertNotEquals() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not equal "$1"; }

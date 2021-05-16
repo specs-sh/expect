@@ -1,6 +1,7 @@
 ---
 ---
 
+{% raw %}
 # 🧐 `Expect`
 
 > _Modern assertions for Shell Scripting in the 2020s_
@@ -17,7 +18,7 @@ curl -o- https://expect.specs.sh/install.sh | bash
 
 # Expectations for Everyone
 
-Based on which programming language you prefer, you may have a favorite syntax for testing.
+{% endraw %}
 
 _Choose your own **preferred** syntax for test assertions:_
 
@@ -26,7 +27,7 @@ _Choose your own **preferred** syntax for test assertions:_
 > exitcode=$?
 > ```
 
-**Classic Assertions**
+**Classic-style Assertions**
 
 > ```sh
 > assertEquals 2 $exitcode
@@ -50,16 +51,18 @@ _Choose your own **preferred** syntax for test assertions:_
 **`assertThat`-style Assertions**
 
 > ```sh
-> assertThat { ls dir } fails with exitcode = 2
+> assertThat { ls dir } fails with exitcode = 2 \
 >                       and stdout contains "No such file or directory"
 > ```
 
+{% raw %}
 **`should`-style Assertions**
 
 > ```sh
-> {{ ls dir }} should fail with exitcode = 2
->              and stdout contains "No such file or directory"
+> {{ ls dir }} should fail with exitcode = 2 \
+>              and stdout containing "No such file or directory"
 > ```
+{% endraw %}
 
 ---
 
@@ -84,11 +87,11 @@ curl -o- https://expect.specs.sh/install.sh | bash
 > 
 > 🧐 Downloaded files (and example syntax)
 > 
-> » assertThat.sh - assertThat { ls } output contains "assertThat.sh"
+> » assertThat.sh - assertThat { ls } contains "assertThat.sh"
 > » assertions.sh - assertContains "assertions.sh" "$( ls )"
 > » brackets.sh   - [[: "$( ls )" = "*brackets.sh*" ]]
-> » expect.sh     - expect { ls } output to contain "expect.sh"
-> » should.sh     - {: ls } output should contain "should.sh"
+> » expect.sh     - expect { ls } to contain "expect.sh"
+> » should.sh     - {: ls } should contain "should.sh"
 > 
 > To get started, source any of the provided files in your tests.
 > 
@@ -141,6 +144,36 @@ assertThat "Hello" equals "World"
 ```
 
 {% raw %}
+
+### Matchers
+
+Matchers may be freely preceded by any of these (_ignored_) terms:
+
+- `a` `be` `to` `and` `does` `have` `with` `should`
+
+```sh
+assertThat { ls } does contain "README"
+```
+
+## `not`
+
+To negate an assertion, use `not`:
+
+```sh
+assertThat { ls } does not contain "README"
+# Expected text not to contain subtext
+# Actual: 'LICENSE README docs'
+# Not Expected: 'README'
+```
+
+### Multiple Assertions (_aka 'fluent assertions'_)
+
+Multiple assertions may be freely chained together:
+
+```sh
+assertThat { ls } contains "README" and contains "LICENSE"
+```
+
 ## `{ }` vs `{{ }}`
 
 ### `{ command arg }`
@@ -239,6 +272,35 @@ expect "Hello" to equal "World"
 ```
 
 {% raw %}
+
+### Matchers
+
+Matchers may be freely preceded by any of these (_ignored_) terms:
+
+- `a` `be` `to` `and` `does` `have` `with` `should`
+
+```sh
+expect { ls } to contain "README"
+```
+
+## `not`
+
+To negate an assertion, use `not`:
+
+```sh
+expect { ls } not to contain "README"
+# Expected text not to contain subtext
+# Actual: 'LICENSE README docs'
+# Not Expected: 'README'
+```
+
+### Multiple Assertions (_aka 'fluent assertions'_)
+
+Multiple assertions may be freely chained together:
+
+```sh
+expect { ls } to contain "README" and contain "LICENSE"
+```
 ## `{ }` vs `{{ }}`
 
 ### `{ command arg }`
@@ -286,6 +348,34 @@ Now try making an assertion!
 # Expected results to equal
 # Actual: 'Hello'
 # Expected: 'World'
+```
+### Matchers
+
+Matchers may be freely preceded by any of these (_ignored_) terms:
+
+- `a` `be` `to` `and` `does` `have` `with` `should`
+
+```sh
+{: ls } should contain "README"
+```
+
+## `not`
+
+To negate an assertion, use `not`:
+
+```sh
+{: ls } should not contain "README"
+# Expected text not to contain subtext
+# Actual: 'LICENSE README docs'
+# Not Expected: 'README'
+```
+
+### Multiple Assertions (_aka 'fluent assertions'_)
+
+Multiple assertions may be freely chained together:
+
+```sh
+{: ls } should contain "README" and contain "LICENSE"
 ```
 
 ## `{{ }}` vs `{: }` vs `{{: }}`
@@ -337,38 +427,38 @@ To run a command _in a subshell_ and assert on its output, use `{{: command }}`:
 <br>
 </details>
 
-## <i class="fad fa-atom-alt"></i> Available Matchers
+## <i class="fad fa-atom-alt"></i> Matchers
 
 Click or tap one of the options below for description and examples:
 
 ### Text Matchers
 
 <details>
-  <summary><h3>Empty</h3></summary>
+  <summary><h4>Empty</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Length</h3></summary>
+  <summary><h4>Length</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Equals</h3></summary>
+  <summary><h4>Equals</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Contains</h3></summary>
+  <summary><h4>Contains</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Matches</h3></summary>
+  <summary><h4>Matches</h4></summary>
 
 ...
 </details>
@@ -376,37 +466,37 @@ Click or tap one of the options below for description and examples:
 ### Array Matchers
 
 <details>
-  <summary><h3>Empty</h3></summary>
+  <summary><h4>Empty</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Size</h3></summary>
+  <summary><h4>Size</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Equals</h3></summary>
+  <summary><h4>Equals</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Contains</h3></summary>
+  <summary><h4>Contains</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>One Match</h3></summary>
+  <summary><h4>One Match</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>All Match</h3></summary>
+  <summary><h4>All Match</h4></summary>
 
 ...
 </details>
@@ -414,39 +504,127 @@ Click or tap one of the options below for description and examples:
 ### Command Matchers
 
 <details>
-  <summary><h3>Exit Code</h3></summary>
+  <summary><h4>Exit Code</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Passes</h3></summary>
+  <summary><h4>Passes</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Fails</h3></summary>
+  <summary><h4>Fails</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Output</h3></summary>
+  <summary><h4>Output</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Standard Output</h3></summary>
+  <summary><h4>Standard Output</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h3>Standard Error</h3></summary>
+  <summary><h4>Standard Error</h4></summary>
+
+...
+</details>
+
+### File / Directory Matchers
+
+<details>
+  <summary><h4>Directory Exists</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Exists</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Is Empty</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Is Readable</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Is Writeable</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Is Executable</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Is Newer Than</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Is Older Than</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Is Pipe</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Is Socket</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>File Paths Are Equal</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>Path (File or Directory) Exists</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>Path Is Symbolic Link</h4></summary>
 
 ...
 </details>
 
 ## <i class="fad fa-flask-potion"></i> Custom Matchers
+
+A matcher is merely a function which returns zero on success or non-zero on failure.
+
+```sh
+TODO
+```
+
+### Changing Assertion Target with Function

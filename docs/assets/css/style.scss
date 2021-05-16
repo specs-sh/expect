@@ -3,7 +3,7 @@
 
 @import "{{ site.theme }}";
 
-summary h3 {
+summary h3, summary h4 {
   display: inline;
 }
 

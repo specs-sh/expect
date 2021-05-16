@@ -3,10 +3,10 @@ source core/core.sh # Switch to compilation when ready for production
 
 Assertions.assertExpectedAndActual() {
   case $# in
-    0) echo "${FUNCNAME[1]} expected 2 arguments: [expected], [actual]" >&2; return 1 ;;
-    1) echo "${FUNCNAME[1]} expected 2 arguments: [expected], [actual]" >&2; return 1 ;;
+    0) echo "${FUNCNAME[1]} expected 2 arguments: [expected] [actual]" >&2; return 40 ;;
+    1) echo "${FUNCNAME[1]} expected 2 arguments: [expected] [actual]" >&2; return 40 ;;
     2) return 0 ;;
-    *) echo "${FUNCNAME[1]} expected 2 arguments: [expected], [actual]" >&2; return 1 ;;
+    *) echo "${FUNCNAME[1]} expected 2 arguments: [expected] [actual]" >&2; return 40 ;;
   esac
 }
 

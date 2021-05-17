@@ -4,7 +4,7 @@ ExpectMatcher.equal() {
   if [ "$EXPECT_NOT" = true ] && [ "$EXPECT_ACTUAL" = "$1" ]; then
     printf "Expected values not to equal:\nValue: %s\n" \
       "$( ExpectMatchers.utils.inspect "$EXPECT_ACTUAL" )" >&2
-    return 51
+    return 50
   elif [ "$EXPECT_NOT" != true ] && [ "$EXPECT_ACTUAL" != "$1" ]; then
     printf "Expected values to equal:\nActual: %s\nExpected: %s\n" \
       "$( ExpectMatchers.utils.inspect "$EXPECT_ACTUAL" )" \

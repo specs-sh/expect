@@ -2,7 +2,6 @@ source spec/helper.sh
 source matchers/equal.sh
 
 EQUAL_EXITCODE=50
-EQUAL_NOT_EXITCODE=51
 
 spec.assertEquals.noArguments() {
   source assertions.sh
@@ -87,7 +86,7 @@ example.does.not.equal.fail() {
   e.g. should     : {{ "Hello" }} should not equal "Hello"
   [[ "$STDERR" = *"Expected values not to equal"* ]]
   [[ "$STDERR" = *'Value: "Hello"'* ]]
-  (( EXITCODE == EQUAL_NOT_EXITCODE ))
+  (( EXITCODE == EQUAL_EXITCODE ))
   [ -z "$STDOUT" ]
 }
 

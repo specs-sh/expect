@@ -2,10 +2,8 @@ source spec/helper.sh
 source matchers/contain.sh
 
 CONTAIN_MESSAGE="Expected text value to contain"
-CONTAIN_EXITCODE=52
-
 CONTAIN_NOT_MESSAGE="Expected text value not to contain"
-CONTAIN_NOT_EXITCODE=53
+CONTAIN_EXITCODE=51
 
 example.noArguments() {
   e.g. assertThat : assertThat "Hello" contains
@@ -46,7 +44,7 @@ example.does.not.equal.fail() {
   [[ "$STDERR" = *"$CONTAIN_NOT_MESSAGE"* ]]
   [[ "$STDERR" = *'Actual: "Hello, world!"'* ]]
   [[ "$STDERR" = *'Unexpected: "Hello"'* ]]
-  (( EXITCODE == CONTAIN_NOT_EXITCODE ))
+  (( EXITCODE == CONTAIN_EXITCODE ))
   [ -z "$STDOUT" ]
 }
 
@@ -74,6 +72,6 @@ example.does.expand.wildcard.pattern.stars.fail() {
 
 # TODO: LIST SHOULD CONTAIN
 
-# TODO: ARRAY SHOULD CONTAIN
+# TODO: ARRAY CONTAIN
 
 runExamples

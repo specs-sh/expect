@@ -20,3 +20,6 @@ assertNotContains() { Assertions.assertExpectedAndActual "$@" || return $?; Expe
 
 assertSubstring() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" substring "$1"; }
 assertNotSubstring() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not substring "$1"; }
+
+assertLength() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" length "$1"; }
+assertNotLength() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not length "$1"; }

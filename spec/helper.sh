@@ -13,6 +13,7 @@ e.g.() {
       run -p [ "$@" ] || :
     fi
   fi
+  return 0
 }
 
 runExamples() {

@@ -5,12 +5,12 @@ ExpectMatcher.contain() {
     printf "Expected text value not to contain subtext:\nActual: %s\nUnexpected: %s\n" \
       "$( ExpectMatchers.utils.inspect "$EXPECT_ACTUAL" )" \
       "$( ExpectMatchers.utils.inspect "$1" )" >&2
-    return 53
+    return 51
   elif [ "$EXPECT_NOT" != true ] && [[ "$EXPECT_ACTUAL" != *$1* ]]; then
     printf "Expected text value to contain subtext:\nActual: %s\nExpected: %s\n" \
       "$( ExpectMatchers.utils.inspect "$EXPECT_ACTUAL" )" \
       "$( ExpectMatchers.utils.inspect "$1" )" >&2
-    return 52
+    return 51
   fi
   return 0
 }

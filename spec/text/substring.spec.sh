@@ -2,10 +2,8 @@ source spec/helper.sh
 source matchers/substring.sh
 
 SUBSTRING_MESSAGE="Expected text value to contain substring"
-SUBSTRING_EXITCODE=54
-
 SUBSTRING_NOT_MESSAGE="Expected text value not to contain substring"
-SUBSTRING_NOT_EXITCODE=55
+SUBSTRING_EXITCODE=55
 
 example.noArguments() {
   e.g. assertThat : assertThat "Hello" has substring
@@ -46,7 +44,7 @@ example.does.not.equal.fail() {
   [[ "$STDERR" = *"$SUBSTRING_NOT_MESSAGE"* ]]
   [[ "$STDERR" = *'Actual: "Hello, world!"'* ]]
   [[ "$STDERR" = *'Unexpected: "Hello"'* ]]
-  (( EXITCODE == SUBSTRING_NOT_EXITCODE ))
+  (( EXITCODE == SUBSTRING_EXITCODE ))
   [ -z "$STDOUT" ]
 }
 

@@ -10,7 +10,7 @@ ExpectMatcher.substring() {
     printf "Expected text value to contain substring:\nActual: %s\nExpected: %s\n" \
       "$( ExpectMatchers.utils.inspect "$EXPECT_ACTUAL" )" \
       "$( ExpectMatchers.utils.inspect "$1" )" >&2
-    return 54
+    return 55
   fi
   return 0
 }

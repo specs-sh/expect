@@ -103,7 +103,7 @@ curl -o- https://expect.specs.sh/install.sh | bash
 Click or tap on one of the options below for documentation:
 
 <details>
-  <summary><h3>Assertions (e.g. <code>assertEquals</code>)</h3></summary>
+  <summary><h3>Assertions – e.g. <code>assertEquals $x $y</code></h3></summary>
 
 First, `source` the `assertions.sh`:
 
@@ -126,7 +126,7 @@ assertEquals "World" "Hello"
 </details>
 
 <details>
-  <summary><h3>AssertThat</h3></summary>
+  <summary><h3>Assert That – e.g. <code>assertThat $x equals $y</code></h3></summary>
 
 First, `source` the `assertThat.sh`:
 
@@ -204,7 +204,7 @@ assertThat {{ ls }} contains "README"
 </details>
 
 <details>
-  <summary><h3>Brackets (e.g. <code>[: "Hello" = "World" ]</code>)</h3></summary>
+  <summary><h3>Brackets – e.g. <code>[: $x = $y ]</code></h3></summary>
 
 First, `source` the `assertThat.sh`:
 
@@ -254,7 +254,7 @@ To match against a BASH regular expression, use `[[: "$text" =~ 'pattern' ]]`
 
 
 <details>
-  <summary><h3>Expect</h3></summary>
+  <summary><h3>Expect – e.g. <code>expect $x to equal $y</code></h3></summary>
 
 First, `source` the `expect.sh`:
 
@@ -331,8 +331,10 @@ expect {{ ls }} to contain "README"
 </details>
 
 
+{% raw %}
 <details>
-  <summary><h3>Should</h3></summary>
+  <summary><h3>Should – e.g. <code>{{ $x }} should equal $y</code></h3></summary>
+{% endraw %}
 
 First, `source` the `should.sh`:
 

@@ -80,6 +80,7 @@ Expect.core.nextMatcher() {
       be) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
       a) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
       to) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
+      is) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
       does) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
       has) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
       have) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;

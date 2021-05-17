@@ -10,10 +10,22 @@ Assertions.assertExpectedAndActual() {
   esac
 }
 
+Assertions.assertActual() {
+  case $# in
+    0) echo "${FUNCNAME[1]} expected 1 arguments: [actual]" >&2; return 40 ;;
+    1) return 0 ;;
+    2) echo "${FUNCNAME[1]} expected 1 arguments: [actual]" >&2; return 40 ;;
+    *) echo "${FUNCNAME[1]} expected 1 arguments: [actual]" >&2; return 40 ;;
+  esac
+}
+
 assertEqual() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" equal "$1"; }
 assertEquals() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" equal "$1"; }
 assertNotEqual() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not equal "$1"; }
 assertNotEquals() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not equal "$1"; }
+
+assertEmpty() { Assertions.assertActual "$@" || return $?; Expect.assert assertions "$1" empty; }
+assertNotEmpty() { Assertions.assertActual "$@" || return $?; Expect.assert assertions "$1" not empty; }
 
 assertContains() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" contain "$1"; }
 assertNotContains() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not contain "$1"; }

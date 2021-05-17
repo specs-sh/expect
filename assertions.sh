@@ -14,3 +14,9 @@ assertEqual() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.ass
 assertEquals() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" equal "$1"; }
 assertNotEqual() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not equal "$1"; }
 assertNotEquals() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not equal "$1"; }
+
+assertContains() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" contain "$1"; }
+assertNotContains() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not contain "$1"; }
+
+assertSubstring() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" substring "$1"; }
+assertNotSubstring() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert assertions "$2" not substring "$1"; }

@@ -463,6 +463,24 @@ Click or tap one of the options below for description and examples:
 ...
 </details>
 
+<details>
+  <summary><h4>Starts With</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>Ends With</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>Has Substring</h4></summary>
+
+...
+</details>
+
 ### Array Matchers
 
 <details>

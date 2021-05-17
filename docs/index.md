@@ -492,7 +492,7 @@ Click or tap one of the options below for description and examples:
 </details>
 
 <details>
-  <summary><h4>Size</h4></summary>
+  <summary><h4>Length</h4></summary>
 
 ...
 </details>
@@ -510,13 +510,25 @@ Click or tap one of the options below for description and examples:
 </details>
 
 <details>
-  <summary><h4>One Match</h4></summary>
+  <summary><h4>First</h4></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>All Match</h4></summary>
+  <summary><h4>Last</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>All</h4></summary>
+
+...
+</details>
+
+<details>
+  <summary><h4>Any</h4></summary>
 
 ...
 </details>

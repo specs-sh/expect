@@ -1,13 +1,13 @@
-set -uo pipefail # Remove when ready for production
+# set -uo pipefail # Remove when ready for production
 source core/utils.sh # Switch to compilation when ready for production
 
 Expect.assert() {
   local -a EXPECT_ORIGINAL_ARGUMENTS=("$@") EXPECT_ARGUMENTS=() EXPECT_COMMAND=()
-  local EXPECT_TYPE="${1:-expect}" EXPECT_ACTUAL= EXPECT_MATCHER= EXPECT_NOT= EXPECT_IS_ARRAY= \
+  local EXPECT_TYPE="${1:-expect}" EXPECT_ACTUAL= EXPECT_MATCHER= EXPECT_NOT= EXPECT_ACTUAL_IS_ARRAY_NAME= EXPECT_ACTUAL_ARRAY_NAME= \
         EXPECT_BLOCK_OPEN= EXPECT_BLOCK_CLOSE= \
         EXPECT_COMMAND_STDOUT= EXPECT_COMMAND_STDERR= \
         EXPECT_BASH_ASSOCIATIVE_ARRAYS= EXPECT_BASH_NAME_REFERENCES= \
-        __expect__argument= __expect__isCommand= __expect__runCommandInSubShell= __expect__stdoutTempFile= __expect__stderrTempFile=
+        __expect__argument= __expect__isCommand= __expect__runCommandInSubShell= __expect__stdoutTempFile= __expect__stderrTempFile= __expect__nounsetOn= __expect__returnValue=
   local -i EXPECT_COMMAND_EXITCODE=0
   shift
 
@@ -59,12 +59,14 @@ Expect.assert() {
   EXPECT_ARGUMENTS=("$@")
   EXPECT_SEARCH_ARGUMENTS=("${EXPECT_ARGUMENTS[@]}")
   EXPECT_MATCHER=
+  shopt -qo nounset && { __expect__nounsetOn=true; set +u; }
   until (( ${#EXPECT_ARGUMENTS[@]} == 0 )); do
     if Expect.core.nextMatcher; then
-      "$EXPECT_MATCHER" "${EXPECT_ARGUMENTS[@]}" || return $?
+      "$EXPECT_MATCHER" "${EXPECT_ARGUMENTS[@]}" || { __expect__returnValue=$?; [ "$__expect__nounsetOn" = true ] && set -u; return $__expect__returnValue; }
       EXPECT_MATCHER= EXPECT_NOT=
     else
       echo "No matcher found for arguments: ${EXPECT_SEARCH_ARGUMENTS[*]}" >&2
+      [ "$__expect__nounsetOn" = true ] && set -u
       return 44
     fi
     EXPECT_SEARCH_ARGUMENTS=("${EXPECT_ARGUMENTS[@]}")

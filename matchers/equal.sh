@@ -1,13 +1,13 @@
 ExpectMatcher.equal() {
   (( $# == 0 )) && { echo "Missing required argument for 'equal' matcher: [expected]" >&2; return 40; }
   EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
-  if [ "$EXPECT_NOT" = true ] && [ "$EXPECT_ACTUAL" = "$1" ]; then
+  if [ "${EXPECT_NOT:-}" = true ] && [ "${EXPECT_ACTUAL:-}" = "$1" ]; then
     printf "Expected values not to equal:\nValue: %s\n" \
-      "$( ExpectMatchers.utils.inspect "$EXPECT_ACTUAL" )" >&2
+      "$( ExpectMatchers.utils.inspect "${EXPECT_ACTUAL:-}" )" >&2
     return 50
-  elif [ "$EXPECT_NOT" != true ] && [ "$EXPECT_ACTUAL" != "$1" ]; then
+  elif [ "${EXPECT_NOT:-}" != true ] && [ "${EXPECT_ACTUAL:-}" != "$1" ]; then
     printf "Expected values to equal:\nActual: %s\nExpected: %s\n" \
-      "$( ExpectMatchers.utils.inspect "$EXPECT_ACTUAL" )" \
+      "$( ExpectMatchers.utils.inspect "${EXPECT_ACTUAL:-}" )" \
       "$( ExpectMatchers.utils.inspect "$1" )" >&2
     return 50
   fi

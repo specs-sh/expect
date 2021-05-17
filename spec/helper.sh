@@ -2,6 +2,8 @@ source vendor/run.sh
 source vendor/assert.sh
 source vendor/refute.sh
 
+STDOUT= STDERR= EXITCODE=
+
 e.g.() {
   local assertionsLibrary
   if [ -n "$RUN_EXAMPLE" ] && [ "$RUN_EXAMPLE" = "$1" ]; then
@@ -19,7 +21,7 @@ e.g.() {
 runExamples() {
   local exampleFn exampleFnBody assertionsLibrary
   for exampleFn in $( declare -pF | awk '{print $3}' | grep ^example. ); do
-    exampleFnBody="$( declare -pf $exampleFn | tail -n +3 | head -n -1 )"
+    exampleFnBody="$( declare -f $exampleFn | tail -n +3 | head -n -1 )"
     for assertionsLibrary in assertions assertThat brackets expect should; do
       if echo "$exampleFnBody" | grep "e.g. $assertionsLibrary" &>/dev/null; then
         eval "spec.$assertionsLibrary.$exampleFn() {

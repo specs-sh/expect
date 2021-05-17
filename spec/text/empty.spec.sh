@@ -27,26 +27,25 @@ example.empty.pass() {
   [ -z "$STDERR" ]
 }
 
-# example.does.not.have.empty.fail() {
-#   e.g. assertions : assertNotLength 5 "Hello"
-#   e.g. assertThat : assertThat "Hello" does not be empty 5
-#   e.g. expect     : expect "Hello" not to be empty 5
-#   e.g. should     : {{ "Hello" }} should not be empty 5
-#   [[ "$STDERR" = *"$EMPTY_NOT_MESSAGE"* ]]
-#   [[ "$STDERR" = *'Text: "Hello"'* ]]
-#   [[ "$STDERR" = *'Length: 5'* ]]
-#   (( EXITCODE == EMPTY_EXITCODE ))
-#   [ -z "$STDOUT" ]
-# }
+example.not.empty.fail() {
+  e.g. assertions : assertNotEmpty ""
+  e.g. assertThat : assertThat "" is not empty
+  e.g. expect     : expect "" not to be empty
+  e.g. should     : {{ "" }} should not be empty
+  [[ "$STDERR" = *"$EMPTY_NOT_MESSAGE"* ]]
+  [[ "$STDERR" = *'Actual: ""'* ]]
+  (( EXITCODE == EMPTY_EXITCODE ))
+  [ -z "$STDOUT" ]
+}
 
-# example.does.not.have.empty.pass() {
-#   e.g. assertions : assertNotLength 2 "Hello"
-#   e.g. assertThat : assertThat "Hello" does not be empty 2
-#   e.g. expect     : expect "Hello" not to be empty 2
-#   e.g. should     : {{ "Hello" }} should not be empty 2
-#   (( EXITCODE == 0 ))
-#   [ -z "$STDOUT" ]
-#   [ -z "$STDERR" ]
-# }
+example.not.empty.pass() {
+  e.g. assertions : assertNotEmpty "Hello"
+  e.g. assertThat : assertThat "Hello" is not empty
+  e.g. expect     : expect "Hello" not to be empty
+  e.g. should     : {{ "Hello" }} should not be empty
+  (( EXITCODE == 0 ))
+  [ -z "$STDOUT" ]
+  [ -z "$STDERR" ]
+}
 
 runExamples

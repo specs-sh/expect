@@ -1,7 +1,5 @@
-# set -uo pipefail # Remove when ready for production
-source core/utils.sh # Switch to compilation when ready for production
-
 Expect.assert() {
+  local -r EXPECT_VERSION="2.0.0"
   local -a EXPECT_ORIGINAL_ARGUMENTS=("$@") EXPECT_ARGUMENTS=() EXPECT_COMMAND=() EXPECT_ACTUAL_ARRAY=()
   local EXPECT_TYPE="${1:-expect}" EXPECT_ACTUAL= EXPECT_MATCHER= EXPECT_NOT= EXPECT_ACTUAL_IS_ARRAY_NAME= EXPECT_ACTUAL_ARRAY_NAME= \
         EXPECT_BLOCK_OPEN= EXPECT_BLOCK_CLOSE= \
@@ -99,4 +97,25 @@ Expect.core.nextMatcher() {
     declare -F "${EXPECT_MATCHER%s}" &>/dev/null && EXPECT_MATCHER="${EXPECT_MATCHER%s}"
   done
   declare -F "$EXPECT_MATCHER" &>/dev/null || return 44
+}
+
+ExpectMatchers.utils.inspect() {
+  case "${EXPECT_INSPECT:-declare}" in 
+    declare)
+      local value="${1:-}"
+      local output="$( declare -p value )"
+      printf '%s' "${output#declare -- value=}"
+      ;;
+    cat) printf "'%s'" "$( printf '%s' "${1:-}" | cat -vET )" ;;
+    simple) printf '%s' "${1:-}" ;;
+    *) echo "Unknown EXPECT_INSPECT value '${EXPECT_INSPECT:-}', expected one of: declare, cat, simple" >&2; return 1 ;;
+  esac
+}
+
+ExpectMatchers.utils.inspectList() {
+  while (( $# > 0 )); do
+    ExpectMatchers.utils.inspect "$1"
+    shift
+    (( $# > 0 )) && printf ' '
+  done
 }

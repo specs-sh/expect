@@ -1,0 +1,1 @@
+assertThat() { Expect.assert assertThat "$@"; }

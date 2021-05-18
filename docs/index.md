@@ -429,6 +429,56 @@ To run a command _in a subshell_ and assert on its output, use `{{: command }}`:
 <br>
 </details>
 
+<details>
+  <summary><h3>Custom – e.g. <code>if test: "$x" equals "$y"</code></h3></summary>
+
+`Expect` assertion libraries are _intended_ for unit testing.
+
+_However_, there's nothing keeping you from:
+- (a) Using the library for conditional statements in your programs
+- (b) Customizing the syntax for unit testing to _whatever you want_
+
+So, let's say that you want this syntax to work:
+
+```sh
+if test: items array contains "a" and contains "b"; then
+  echo "Neato!"
+fi
+```
+
+This is pretty easy. The syntax is basically the same as `expect` and `assertThat`.
+
+Here's the entire implementation:
+
+```sh
+# Import the core library for all Expect assertions:
+source expect-sdk.sh
+
+# Define a 'test:' function
+test:() {
+  # Call Expect.assert, passing all provided arguments.
+  # This is the function all assertion libraries internally.
+  # Expect.assert supports the same syntax as the `expect` function.
+  Expect.assert "$@"
+}
+```
+
+If your custom code would like to provide a _list_ of arguments:
+
+> ```sh
+> Expect.assert [ a b c ] contains "a"
+> ```
+
+If your custom code would like to provide a _command_ to execute:
+
+> ```sh
+> Expect.assert { command arg arg } contains "output"
+> ```
+
+For implementing custom matchers and DSL syntax, see <a><i class="fad fa-flask-potion" href="#-custom-matchers"></i> Custom Matchers</a>.
+
+</details>
+
 ## <i class="fad fa-atom-alt"></i> Matchers
 
 Click or tap one of the options below for description and examples:

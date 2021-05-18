@@ -1,0 +1,1 @@
+expect() { Expect.assert expect "$@"; }

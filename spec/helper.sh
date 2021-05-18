@@ -9,11 +9,7 @@ e.g.() {
   if [ -n "$RUN_EXAMPLE" ] && [ "$RUN_EXAMPLE" = "$1" ]; then
     assertionsLibrary="$1"; shift; shift
     [ -f "$assertionsLibrary.sh" ] && source "$assertionsLibrary.sh" || { echo "Could not load assertion library for example: $assertionsLibrary.sh"; exit 1; }
-    if [ "$assertionsLibrary" = brackets ]; then
-      run -p { "$@" } || :
-    else
-      run -p [ "$@" ] || :
-    fi
+    run -p {{{ "$@" }}} || :
   fi
   return 0
 }

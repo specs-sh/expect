@@ -13,6 +13,10 @@ run() {
     [)  __run__blockOpen=[;  __run__blockClose=];  shift ;;
     {{) __run__blockOpen={{; __run__blockClose=}}; shift; __run__runInSubShell=true ;;
     [[) __run__blockOpen=[[; __run__blockClose=]]; shift; __run__runInSubShell=true ;;
+    {{{)  __run__blockOpen={{{;  __run__blockClose=}}};  shift ;;
+    [[[)  __run__blockOpen=[[[;  __run__blockClose=]]];  shift ;;
+    {{{{) __run__blockOpen={{{; __run__blockClose=}}}; shift; __run__runInSubShell=true ;;
+    {{[[) __run__blockOpen=[[[; __run__blockClose=]]]; shift; __run__runInSubShell=true ;;
     *)  __run__command+=("$@"); set -- ;;
   esac
 

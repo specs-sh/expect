@@ -2,7 +2,7 @@
 source core/utils.sh # Switch to compilation when ready for production
 
 Expect.assert() {
-  local -a EXPECT_ORIGINAL_ARGUMENTS=("$@") EXPECT_ARGUMENTS=() EXPECT_COMMAND=()
+  local -a EXPECT_ORIGINAL_ARGUMENTS=("$@") EXPECT_ARGUMENTS=() EXPECT_COMMAND=() EXPECT_ACTUAL_ARRAY=()
   local EXPECT_TYPE="${1:-expect}" EXPECT_ACTUAL= EXPECT_MATCHER= EXPECT_NOT= EXPECT_ACTUAL_IS_ARRAY_NAME= EXPECT_ACTUAL_ARRAY_NAME= \
         EXPECT_BLOCK_OPEN= EXPECT_BLOCK_CLOSE= \
         EXPECT_COMMAND_STDOUT= EXPECT_COMMAND_STDERR= \
@@ -13,18 +13,24 @@ Expect.assert() {
 
   case "$1" in
     {)  EXPECT_BLOCK_OPEN={; EXPECT_BLOCK_CLOSE=} ;;
-    [)  EXPECT_BLOCK_OPEN=[; EXPECT_BLOCK_CLOSE=] ;;
     {{) EXPECT_BLOCK_OPEN={{; EXPECT_BLOCK_CLOSE=}}; __expect__runCommandInSubShell=true ;;
-    [[) EXPECT_BLOCK_OPEN=[[; EXPECT_BLOCK_CLOSE=]]; __expect__runCommandInSubShell=true ;;
+    {{{)  EXPECT_BLOCK_OPEN={{{; EXPECT_BLOCK_CLOSE=}}} ;;
+    {{{{) EXPECT_BLOCK_OPEN={{{{; EXPECT_BLOCK_CLOSE=}}}}; __expect__runCommandInSubShell=true ;;
+    [)  EXPECT_BLOCK_OPEN=[; EXPECT_BLOCK_CLOSE=]; EXPECT_ACTUAL=EXPECT_ACTUAL_ARRAY; EXPECT_ACTUAL_IS_ARRAY_NAME=true; EXPECT_ACTUAL_ARRAY_NAME=EXPECT_ACTUAL_ARRAY;;
+    [[) EXPECT_BLOCK_OPEN=[[; EXPECT_BLOCK_CLOSE=]]; EXPECT_ACTUAL=EXPECT_ACTUAL_ARRAY; EXPECT_ACTUAL_IS_ARRAY_NAME=true; EXPECT_ACTUAL_ARRAY_NAME=EXPECT_ACTUAL_ARRAY ;;
   esac
 
   if [ -n "$EXPECT_BLOCK_OPEN" ]; then
     for __expect__argument in "${EXPECT_ORIGINAL_ARGUMENTS[@]:2}"; do
-      [ "$__expect__argument" = "$EXPECT_BLOCK_CLOSE" ] && { __expect__isCommand=true; break; }
+      [ "$__expect__argument" = "$EXPECT_BLOCK_CLOSE" ] && { __expect__isCommand=true; break; } # UPDATE LOGIC (might not be a command, might just be a list)
       EXPECT_COMMAND+=("$__expect__argument")
     done
     __expect__argument=
-    if [ "$__expect__isCommand" = true ]; then
+    if [ "$EXPECT_ACTUAL_IS_ARRAY_NAME" = true ]; then
+      shift "$(( 2 + ${#EXPECT_COMMAND[@]} ))"  # shift off {{ ... }}
+      EXPECT_ACTUAL_ARRAY=("${EXPECT_COMMAND[@]}")
+      EXPECT_COMMAND=()
+    elif [ "$__expect__isCommand" = true ]; then
       (( ${#EXPECT_COMMAND[@]} == 0 )) && { echo "Error TODO no command" >&2; return 31; }
       shift "$(( 2 + ${#EXPECT_COMMAND[@]} ))"  # shift off {{ ... }}
     else
@@ -32,7 +38,7 @@ Expect.assert() {
     fi
   fi
 
-  if [ "$__expect__isCommand" = true ]; then
+  if [ "$__expect__isCommand" = true ] && [ "$EXPECT_ACTUAL_IS_ARRAY_NAME" != true ]; then # FIXME
     __expect__stderrTempFile="$( mktemp )" || { echo "run: failed to create temporary file to store standard error using 'mktemp'" >&2; return 2; }
     if [ "$__expect__runCommandInSubShell" = true ]; then
       EXPECT_COMMAND_STDOUT="$( "${EXPECT_COMMAND[@]}" 2>"$__expect__stderrTempFile" )" && EXPECT_COMMAND_EXITCODE=$? || EXPECT_COMMAND_EXITCODE=$?
@@ -46,7 +52,7 @@ Expect.assert() {
     [ -f "$__expect__stderrTempFile" ] && { rm "$__expect__stderrTempFile" || echo "run: failed to delete temporary file used for standard error '$__expect__stderrTempFile' created using 'mktemp'" >&2; }
     __expect__stdoutTempFile= __expect__stderrTempFile=
     EXPECT_ACTUAL="${EXPECT_COMMAND_STDOUT}${EXPECT_COMMAND_STDERR}"
-  else
+  elif [ -z "$EXPECT_ACTUAL" ]; then
     EXPECT_ACTUAL="$1"; shift
   fi
 

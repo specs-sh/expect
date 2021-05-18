@@ -2,18 +2,34 @@ set -uo pipefail # Remove when ready for production
 source core/core.sh # Switch to compilation when ready for production
 
 {{() {
-  [ "${2:-}" = '}}' ] || { echo "TODO BOOM" >&2; return 1; }
-  local -r __should__actual="$1"
-  shift 2
-  Expect.assert should "$__should__actual" "$@";
+  local SHOULD_ACTUAL=
+  local -a SHOULD_ACTUAL_LIST=()
+  until (( $# == 0 )) || [ "$1" = }} ]; do
+    SHOULD_ACTUAL_LIST+=("$1"); shift
+  done
+
+  if [ "$1" = }} ]; then
+    shift
+  else
+    echo "TODO BOOM" >&2
+    return 1
+  fi
+
+  if (( ${#SHOULD_ACTUAL_LIST[@]} == 1 )); then
+    local -r SHOULD_ACTUAL="${SHOULD_ACTUAL_LIST[0]}"
+    Expect.assert should "$SHOULD_ACTUAL" "$@"
+  else
+    local -r SHOULD_ACTUAL=""
+    Expect.assert should [ "${SHOULD_ACTUAL_LIST[@]}" ] "$@"
+  fi
 }
 
 {{{() {
-  local -a __should__command=()
+  local -a SHOULD_COMMAND=()
   until (( $# == 0 )) || [ "$1" = }}} ]; do
-    __should__command+=("$1"); shift
+    SHOULD_COMMAND+=("$1"); shift
   done
   # errors here ...
   shift
-  Expect.assert should { "${__should__command[@]}" } "$@";
+  Expect.assert should { "${SHOULD_COMMAND[@]}" } "$@";
 }

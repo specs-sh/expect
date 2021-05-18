@@ -1,5 +1,5 @@
 ExpectMatcher.array() {
-  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
   EXPECT_ACTUAL_IS_ARRAY_NAME=true
   EXPECT_ACTUAL_ARRAY_NAME="$EXPECT_ACTUAL"
 }
+ExpectMatcher.list() { ExpectMatcher.array "$@"; }

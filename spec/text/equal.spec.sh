@@ -32,6 +32,17 @@ example.noArguments() {
   [ -z "$STDOUT" ]
 }
 
+example.equal.pass() {
+  e.g. assertions : assertEqual "Hello" "Hello"
+  e.g. assertThat : assertThat "Hello" equals "Hello"
+  e.g. brackets   : [: "Hello" = "Hello" ]
+  e.g. expect     : expect "Hello" to equal "Hello"
+  e.g. should     : {{ "Hello" }} should equal "Hello"
+  (( EXITCODE == 0 ))
+  [ -z "$STDOUT" ]
+  [ -z "$STDERR" ]
+}
+
 example.equal.fail() {
   e.g. assertions : assertEqual "World" "Hello"
   e.g. assertThat : assertThat "Hello" equals "World"
@@ -67,16 +78,6 @@ example.equal.fail.double_equal_sign() {
   [ -z "$STDOUT" ]
 }
 
-example.equal.pass() {
-  e.g. assertions : assertEqual "Hello" "Hello"
-  e.g. assertThat : assertThat "Hello" equals "Hello"
-  e.g. brackets   : [: "Hello" = "Hello" ]
-  e.g. expect     : expect "Hello" to equal "Hello"
-  e.g. should     : {{ "Hello" }} should equal "Hello"
-  (( EXITCODE == 0 ))
-  [ -z "$STDOUT" ]
-  [ -z "$STDERR" ]
-}
 
 example.does.not.equal.fail() {
   e.g. assertions : assertNotEqual "Hello" "Hello"
@@ -86,6 +87,18 @@ example.does.not.equal.fail() {
   e.g. should     : {{ "Hello" }} should not equal "Hello"
   [[ "$STDERR" = *"Expected values not to equal"* ]]
   [[ "$STDERR" = *'Value: "Hello"'* ]]
+  (( EXITCODE == EQUAL_EXITCODE ))
+  [ -z "$STDOUT" ]
+}
+example.equal.command.fail() {
+  e.g. assertions : assertEqual "World" "$( echo Hello )"
+  e.g. assertThat : assertThat { echo "Hello" } equals "World"
+  e.g. brackets   : [: "$( echo Hello )" = "World" ]
+  e.g. expect     : expect { echo "Hello" } to equal "World"
+  e.g. should     : {: echo "Hello" } should equal "World"
+  [[ "$STDERR" = *"Expected values to equal"* ]]
+  [[ "$STDERR" = *'Actual: "Hello"'* ]]
+  [[ "$STDERR" = *'Expected: "World"'* ]]
   (( EXITCODE == EQUAL_EXITCODE ))
   [ -z "$STDOUT" ]
 }

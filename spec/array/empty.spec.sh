@@ -42,12 +42,10 @@ example.array.empty.pass() {
 }
 
 example.provided.list.empty.fail() {
-  echo HI
   e.g. assertThat : assertThat [ a b c ] is empty
   e.g. expect     : expect [ a b c ] to be empty
   e.g. should     : {{ a b c }} should be empty
-  echo HERE
-  [[ "$STDERR" = *"$EMPTY_MESSAGE"* ]]
+  [[ "$STDERR" = *"Expected list to have zero elements"* ]]
   [[ "$STDERR" = *'Actual: ("a" "b" "c")'* ]]
   [[ "$STDERR" = *'Expected: ( )'* ]]
   (( EXITCODE == EMPTY_EXITCODE ))

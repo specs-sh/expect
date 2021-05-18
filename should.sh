@@ -42,3 +42,13 @@ source expect-sdk.sh
   shift
   Expect.assert { "${SHOULD_COMMAND[@]}" } "$@";
 }
+
+{:() {
+  local -a SHOULD_COMMAND=()
+  until (( $# == 0 )) || [ "$1" = } ]; do
+    SHOULD_COMMAND+=("$1"); shift
+  done
+  # errors here ...
+  shift
+  Expect.assert { "${SHOULD_COMMAND[@]}" } "$@";
+}

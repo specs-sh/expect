@@ -1,5 +1,4 @@
 ExpectMatcher.array() {
-  EXPECT_ACTUAL_IS_ARRAY_NAME=true
-  EXPECT_ACTUAL_ARRAY_NAME="$EXPECT_ACTUAL"
+  EXPECT_ACTUAL_TYPE=ARRAY_NAME
 }
 ExpectMatcher.list() { ExpectMatcher.array "$@"; }

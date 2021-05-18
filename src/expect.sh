@@ -1,1 +1,1 @@
-expect() { Expect.assert expect "$@"; }
+expect() { Expect.assert "$@"; }

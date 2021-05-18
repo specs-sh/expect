@@ -14,10 +14,10 @@
 
   if (( ${#SHOULD_ACTUAL_LIST[@]} == 1 )); then
     local -r SHOULD_ACTUAL="${SHOULD_ACTUAL_LIST[0]}"
-    Expect.assert should "$SHOULD_ACTUAL" "$@"
+    Expect.assert "$SHOULD_ACTUAL" "$@"
   else
     local -r SHOULD_ACTUAL=""
-    Expect.assert should [ "${SHOULD_ACTUAL_LIST[@]}" ] "$@"
+    Expect.assert [ "${SHOULD_ACTUAL_LIST[@]}" ] "$@"
   fi
 }
 
@@ -28,5 +28,5 @@
   done
   # errors here ...
   shift
-  Expect.assert should { "${SHOULD_COMMAND[@]}" } "$@";
+  Expect.assert { "${SHOULD_COMMAND[@]}" } "$@";
 }

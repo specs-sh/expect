@@ -1,8 +1,3 @@
-# Expect SDK source file
-#
-# REMINDER: ALL FUNCTIONS IN THIS FILE MUST BE REGISTERED IN ./scripts/compile
-#
-
 Expect.assert() {
   local -r EXPECT_VERSION="2.0.0"
 

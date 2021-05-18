@@ -5,5 +5,5 @@
     !=) __brackets__matcher="not equal" ;;
   esac
   [ -z "$__brackets__matcher" ] && { echo "TODO ERROR" >&2; return 44; }
-  Expect.assert brackets "$__brackets__leftHandSide" $__brackets__matcher "$__brackets__rightHandSide"
+  Expect.assert "$__brackets__leftHandSide" $__brackets__matcher "$__brackets__rightHandSide"
 }

@@ -1,2 +1,10 @@
+# GENERATED
+# DO NOT EDIT
+# GENERATED
+
+# In Development: use set -eEuo pipefail
 set -uo pipefail
-source expect-sdk.sh
+set -eEuo pipefail
+
+# Source Expect SDK
+source src/expect-sdk.sh

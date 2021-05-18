@@ -1,13 +1,18 @@
+# Expect SDK source file
+#
+# REMINDER: ALL FUNCTIONS IN THIS FILE MUST BE REGISTERED IN ./scripts/compile
+#
+
 Expect.assert() {
   local -r EXPECT_VERSION="2.0.0"
+
   local -a EXPECT_ORIGINAL_ARGUMENTS=("$@") EXPECT_ARGUMENTS=() EXPECT_COMMAND=() EXPECT_ACTUAL_ARRAY=()
-  local EXPECT_TYPE="${1:-expect}" EXPECT_ACTUAL= EXPECT_MATCHER= EXPECT_NOT= EXPECT_ACTUAL_IS_ARRAY_NAME= EXPECT_ACTUAL_ARRAY_NAME= \
+  local EXPECT_ACTUAL= EXPECT_MATCHER= EXPECT_NOT= EXPECT_ACTUAL_IS_ARRAY_NAME= EXPECT_ACTUAL_ARRAY_NAME= \
         EXPECT_BLOCK_OPEN= EXPECT_BLOCK_CLOSE= \
         EXPECT_COMMAND_STDOUT= EXPECT_COMMAND_STDERR= \
         EXPECT_BASH_ASSOCIATIVE_ARRAYS= EXPECT_BASH_NAME_REFERENCES= \
         __expect__argument= __expect__isCommand= __expect__runCommandInSubShell= __expect__stdoutTempFile= __expect__stderrTempFile= __expect__nounsetOn= __expect__returnValue=
   local -i EXPECT_COMMAND_EXITCODE=0
-  shift
 
   case "$1" in
     {)  EXPECT_BLOCK_OPEN={; EXPECT_BLOCK_CLOSE=} ;;

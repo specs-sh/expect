@@ -86,7 +86,7 @@ Expect.assert() {
       "$EXPECT_MATCHER" "${EXPECT_ARGUMENTS[@]}" || { __expect__returnValue=$?; [ "$__expect__nounsetOn" = true ] && set -u; return $__expect__returnValue; }
       EXPECT_MATCHER= EXPECT_NOT=
     else
-      echo "No matcher found for arguments: ${EXPECT_SEARCH_ARGUMENTS[*]}" >&2
+      echo "No matcher found for type: '$EXPECT_ACTUAL_TYPE', arguments: [ ${EXPECT_SEARCH_ARGUMENTS[*]} ]" >&2
       [ "$__expect__nounsetOn" = true ] && set -u
       return 44
     fi
@@ -96,7 +96,7 @@ Expect.assert() {
 
 Expect.core.nextMatcher() {
   EXPECT_MATCHER="${EXPECT_MATCHER_PREFIX:-ExpectMatcher}"
-  until (( ${#EXPECT_ARGUMENTS[@]} == 0 )) || declare -F "$EXPECT_MATCHER" &>/dev/null; do
+  until (( ${#EXPECT_ARGUMENTS[@]} == 0 )) || declare -F "$EXPECT_MATCHER.$EXPECT_ACTUAL_TYPE" &>/dev/null || declare -F "$EXPECT_MATCHER.ANY" &>/dev/null; do
     case "${EXPECT_ARGUMENTS[0]}" in
       not) EXPECT_NOT=true; EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
       should) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
@@ -111,9 +111,15 @@ Expect.core.nextMatcher() {
       with) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
       *) EXPECT_MATCHER+=".${EXPECT_ARGUMENTS[0]}"; EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
     esac
-    declare -F "${EXPECT_MATCHER%s}" &>/dev/null && EXPECT_MATCHER="${EXPECT_MATCHER%s}"
+    declare -F "${EXPECT_MATCHER%s}.$EXPECT_ACTUAL_TYPE" &>/dev/null || declare -F "${EXPECT_MATCHER%s}.ANY" &>/dev/null && EXPECT_MATCHER="${EXPECT_MATCHER%s}"
   done
-  declare -F "$EXPECT_MATCHER" &>/dev/null || return 44
+  if declare -F "$EXPECT_MATCHER.$EXPECT_ACTUAL_TYPE" &>/dev/null; then
+    EXPECT_MATCHER="$EXPECT_MATCHER.$EXPECT_ACTUAL_TYPE" 
+  elif declare -F "$EXPECT_MATCHER.ANY" &>/dev/null; then
+    EXPECT_MATCHER="$EXPECT_MATCHER.ANY" 
+  else
+    return 44
+  fi
 }
 
 ExpectMatchers.utils.inspect() {

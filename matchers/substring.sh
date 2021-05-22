@@ -1,4 +1,4 @@
-ExpectMatcher.substring() {
+ExpectMatcher.substring.TEXT() {
   (( $# == 0 )) && { echo "Missing required argument for 'substring' matcher: [expected]" >&2; return 40; }
   EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
   if [ "$EXPECT_NOT" = true ] && [[ "$EXPECT_ACTUAL" = *"$1"* ]]; then

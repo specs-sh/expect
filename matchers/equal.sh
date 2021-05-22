@@ -1,4 +1,4 @@
-ExpectMatcher.equal() {
+ExpectMatcher.equal.TEXT() {
   (( $# == 0 )) && { echo "Missing required argument for 'equal' matcher: [expected]" >&2; return 40; }
   EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
   if [ "${EXPECT_NOT:-}" = true ] && [ "${EXPECT_ACTUAL:-}" = "$1" ]; then
@@ -13,6 +13,6 @@ ExpectMatcher.equal() {
   fi
   return 0
 }
-ExpectMatcher.eq() { ExpectMatcher.equal "$@"; }
-ExpectMatcher.=() { ExpectMatcher.equal "$@"; }
-ExpectMatcher.==() { ExpectMatcher.equal "$@"; }
+ExpectMatcher.eq.TEXT() { ExpectMatcher.equal.TEXT "$@"; }
+ExpectMatcher.=.TEXT() { ExpectMatcher.equal.TEXT "$@"; }
+ExpectMatcher.==.TEXT() { ExpectMatcher.equal.TEXT "$@"; }

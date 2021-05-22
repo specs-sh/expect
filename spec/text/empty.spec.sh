@@ -48,4 +48,16 @@ example.not.empty.pass() {
   [ -z "$STDERR" ]
 }
 
+example.provided.list.empty.fail() {
+  e.g. assertThat : assertThat [ a b c ] is empty
+  e.g. expect     : expect [ a b c ] to be empty
+  e.g. should     : {{ a b c }} should be empty
+  [[ "$STDERR" = *"Expected list to have zero elements"* ]]
+  [[ "$STDERR" = *'Actual: ("a" "b" "c")'* ]]
+  [[ "$STDERR" = *'Expected: ( )'* ]]
+  (( EXITCODE == EMPTY_EXITCODE ))
+  echo "STDOUT: $STDOUT"
+  [ -z "$STDOUT" ]
+}
+
 runExamples

@@ -11,3 +11,8 @@ source expect-sdk.sh
 # assertThat Version 2.0.0
 
 assertThat() { Expect.assert "$@"; }
+
+
+# GENERATED
+# DO NOT EDIT
+# GENERATED

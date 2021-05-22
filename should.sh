@@ -52,3 +52,7 @@ source expect-sdk.sh
   shift
   Expect.assert { "${SHOULD_COMMAND[@]}" } "$@";
 }
+
+# GENERATED
+# DO NOT EDIT
+# GENERATED

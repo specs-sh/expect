@@ -30,6 +30,8 @@ for library in assertions assertThat brackets expect should; do
       echo "# $library Version $expectVersion" >> "$library.sh"
       echo                                     >> "$library.sh"
       cat "src/$library.sh"                    >> "$library.sh"
+      echo                                     >> "$library.sh"
+      cat "src/_devFooter.sh"                  >> "$library.sh"
       ;;
   esac
 done

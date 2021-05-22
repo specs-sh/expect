@@ -19,3 +19,7 @@ source expect-sdk.sh
   [ -z "$__brackets__matcher" ] && { echo "TODO ERROR" >&2; return 44; }
   Expect.assert "$__brackets__leftHandSide" $__brackets__matcher "$__brackets__rightHandSide"
 }
+
+# GENERATED
+# DO NOT EDIT
+# GENERATED

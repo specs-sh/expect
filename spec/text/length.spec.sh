@@ -59,4 +59,27 @@ example.does.not.have.length.pass() {
   [ -z "$STDERR" ]
 }
 
+example.list.length.fail() {
+  e.g. assertions : assertListLength 1 "Hello" "World"
+  e.g. assertThat : assertThat [ "Hello" "World" ] has length 1
+  e.g. expect     : expect [ "Hello" "World" ] to have length 1
+  e.g. should     : {{ "Hello" "World" }} should have length 1
+  [[ "$STDERR" = *"Expected list to have specified length"* ]]
+  [[ "$STDERR" = *'List: ("Hello" "World")'* ]]
+  [[ "$STDERR" = *'Actual Length: 2'* ]]
+  [[ "$STDERR" = *'Expected Length: 1'* ]]
+  (( EXITCODE == LENGTH_EXITCODE ))
+  [ -z "$STDOUT" ]
+}
+
+example.list.length.pass() {
+  e.g. assertions : assertListLength 2 "Hello" "World"
+  e.g. assertThat : assertThat [ "Hello" "World" ] has length 2
+  e.g. expect     : expect [ "Hello" "World" ] to have length 2
+  e.g. should     : {{ "Hello" "World" }} should have length 2
+  (( EXITCODE == 0 ))
+  [ -z "$STDOUT" ]
+  [ -z "$STDERR" ]
+}
+
 runExamples

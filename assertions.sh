@@ -28,6 +28,13 @@ Assertions.assertActual() {
   esac
 }
 
+Assertions.assertExpectedForList() {
+  case $# in
+    0) echo "${FUNCNAME[1]} expected 1 or more arguments: [expected] (actual) (actual) ..." >&2; return 40 ;;
+    *) return 0 ;;
+  esac
+}
+
 assertEqual()     { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" equal "$1"; }
 assertEquals()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" equal "$1"; }
 assertNotEqual()  { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not equal "$1"; }
@@ -47,3 +54,13 @@ assertNotSubstring() { Assertions.assertExpectedAndActual "$@" || return $?; Exp
 
 assertLength()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" length "$1"; }
 assertNotLength() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not length "$1"; }
+
+assertListLength()    { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] length "$expected"; }
+assertNotListLength() { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] not length "$expected"; }
+
+assertArrayLength()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array length "$1"; }
+assertNotArrayLength() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not array length "$1"; }
+
+# GENERATED
+# DO NOT EDIT
+# GENERATED

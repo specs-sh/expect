@@ -1,3 +1,4 @@
+# Rename to RUN.
 Expect.assert() {
   local -r EXPECT_VERSION="2.0.0"
 

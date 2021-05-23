@@ -123,4 +123,13 @@ example.list.contain.pass.compare.to.include() {
   assertExitcode 0
 }
 
+example.text.split.to.list.fail.again() {
+  e.g. assertThat : assertThat "Hi Hello, world! " split " " contains "Hel*"
+  e.g. expect     : expect "Hi Hello, world! " split " " to contain "Hel*"
+  e.g. should     : {{ "Hi Hello, world! " }} split " " to contain "Hel*"
+  assertEmptyStdout
+  assertEmptyStderr
+  assertExitcode 0
+}
+
 runExamples

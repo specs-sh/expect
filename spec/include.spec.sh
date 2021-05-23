@@ -1,6 +1,7 @@
 source spec/helper.sh
 source matchers/include.sh
 source matchers/array.sh
+source matchers/split.sh
 
 example.noArguments() {
   e.g. assertThat : assertThat [ "Hello" ] includes
@@ -135,6 +136,34 @@ example.array.empty.not.include.pass() {
   assertEmptyStdout
   assertEmptyStderr
   assertExitcode 0
+}
+
+# This should pass for contains, try it out there :)
+example.text.split.to.list.fail() {
+  e.g. assertThat : assertThat "Hi Hello, world!" split " " includes "Hel*"
+  e.g. expect     : expect "Hi Hello, world!" split " " to include "Hel*"
+  e.g. should     : {{ "Hi Hello, world!" }} split " " to include "Hel*"
+  assertStderr "Expected list to include item" 'List: ("Hi" "Hello," "world!")' 'Expected: "Hel*"'
+  assertEmptyStdout
+  assertExitcode 52
+}
+
+example.text.split.to.list.fail.again() {
+  e.g. assertThat : assertThat "Hi Hello, world! " split " " includes "Hel*"
+  e.g. expect     : expect "Hi Hello, world! " split " " to include "Hel*"
+  e.g. should     : {{ "Hi Hello, world! " }} split " " to include "Hel*"
+  assertStderr "Expected list to include item" 'List: ("Hi" "Hello," "world!" "")' 'Expected: "Hel*"'
+  assertEmptyStdout
+  assertExitcode 52
+}
+
+example.text.split.to.list.fail.again.again() {
+  e.g. assertThat : assertThat "Hi\nHello, world! " split "\n" includes "Hel*"
+  e.g. expect     : expect "Hi\nHello, world! " split "\n" to include "Hel*"
+  e.g. should     : {{ "Hi\nHello, world! " }} split "\n" to include "Hel*"
+  assertStderr "Expected list to include item" 'List: ("Hi" "Hello, world! ")' 'Expected: "Hel*"'
+  assertEmptyStdout
+  assertExitcode 52
 }
 
 runExamples

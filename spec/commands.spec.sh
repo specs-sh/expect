@@ -22,14 +22,11 @@ spec.expect.command.output.to.equal() {
 spec.expect.command.to.have.exitcode() {
   assert run expect { passingFunction } exitcode to equal 0
   refute run expect { passingFunction } exitcode to equal 42
-  [[ "$STDERR" = *"Expected results to equal:"* ]]
-  [[ "$STDERR" = *"Actual: '0'"* ]]
-  [[ "$STDERR" = *"Expected: '42'"* ]]
+  assertStderr "Expected values to equal:" 'Actual: "0"' 'Expected: "42"'
 
   assert run expect { failingFunction } exitcode not to equal 0
   refute run expect { failingFunction } exitcode not to equal 42
-  [[ "$STDERR" = *"Expected results not to equal"* ]]
-  [[ "$STDERR" = *"Value: '42'"* ]]
+  assertStderr "Expected values not to equal:" 'Value: "42"'
 }
 
 spec.expect.command.stdout.to.equal() {
@@ -42,10 +39,8 @@ spec.expect.command.to.have.exitcode.and.stdout.equal() {
   assert run expect { failingFunction } exitcode to equal 42 \
                                     and stdout to equal "Failing STDOUT"
   refute run expect { failingFunction } exitcode to equal 42 \
-                                    and stdout to equal "Failing STDOUTXX"
-  [[ "$STDERR" = *"Expected results to equal:"* ]]
-  [[ "$STDERR" = *"Actual: 'Failing STDOUT'"* ]]
-  [[ "$STDERR" = *"Expected: 'Failing STDOUTXX'"* ]]
+                                    and stdout to equal "Failing STDOUTxx"
+  assertStderr "Expected values to equal" 'Actual: "Failing STDOUT"' 'Expected: "Failing STDOUTxx"'
 
   assert run expect { failingFunction } to fail \
     with exitcode equals 42 \

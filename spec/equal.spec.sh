@@ -78,7 +78,6 @@ example.equal.fail.double_equal_sign() {
   [ -z "$STDOUT" ]
 }
 
-
 example.does.not.equal.fail() {
   e.g. assertions : assertNotEqual "Hello" "Hello"
   e.g. assertThat : assertThat "Hello" does not equal "Hello"

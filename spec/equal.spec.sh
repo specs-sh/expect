@@ -94,7 +94,7 @@ example.equal.command.fail() {
   e.g. assertThat : assertThat { echo "Hello" } equals "World"
   e.g. brackets   : [: "$( echo Hello )" = "World" ]
   e.g. expect     : expect { echo "Hello" } to equal "World"
-  e.g. should     : {: echo "Hello" } should equal "World"
+  e.g. should     : :{ echo "Hello" } should equal "World"
   [[ "$STDERR" = *"Expected values to equal"* ]]
   [[ "$STDERR" = *'Actual: "Hello"'* ]]
   [[ "$STDERR" = *'Expected: "World"'* ]]

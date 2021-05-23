@@ -112,6 +112,15 @@ example.array.contains.fail() {
   assertExitcode 51
 }
 
-runExamples
+# This same example *fails* with include because contain does wildcard matching
+example.list.contain.pass.compare.to.include() {
+  e.g. assertions : assertListContains "Hel*" "Hello" "World"
+  e.g. assertThat : assertThat [ "Hello" "World" ] contains "Hel*"
+  e.g. expect     : expect [ "Hello" "World" ] to contain "Hel*"
+  e.g. should     : :[ "Hello" "World" ] should contain "Hel*"
+  assertEmptyStdout
+  assertEmptyStderr
+  assertExitcode 0
+}
 
-# TODO 'include' which is EXACT matches only
+runExamples

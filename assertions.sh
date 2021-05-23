@@ -29,6 +29,7 @@ Assertions.assertExpectedForList() {
   esac
 }
 
+# Equals
 assertEqual()     { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" equal "$1"; }
 assertEquals()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" equal "$1"; }
 assertNotEqual()  { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not equal "$1"; }
@@ -36,30 +37,36 @@ assertNotEquals() { Assertions.assertExpectedAndActual "$@" || return $?; Expect
 
 assertEmpty()    { Assertions.assertActual "$@" || return $?; Expect.assert "$1" empty; }
 assertNotEmpty() { Assertions.assertActual "$@" || return $?; Expect.assert "$1" not empty; }
-
+# TODO EMPTY LIST
 assertEmptyArray()    { Assertions.assertActual "$@" || return $?; Expect.assert "$1" array empty; }
 assertNotEmptyArray() { Assertions.assertActual "$@" || return $?; Expect.assert "$1" array not empty; }
 
+# Contains
 assertContains()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" contain "$1"; }
 assertNotContains() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not contain "$1"; }
-
 assertListContains()    { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] contains "$expected"; }
 assertNotListContains() { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] not contains "$expected"; }
-
 assertArrayContains()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array contain "$1"; }
 assertNotArrayContains() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array not contain "$1"; }
 
+# Includes
+assertListIncludes()    { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] includes "$expected"; }
+assertNotListIncludes() { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] not includes "$expected"; }
+assertArrayIncludes()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array includes "$1"; }
+assertNotArrayIncludes() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array not includes "$1"; }
+
+# Substring
 assertSubstring()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" substring "$1"; }
 assertNotSubstring() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not substring "$1"; }
 
+# Length
 assertLength()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" length "$1"; }
 assertNotLength() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not length "$1"; }
-
 assertListLength()    { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] length "$expected"; }
 assertNotListLength() { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] not length "$expected"; }
-
 assertArrayLength()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array length "$1"; }
 assertNotArrayLength() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array not length "$1"; }
+
 # Included matchers/array matcher
 ExpectMatcher.array.ANY() {
   EXPECT_ACTUAL_TYPE=ARRAY_NAME
@@ -270,6 +277,61 @@ ExpectMatcher.first.ARRAY_NAME() {
   return 0
 }
 
+
+# Included matchers/include matcher
+ExpectMatcher.include.LIST() {
+  (( $# == 0 )) && { echo "Missing required argument for 'contain' matcher: [expected]" >&2; return 40; }
+  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
+
+  local __expected__found=
+  local __expected__item=
+  for __expected__item in "${EXPECT_ACTUAL[@]}"; do
+    if [ "$EXPECT_NOT" = true ] && [ "$__expected__item" = "$1" ]; then
+      printf "Expected list not to include item\nList: (%s)\nMatching item: %s\nUnexpected: %s\n" "$( ExpectMatchers.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( ExpectMatchers.utils.inspect "$__expected__item" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+      return 51
+    elif [ "$__expected__item" = "$1" ]; then
+      __expected__found=true
+      break
+    fi
+  done
+
+  if [ "$EXPECT_NOT" != true ] && [ "$__expected__found" != true ]; then
+    printf "Expected list to include item\nList: (%s)\nExpected: %s\n" "$( ExpectMatchers.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+    return 51
+  fi
+
+  return 0
+}
+
+ExpectMatcher.include.ARRAY_NAME() {
+  (( $# == 0 )) && { echo "Missing required argument for 'contain' matcher: [expected]" >&2; return 40; }
+  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
+
+  if [ "$EXPECT_BASH_NAME_REFERENCES" = true ]; then
+    local -n __expected__array="${EXPECT_ACTUAL[0]}"
+  else
+    eval "local -a __expected__array=(\"\${$EXPECT_ACTUAL[@]}\")"
+  fi
+
+  local __expected__found=
+  local __expected__item=
+  for __expected__item in "${__expected__array[@]}"; do
+    if [ "$EXPECT_NOT" = true ] && [ "$__expected__item" = "$1" ]; then
+      printf "Expected array not to include element\nArray variable: %s\nElements: (%s)\nMatching item: %s\nUnexpected: %s\n" "${EXPECT_ACTUAL[0]}" "$( ExpectMatchers.utils.inspectList "${__expected__array[@]}" )" "$( ExpectMatchers.utils.inspect "$__expected__item" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+      return 51
+    elif [ "$__expected__item" = "$1" ]; then
+      __expected__found=true
+      break
+    fi
+  done
+
+  if [ "$EXPECT_NOT" != true ] && [ "$__expected__found" != true ]; then
+    printf "Expected array to include element\nArray variable: %s\nElements: (%s)\nExpected: %s\n" "${EXPECT_ACTUAL[0]}" "$( ExpectMatchers.utils.inspectList "${__expected__array[@]}" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+    return 51
+  fi
+
+  return 0
+}
 
 # Included matchers/last matcher
 ExpectMatcher.last.LIST() {

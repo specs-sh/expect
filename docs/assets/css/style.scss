@@ -1,16 +1,7 @@
 ---
 ---
 
-@import "{{ site.theme }}";
-
-summary em {
-  font-weight: normal;
-  font-size: 0.9em;
-}
-
-summary h3, summary h4, summary code, summary em {
-  display: inline;
-}
+@import '{{ site.theme }}';
 
 section details h2 code {
   font-size: 20px;

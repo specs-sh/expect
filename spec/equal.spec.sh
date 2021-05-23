@@ -89,6 +89,7 @@ example.does.not.equal.fail() {
   (( EXITCODE == EQUAL_EXITCODE ))
   [ -z "$STDOUT" ]
 }
+
 example.equal.command.fail() {
   e.g. assertions : assertEqual "World" "$( echo Hello )"
   e.g. assertThat : assertThat { echo "Hello" } equals "World"
@@ -101,5 +102,16 @@ example.equal.command.fail() {
   (( EXITCODE == EQUAL_EXITCODE ))
   [ -z "$STDOUT" ]
 }
+
+# example.list.equal.fail() {
+#   e.g. assertThat : assertThat [ "Hello" "World" ] equals "World" "Hello"
+#   e.g. expect     : expect [ "Hello" "World" ] to equal "World" "Hello"
+#   e.g. should     : :[ "Hello" "World" ] should equal "World" "Hello"
+
+# }
+
+# xexample.list.equal.pass() {
+#   :
+# }
 
 runExamples

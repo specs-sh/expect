@@ -1,9 +1,9 @@
 ExpectMatcher.empty.TEXT() {
   if [ "$EXPECT_NOT" = true ] && [ -z "${EXPECT_ACTUAL[*]}" ]; then
-    printf "Expected text not to have zero-length\nActual: %s\n" "$( ExpectMatchers.utils.inspect "${EXPECT_ACTUAL[*]}" )" >&2
+    printf "Expected text not to have zero-length\nActual: %s\n" "$( Expect.utils.inspect "${EXPECT_ACTUAL[*]}" )" >&2
     return 52
   elif [ "$EXPECT_NOT" != true ] && [ -n "${EXPECT_ACTUAL[*]}" ]; then
-    printf "Expected text to have zero-length\nActual: %s\nExpected: \"\"\n" "$( ExpectMatchers.utils.inspect "${EXPECT_ACTUAL[*]}" )" >&2
+    printf "Expected text to have zero-length\nActual: %s\nExpected: \"\"\n" "$( Expect.utils.inspect "${EXPECT_ACTUAL[*]}" )" >&2
     return 52
   fi
 
@@ -15,7 +15,7 @@ ExpectMatcher.empty.LIST() {
     printf "Expected list not to have zero elements\nActual: ( )%s\n"
     return 52
   elif [ "$EXPECT_NOT" != true ] && (( ${#EXPECT_ACTUAL[@]} > 0 )); then
-    printf "Expected list to have zero elements\nActual: (%s)\nExpected: ( )\n" "$( ExpectMatchers.utils.inspectList "${EXPECT_ACTUAL[@]}" )" >&2
+    printf "Expected list to have zero elements\nActual: (%s)\nExpected: ( )\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" >&2
     return 52
   fi
 
@@ -30,7 +30,7 @@ ExpectMatcher.empty.ARRAY_NAME() {
         printf "Expected array not to have zero elements\nActual: ( )%s\n"
         return 52
       elif [ "$EXPECT_NOT" != true ] && (( ${#__array__[@]} > 0 )); then
-        printf "Expected array to have zero elements\nActual: (%s)\nExpected: ( )\n" "$( ExpectMatchers.utils.inspectList "${__array__[@]}" )" >&2
+        printf "Expected array to have zero elements\nActual: (%s)\nExpected: ( )\n" "$( Expect.utils.inspectList "${__array__[@]}" )" >&2
         return 52
       fi
     else
@@ -40,7 +40,7 @@ ExpectMatcher.empty.ARRAY_NAME() {
         printf "Expected array not to have zero elements\nActual: ( )%s\n"
         return 52
       elif [ "$EXPECT_NOT" != true ] && (( __arrayLength__ > 0 )); then
-        eval "printf \"Expected array to have zero elements\nActual: (%s)\nExpected: ( )\n\" \"\$( ExpectMatchers.utils.inspectList \"\${$EXPECT_ACTUAL[@]}\" )\"" >&2
+        eval "printf \"Expected array to have zero elements\nActual: (%s)\nExpected: ( )\n\" \"\$( Expect.utils.inspectList \"\${$EXPECT_ACTUAL[@]}\" )\"" >&2
         return 52
       fi
     fi

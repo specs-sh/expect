@@ -15,9 +15,11 @@ github:
   owner_url: https://github.com/beccasaurus
   owner_name: "@beccasaurus"
 
-markdown: kramdown
-kramdown:
-  parse_block_html: true
+markdown: CommonMarkGhPages
+
+# markdown: kramdown
+# kramdown:
+#   parse_block_html: true
 
 defaults:
   -

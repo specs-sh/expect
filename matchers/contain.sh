@@ -4,10 +4,10 @@ ExpectMatcher.contain.TEXT() {
 
   # FIXME doesn't use actual right
   if [ "$EXPECT_NOT" = true ] && [[ "$EXPECT_ACTUAL" = *$1* ]]; then
-    printf "Expected text value not to contain subtext\nActual: %s\nUnexpected: %s\n" "$( ExpectMatchers.utils.inspect "$EXPECT_ACTUAL" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+    printf "Expected text value not to contain subtext\nActual: %s\nUnexpected: %s\n" "$( Expect.utils.inspect "$EXPECT_ACTUAL" )" "$( Expect.utils.inspect "$1" )" >&2
     return 51
   elif [ "$EXPECT_NOT" != true ] && [[ "$EXPECT_ACTUAL" != *$1* ]]; then
-    printf "Expected text value to contain subtext\nActual: %s\nExpected: %s\n" "$( ExpectMatchers.utils.inspect "$EXPECT_ACTUAL" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+    printf "Expected text value to contain subtext\nActual: %s\nExpected: %s\n" "$( Expect.utils.inspect "$EXPECT_ACTUAL" )" "$( Expect.utils.inspect "$1" )" >&2
     return 51
   fi
 
@@ -22,7 +22,7 @@ ExpectMatcher.contain.LIST() {
   local __expected__item=
   for __expected__item in "${EXPECT_ACTUAL[@]}"; do
     if [ "$EXPECT_NOT" = true ] && [[ "$__expected__item" = *$1* ]]; then
-      printf "Expected list not to contain item with subtext\nList: (%s)\nMatching item: %s\nUnexpected: %s\n" "$( ExpectMatchers.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( ExpectMatchers.utils.inspect "$__expected__item" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+      printf "Expected list not to contain item with subtext\nList: (%s)\nMatching item: %s\nUnexpected: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspect "$__expected__item" )" "$( Expect.utils.inspect "$1" )" >&2
       return 51
     elif [[ "$__expected__item" = *$1* ]]; then
       __expected__found=true
@@ -31,7 +31,7 @@ ExpectMatcher.contain.LIST() {
   done
 
   if [ "$EXPECT_NOT" != true ] && [ "$__expected__found" != true ]; then
-    printf "Expected list to contain item with subtext\nList: (%s)\nExpected: %s\n" "$( ExpectMatchers.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+    printf "Expected list to contain item with subtext\nList: (%s)\nExpected: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspect "$1" )" >&2
     return 51
   fi
 
@@ -52,7 +52,7 @@ ExpectMatcher.contain.ARRAY_NAME() {
   local __expected__item=
   for __expected__item in "${__expected__array[@]}"; do
     if [ "$EXPECT_NOT" = true ] && [[ "$__expected__item" = *$1* ]]; then
-      printf "Expected array not to contain item with subtext\nArray variable: %s\nElements: (%s)\nMatching item: %s\nUnexpected: %s\n" "${EXPECT_ACTUAL[0]}" "$( ExpectMatchers.utils.inspectList "${__expected__array[@]}" )" "$( ExpectMatchers.utils.inspect "$__expected__item" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+      printf "Expected array not to contain item with subtext\nArray variable: %s\nElements: (%s)\nMatching item: %s\nUnexpected: %s\n" "${EXPECT_ACTUAL[0]}" "$( Expect.utils.inspectList "${__expected__array[@]}" )" "$( Expect.utils.inspect "$__expected__item" )" "$( Expect.utils.inspect "$1" )" >&2
       return 51
     elif [[ "$__expected__item" = *$1* ]]; then
       __expected__found=true
@@ -61,7 +61,7 @@ ExpectMatcher.contain.ARRAY_NAME() {
   done
 
   if [ "$EXPECT_NOT" != true ] && [ "$__expected__found" != true ]; then
-    printf "Expected array to contain item with subtext\nArray variable: %s\nElements: (%s)\nExpected: %s\n" "${EXPECT_ACTUAL[0]}" "$( ExpectMatchers.utils.inspectList "${__expected__array[@]}" )" "$( ExpectMatchers.utils.inspect "$1" )" >&2
+    printf "Expected array to contain item with subtext\nArray variable: %s\nElements: (%s)\nExpected: %s\n" "${EXPECT_ACTUAL[0]}" "$( Expect.utils.inspectList "${__expected__array[@]}" )" "$( Expect.utils.inspect "$1" )" >&2
     return 51
   fi
 

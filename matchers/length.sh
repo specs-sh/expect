@@ -8,10 +8,10 @@ ExpectMatcher.length.TEXT() {
   __expect__length="${#__expect__length__actual}"
 
   if [ "$EXPECT_NOT" = true ] && [ "$__expect__length" = "$1" ]; then
-    printf "Expected text value not to have specified length\nText: %s\nLength: %s\n" "$( ExpectMatchers.utils.inspect "$__expect__length__actual" )" "$__expect__length" >&2
+    printf "Expected text value not to have specified length\nText: %s\nLength: %s\n" "$( Expect.utils.inspect "$__expect__length__actual" )" "$__expect__length" >&2
     return 56
   elif [ "$EXPECT_NOT" != true ] && [ "$__expect__length" != "$1" ]; then
-    printf "Expected text value to have specified length\nText: %s\nActual Length: %s\nExpected Length: %s\n" "$( ExpectMatchers.utils.inspect "$__expect__length__actual" )" "$__expect__length" "$1" >&2
+    printf "Expected text value to have specified length\nText: %s\nActual Length: %s\nExpected Length: %s\n" "$( Expect.utils.inspect "$__expect__length__actual" )" "$__expect__length" "$1" >&2
     return 56
   fi
 
@@ -23,10 +23,10 @@ ExpectMatcher.length.LIST() {
   EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
 
   if [ "$EXPECT_NOT" = true ] && [ "${#EXPECT_ACTUAL[@]}" = "$1" ]; then
-    printf "Expected list not to have specified length\nList: (%s)\nLength: %s\n" "$( ExpectMatchers.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "${#EXPECT_ACTUAL[@]}" >&2
+    printf "Expected list not to have specified length\nList: (%s)\nLength: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "${#EXPECT_ACTUAL[@]}" >&2
     return 56
   elif [ "$EXPECT_NOT" != true ] && [ "${#EXPECT_ACTUAL[@]}" != "$1" ]; then
-    printf "Expected list to have specified length\nList: (%s)\nActual Length: %s\nExpected Length: %s\n" "$( ExpectMatchers.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "${#EXPECT_ACTUAL[@]}" "$1" >&2
+    printf "Expected list to have specified length\nList: (%s)\nActual Length: %s\nExpected Length: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "${#EXPECT_ACTUAL[@]}" "$1" >&2
     return 56
   fi
 
@@ -44,10 +44,10 @@ ExpectMatcher.length.ARRAY_NAME() {
       eval "local -a __array__=(\"\${$EXPECT_ACTUAL[@]}\")"
     fi
     if [ "$EXPECT_NOT" = true ] && [ "${#__array__[@]}" = "$1" ]; then
-      printf "Expected array not to have specified length\nArray: %s\nArray Items: (%s)\nLength: %s\n" "$EXPECT_ACTUAL" "$( ExpectMatchers.utils.inspectList "${__array__[@]}" )" "${#__array__[@]}" >&2
+      printf "Expected array not to have specified length\nArray: %s\nArray Items: (%s)\nLength: %s\n" "$EXPECT_ACTUAL" "$( Expect.utils.inspectList "${__array__[@]}" )" "${#__array__[@]}" >&2
       return 56
     elif [ "$EXPECT_NOT" != true ] && [ "${#__array__[@]}" != "$1" ]; then
-      printf "Expected array to have specified length\nArray: %s\nArray Items: (%s)\nActual Length: %s\nExpected Length: %s\n" "$EXPECT_ACTUAL" "$( ExpectMatchers.utils.inspectList "${__array__[@]}" )" "${#__array__[@]}" "$1" >&2
+      printf "Expected array to have specified length\nArray: %s\nArray Items: (%s)\nActual Length: %s\nExpected Length: %s\n" "$EXPECT_ACTUAL" "$( Expect.utils.inspectList "${__array__[@]}" )" "${#__array__[@]}" "$1" >&2
       return 56
     fi
   else

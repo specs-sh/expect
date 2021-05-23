@@ -122,7 +122,7 @@ Expect.core.nextMatcher() {
   fi
 }
 
-ExpectMatchers.utils.inspect() {
+Expect.utils.inspect() {
   case "${EXPECT_INSPECT:-declare}" in 
     declare)
       local value="${1:-}"
@@ -135,9 +135,9 @@ ExpectMatchers.utils.inspect() {
   esac
 }
 
-ExpectMatchers.utils.inspectList() {
+Expect.utils.inspectList() {
   while (( $# > 0 )); do
-    ExpectMatchers.utils.inspect "$1"
+    Expect.utils.inspect "$1"
     shift
     (( $# > 0 )) && printf ' '
   done

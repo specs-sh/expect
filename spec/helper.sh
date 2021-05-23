@@ -14,21 +14,6 @@ e.g.() {
   return 0
 }
 
-runExamples() {
-  local exampleFn exampleFnBody assertionsLibrary
-  for exampleFn in $( declare -pF | awk '{print $3}' | grep ^example. ); do
-    exampleFnBody="$( declare -f $exampleFn | tail -n +3 | head -n -1 )"
-    for assertionsLibrary in assertions assertThat brackets expect should; do
-      if echo "$exampleFnBody" | grep "e.g. $assertionsLibrary" &>/dev/null; then
-        eval "spec.$assertionsLibrary.$exampleFn() {
-          RUN_EXAMPLE=$assertionsLibrary
-          $exampleFnBody
-        }"
-      fi
-    done
-  done
-}
-
 assertStderr() {
   local expected=
   for expected; do
@@ -59,4 +44,19 @@ assertEmptyStdout() {
 
 assertEmptyStderr() {
   [ -z "$STDERR" ] || { printf "Expected STDERR to be empty\nActual: '%s'" "$STDERR" >&2; return 1; }
+}
+
+runExamples() {
+  local exampleFn exampleFnBody assertionsLibrary
+  for exampleFn in $( declare -pF | awk '{print $3}' | grep ^example. ); do
+    exampleFnBody="$( declare -f $exampleFn | tail -n +3 | head -n -1 )"
+    for assertionsLibrary in assertions assertThat brackets expect should; do
+      if echo "$exampleFnBody" | grep "e.g. $assertionsLibrary" &>/dev/null; then
+        eval "spec.$assertionsLibrary.$exampleFn() {
+          RUN_EXAMPLE=$assertionsLibrary
+          $exampleFnBody
+        }"
+      fi
+    done
+  done
 }

@@ -103,15 +103,22 @@ example.equal.command.fail() {
   [ -z "$STDOUT" ]
 }
 
-# example.list.equal.fail() {
-#   e.g. assertThat : assertThat [ "Hello" "World" ] equals "World" "Hello"
-#   e.g. expect     : expect [ "Hello" "World" ] to equal "World" "Hello"
-#   e.g. should     : :[ "Hello" "World" ] should equal "World" "Hello"
+example.list.equal.fail() {
+  e.g. assertThat : assertThat [ "Hello" "World" ] equals "World" "Hello"
+  e.g. expect     : expect [ "Hello" "World" ] to equal "World" "Hello"
+  e.g. should     : :[ "Hello" "World" ] should equal "World" "Hello"
+  assertStderr "Expected list to equal provided values" 'Actual: ("Hello" "World")' 'Expected: ("World" "Hello")'
+  assertEmptyStdout
+  assertExitcode 50
+}
 
-# }
-
-# xexample.list.equal.pass() {
-#   :
-# }
+example.list.equal.pass() {
+  e.g. assertThat : assertThat [ "Hello" "World" ] equals "Hello" "World"
+  e.g. expect     : expect [ "Hello" "World" ] to equal "Hello" "World"
+  e.g. should     : :[ "Hello" "World" ] should equal "Hello" "World"
+  assertEmptyStderr
+  assertEmptyStdout
+  assertExitcode 0
+}
 
 runExamples

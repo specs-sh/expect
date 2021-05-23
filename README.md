@@ -69,7 +69,7 @@ The `Expect` library brings all of these lovely assertions styles that you love 
 
 All running on top of the same core code which provides **_lovely_ assertion failure messages**.
 
-<script src="https://kit.fontawesome.com/319dabc23d.js" crossorigin="anonymous"></script>
+
 
 ## 📖 Documentation
 
@@ -153,67 +153,67 @@ expect items array last to equal "C"
 Click or tap one of the options below for description and examples:
 
 <details>
-  <summary><h4>Array</h4></summary>
+  <summary>Array</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>First</h4></summary>
+  <summary>First</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Last</h4></summary>
+  <summary>Last</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Split</h4></summary>
+  <summary>Split</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Join</h4></summary>
+  <summary>Join</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Lowercase</h4></summary>
+  <summary>Lowercase</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Uppercase</h4></summary>
+  <summary>Uppercase</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Exitcode</h4></summary>
+  <summary>Exitcode</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Output</h4></summary>
+  <summary>Output</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Standard Output</h4></summary>
+  <summary>Standard Output</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Standard Error</h4></summary>
+  <summary>Standard Error</summary>
 
 ...
 </details>
@@ -225,31 +225,31 @@ Click or tap one of the options below for description and examples:
 ### Common Matchers (_Text or Collections_)
 
 <details>
-  <summary><h4>Equals</h4></summary>
+  <summary>Equals</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Empty</h4></summary>
+  <summary>Empty</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Length</h4></summary>
+  <summary>Length</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Contains &nbsp;<em>(allows <code>*</code> wildcards)</em></h4></summary>
+  <summary>Contains &nbsp;<em>(allows <code>*</code> wildcards)</em></summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Includes &nbsp;<em>(exact values)</em></h4></summary>
+  <summary>Includes &nbsp;<em>(exact values)</em></summary>
 
 ...
 </details>
@@ -257,13 +257,13 @@ Click or tap one of the options below for description and examples:
 ### Text Matchers
 
 <details>
-  <summary><h4>Starts With</h4></summary>
+  <summary>Starts With</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Ends With</h4></summary>
+  <summary>Ends With</summary>
 
 ...
 </details>
@@ -271,13 +271,13 @@ Click or tap one of the options below for description and examples:
 ### Command Matchers
 
 <details>
-  <summary><h4>Command Fails</h4></summary>
+  <summary>Command Fails</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Command Succeeds</h4></summary>
+  <summary>Command Succeeds</summary>
 
 ...
 </details>
@@ -285,79 +285,79 @@ Click or tap one of the options below for description and examples:
 ### File / Directory Matchers
 
 <details>
-  <summary><h4>Path Exists</h4></summary>
+  <summary>Path Exists</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Directory Exists</h4></summary>
+  <summary>Directory Exists</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Exists</h4></summary>
+  <summary>File Exists</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Is Empty</h4></summary>
+  <summary>File Is Empty</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Is Readable</h4></summary>
+  <summary>File Is Readable</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Is Writeable</h4></summary>
+  <summary>File Is Writeable</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Is Executable</h4></summary>
+  <summary>File Is Executable</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Is Newer Than</h4></summary>
+  <summary>File Is Newer Than</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Is Older Than</h4></summary>
+  <summary>File Is Older Than</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Is Pipe</h4></summary>
+  <summary>File Is Pipe</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Is Socket</h4></summary>
+  <summary>File Is Socket</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>File Paths Are Equal</h4></summary>
+  <summary>File Paths Are Equal</summary>
 
 ...
 </details>
 
 <details>
-  <summary><h4>Path Is Symbolic Link</h4></summary>
+  <summary>Path Is Symbolic Link</summary>
 
 ...
 </details>

@@ -59,7 +59,7 @@ _Choose your own **preferred** syntax for test assertions:_
 **`should`-style Assertions**
 
 > ```sh
-> {{ ls dir }} should fail with exitcode = 2 \
+> :{ ls dir } should fail with exitcode = 2 \
 >              and stdout containing "No such file or directory"
 > ```
 {% endraw %}

@@ -37,6 +37,12 @@ assertNotEmptyArray() { Assertions.assertActual "$@" || return $?; Expect.assert
 assertContains()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" contain "$1"; }
 assertNotContains() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not contain "$1"; }
 
+assertListContains()    { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] contains "$expected"; }
+assertNotListContains() { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] not contains "$expected"; }
+
+assertArrayContains()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array contain "$1"; }
+assertNotArrayContains() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array not contain "$1"; }
+
 assertSubstring()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" substring "$1"; }
 assertNotSubstring() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not substring "$1"; }
 
@@ -45,3 +51,6 @@ assertNotLength() { Assertions.assertExpectedAndActual "$@" || return $?; Expect
 
 assertListLength()    { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] length "$expected"; }
 assertNotListLength() { Assertions.assertExpectedForList "$@" || return $?; local expected="$1"; shift; Expect.assert [ "$@" ] not length "$expected"; }
+
+assertArrayLength()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array length "$1"; }
+assertNotArrayLength() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array not length "$1"; }

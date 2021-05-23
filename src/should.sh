@@ -21,17 +21,28 @@
   fi
 }
 
-{{{() {
+# HIGHLY recommended and preferred for lists
+:[() {
+  local -a SHOULD_ACTUAL_LIST=()
+  until (( $# == 0 )) || [ "$1" = ] ]; do
+    SHOULD_ACTUAL_LIST+=("$1"); shift
+  done
+  shift
+
+  Expect.assert [ "${SHOULD_ACTUAL_LIST[@]}" ] "$@"
+}
+
+:{{() {
   local -a SHOULD_COMMAND=()
-  until (( $# == 0 )) || [ "$1" = }}} ]; do
+  until (( $# == 0 )) || [ "$1" = }} ]; do
     SHOULD_COMMAND+=("$1"); shift
   done
   # errors here ...
   shift
-  Expect.assert { "${SHOULD_COMMAND[@]}" } "$@";
+  Expect.assert {{ "${SHOULD_COMMAND[@]}" }} "$@";
 }
 
-{:() {
+:{() {
   local -a SHOULD_COMMAND=()
   until (( $# == 0 )) || [ "$1" = } ]; do
     SHOULD_COMMAND+=("$1"); shift

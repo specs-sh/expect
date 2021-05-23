@@ -70,8 +70,48 @@ example.does.expand.wildcard.pattern.stars.fail() {
   [ -z "$STDOUT" ]
 }
 
-# TODO: LIST SHOULD CONTAIN
+example.list.contains.fail() {
+  e.g. assertions : assertListContains "Hello*orld" "Hello" "World"
+  e.g. assertThat : assertThat [ "Hello" "World" ] contains "Hello*orld"
+  e.g. expect     : expect [ "Hello" "World" ] to contain "Hello*orld"
+  e.g. should     : :[ "Hello" "World" ] should contain "Hello*orld"
+  assertStderr "Expected list to contain item with subtext" 'List: ("Hello" "World")' 'Expected: "Hello*orld"'
+  assertEmptyStdout
+  assertExitcode 51
+}
 
-# TODO: ARRAY CONTAIN
+example.list.contains.pass() {
+  e.g. assertions : assertListContains "Hello*orld" "Hello" "Hello, world!" "World"
+  e.g. assertThat : assertThat [ "Hello" "Hello, world!" "World" ] does contain "Hello*orld"
+  e.g. expect     : expect [ "Hello" "Hello, world!" "World" ] to contain "Hello*orld"
+  e.g. should     : :[ "Hello" "Hello, world!" "World" ] should contain "Hello*orld"
+  assertEmptyStdout
+  assertEmptyStderr
+  assertExitcode 0
+}
+
+example.list.contains.not.fail() {
+  e.g. assertions : assertNotListContains "Hello*orld" "Hello" "Hello, world!" "World"
+  e.g. assertThat : assertThat [ "Hello" "Hello, world!" "World" ] does not contain "Hello*orld"
+  e.g. expect     : expect [ "Hello" "Hello, world!" "World" ] not to contain "Hello*orld"
+  e.g. should     : :[ "Hello" "Hello, world!" "World" ] should not contain "Hello*orld"
+  assertStderr "Expected list not to contain item with subtext" 'List: ("Hello" "Hello, world!" "World")' 'Unexpected: "Hello*orld"'
+  assertEmptyStdout
+  assertExitcode 51
+}
+
+example.array.contains.fail() {
+  greetings=( "Hello" "World" )
+
+  e.g. assertions : assertArrayContains "Hello*orld" greetings
+  e.g. assertThat : assertThat greetings array contains "Hello*orld"
+  e.g. expect     : expect greetings array to contain "Hello*orld"
+  e.g. should     : {{ greetings }} array should contain "Hello*orld"
+  assertStderr "Expected array to contain item with subtext" "Array variable: greetings" 'Elements: ("Hello" "World")' 'Expected: "Hello*orld"'
+  assertEmptyStdout
+  assertExitcode 51
+}
 
 runExamples
+
+# TODO 'include' which is EXACT matches only

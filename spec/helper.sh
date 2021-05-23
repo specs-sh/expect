@@ -28,3 +28,35 @@ runExamples() {
     done
   done
 }
+
+assertStderr() {
+  local expected=
+  for expected; do
+    if [[ "$STDERR" != *"$expected"* ]]; then
+      printf "Expected STDERR to contain '%s'\nActual: %s" "$expected" "$STDERR" >&2
+      return 1
+    fi
+  done
+}
+
+assertStdout() {
+  local expected=
+  for expected; do
+    if [[ "$STDOUT" != *"$expected"* ]]; then
+      printf "Expected STDOUT to contain '%s'\nActual: %s\n" "$expected" "$STDOUT" >&2
+      return 1
+    fi
+  done
+}
+
+assertExitcode() {
+  [ "$EXITCODE" = "$1" ] || { printf "Expected exitcode to equal\nActual: %s\nExpected: %s\n" "$EXITCODE" "$1" >&2; }
+}
+
+assertEmptyStdout() {
+  [ -z "$STDOUT" ] || { printf "Expected STDOUT to be empty\nActual: '%s'" "$STDOUT" >&2; return 1; }
+}
+
+assertEmptyStderr() {
+  [ -z "$STDERR" ] || { printf "Expected STDERR to be empty\nActual: '%s'" "$STDERR" >&2; return 1; }
+}

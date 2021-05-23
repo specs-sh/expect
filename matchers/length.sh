@@ -39,7 +39,7 @@ ExpectMatcher.length.ARRAY_NAME() {
 
   if declare -p "$EXPECT_ACTUAL" 2>&1 | grep "^declare -a " &>/dev/null; then
     if [ "$EXPECT_BASH_NAME_REFERENCES" = true ]; then
-      local -n __array__="$EXPECT_ACTUAL"
+      local -n __array__="${EXPECT_ACTUAL[0]}"
     else
       eval "local -a __array__=(\"\${$EXPECT_ACTUAL[@]}\")"
     fi

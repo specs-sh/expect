@@ -48,7 +48,11 @@ source expect-sdk.sh
   # errors here ...
   shift
 
-  Expect.assert [ "${SHOULD_ACTUAL_LIST[@]}" ] "$@"
+  if (( ${#SHOULD_ACTUAL_LIST[@]} > 0 )); then
+    Expect.assert [ "${SHOULD_ACTUAL_LIST[@]}" ] "$@"
+  else
+    Expect.assert [ ] "$@"
+  fi
 }
 
 :{() {

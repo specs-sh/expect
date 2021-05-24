@@ -8,12 +8,12 @@ Expect.assert() {
   local EXPECT_PROVIDED_TYPE=TEXT EXPECT_ACTUAL_TYPE=TEXT EXPECT_MATCHER= EXPECT_NOT="${EXPECT_NOT:-}" \
         EXPECT_BLOCK_OPEN= EXPECT_BLOCK_CLOSE= \
         EXPECT_COMMAND_STDOUT= EXPECT_COMMAND_STDERR= \
-        EXPECT_BASH_ASSOCIATIVE_ARRAYS= EXPECT_BASH_NAME_REFERENCES= \
+        EXPECT_BASH_ASSOCIATIVE_ARRAYS= EXPECT_BASH_NAME_REFERENCES= EXPECT_BASH_UPPERLOWER= \
         __expect__argument= __expect__isCommand= EXPECT_COMMAND_SUBSHELL= __expect__stdoutTempFile= __expect__stderrTempFile= __expect__nounsetOn= __expect__returnValue=
 
   local -i EXPECT_COMMAND_EXITCODE=0
 
-  (( ${BASH_VERSINFO[0]} >= 4 )) && EXPECT_BASH_ASSOCIATIVE_ARRAYS=true
+  (( ${BASH_VERSINFO[0]} >= 4 )) && { EXPECT_BASH_ASSOCIATIVE_ARRAYS=true; EXPECT_BASH_UPPERLOWER=true; }
   (( ${BASH_VERSINFO[0]} >= 5 )) || { (( ${BASH_VERSINFO[0]} == 4 )) && (( ${BASH_VERSINFO[1]} >= 3 )); } && EXPECT_BASH_NAME_REFERENCES=true
 
   case "$1" in
@@ -29,7 +29,7 @@ Expect.assert() {
 
   if [ -n "$EXPECT_BLOCK_OPEN" ]; then
     shift
-    until (( $# == 0 )) || [ "$1" = "$EXPECT_BLOCK_CLOSE" ]; do
+    until (( $# == 0 )) || [ "${1:-}" = "$EXPECT_BLOCK_CLOSE" ]; do
       EXPECT_PROVIDED+=("$1"); shift
     done
     if (( $# == 0 )); then
@@ -54,8 +54,8 @@ Expect.assert() {
 
   case "$EXPECT_PROVIDED_TYPE" in
     COMMAND) EXPECT_COMMAND=("${EXPECT_PROVIDED[@]}") ;; # EXPECT_ACTUAL will be set below after the command is run.
-    LIST)    EXPECT_ACTUAL=("${EXPECT_PROVIDED[@]}"); EXPECT_ACTUAL_TYPE=LIST ;;
-    *)       EXPECT_ACTUAL=("${EXPECT_PROVIDED[*]}")
+    LIST)    (( ${#EXPECT_PROVIDED[@]} == 0 )) && EXPECT_ACTUAL=() || EXPECT_ACTUAL=("${EXPECT_PROVIDED[@]}"); EXPECT_ACTUAL_TYPE=LIST ;;
+    *)       (( ${#EXPECT_PROVIDED[@]} == 0 )) && EXPECT_ACTUAL=() || EXPECT_ACTUAL=("${EXPECT_PROVIDED[*]}")
   esac
 
   if [ "$EXPECT_PROVIDED_TYPE" = COMMAND ]; then

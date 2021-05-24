@@ -93,13 +93,13 @@ All running on top of the same core code which provides **_lovely_ assertion fai
     - [Implementing Custom Filters](#)
 - [⚛️ Matchers](#)
   - **Common**
-    - [`equals`](#) [`empty`](#) [`length`](#) [`contain`](#) [`include`](#)
+    - [`equal`](#) [`empty`](#) [`length`](#) [`contain`](#) [`include`](#)
   - **Text**
-    - [`startWith`](#) [`endWith`](#)
+    - [`match`](#) [`startWith`](#) [`endWith`](#)
   - **Command**
     - [`fails`](#) [`succeeds`](#)
   - **Files and Directories**
-    - [`exists`](#) [`readable`](#) [`writeable`](#) [`executable`](#) [`newerThan`](#) [`olderThan`](#) [`pipe`](#) [`socket`](#) [`symlink`](#)
+    - [`exist`](#) [`readable`](#) [`writeable`](#) [`executable`](#) [`newerThan`](#) [`olderThan`](#) [`pipe`](#) [`socket`](#) [`symlink`](#)
 
 ## ⬇️ Download / Install
 
@@ -161,6 +161,7 @@ Click or tap one of the options below for description and examples:
 
 ...
 hello
+
 </details>
 
 <details>
@@ -168,6 +169,7 @@ hello
 
 ...
 hello
+
 </details>
 
 ## ⚛️ Matchers
@@ -179,6 +181,7 @@ Click or tap one of the options below for description and examples:
 
 ...
 hello
+
 </details>
 
 <details>
@@ -186,4 +189,5 @@ hello
 
 ...
 hello
+
 </details>

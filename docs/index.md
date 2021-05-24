@@ -94,13 +94,13 @@ All running on top of the same core code which provides **_lovely_ assertion fai
     - [Implementing Custom Filters](#)
 - [<i class="fad fa-atom-alt"></i> Matchers](#)
   - **Common**
-    - [`equals`](#) [`empty`](#) [`length`](#) [`contain`](#) [`include`](#)
+    - [`equal`](#) [`empty`](#) [`length`](#) [`contain`](#) [`include`](#)
   - **Text**
-    - [`startWith`](#) [`endWith`](#)
+    - [`match`](#) [`startWith`](#) [`endWith`](#)
   - **Command**
     - [`fails`](#) [`succeeds`](#)
   - **Files and Directories**
-    - [`exists`](#) [`readable`](#) [`writeable`](#) [`executable`](#) [`newerThan`](#) [`olderThan`](#) [`pipe`](#) [`socket`](#) [`symlink`](#)
+    - [`exist`](#) [`readable`](#) [`writeable`](#) [`executable`](#) [`newerThan`](#) [`olderThan`](#) [`pipe`](#) [`socket`](#) [`symlink`](#)
 
 ## <i class="fad fa-download"></i> Download / Install
 
@@ -162,6 +162,7 @@ Click or tap one of the options below for description and examples:
 
 ...
 hello
+
 </details>
 
 <details>
@@ -169,6 +170,7 @@ hello
 
 ...
 hello
+
 </details>
 
 ## <i class="fad fa-atom-alt"></i> Matchers
@@ -180,6 +182,7 @@ Click or tap one of the options below for description and examples:
 
 ...
 hello
+
 </details>
 
 <details>
@@ -187,4 +190,5 @@ hello
 
 ...
 hello
+
 </details>

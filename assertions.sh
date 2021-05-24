@@ -75,9 +75,17 @@ assertNotListLength() { Assertions.assertExpectedForList "$@" || return $?; loca
 assertArrayLength()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array length "$1"; }
 assertNotArrayLength() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array not length "$1"; }
 
+# Path
+assertExists()    { Assertions.assertActual "$@" || return $?; Expect.assert "$1" path exists; }
+assertNotExists() { Assertions.assertActual "$@" || return $?; Expect.assert "$1" path not exists; }
+
 # File
 assertFileExists()    { Assertions.assertActual "$@" || return $?; Expect.assert "$1" file exists; }
 assertNotFileExists() { Assertions.assertActual "$@" || return $?; Expect.assert "$1" file not exists; }
+
+# Directory
+assertDirectoryExists()    { Assertions.assertActual "$@" || return $?; Expect.assert "$1" directory exists; }
+assertNotDirectoryExists() { Assertions.assertActual "$@" || return $?; Expect.assert "$1" directory not exists; }
 
 # GENERATED
 # DO NOT EDIT

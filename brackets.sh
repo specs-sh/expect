@@ -18,7 +18,9 @@ source expect-sdk.sh
   [ "${1:-}" = '!' ] && { BRACKETS_NOT=not; shift; }
 
   case "${1:-}" in
+    -e) Expect.assert "$2" path $BRACKETS_NOT exists ;;
     -f) Expect.assert "$2" file $BRACKETS_NOT exists ;;
+    -d) Expect.assert "$2" directory $BRACKETS_NOT exists ;;
     *)
       case "${2:-}" in
         =) Expect.assert "$1" equal "${3:-}" ;;

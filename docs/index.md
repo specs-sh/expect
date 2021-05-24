@@ -96,7 +96,7 @@ All running on top of the same core code which provides **_lovely_ assertion fai
   - **Common**
     - [`equal`](#) [`empty`](#) [`length`](#) [`contain`](#) [`include`](#)
   - **Text**
-    - [`match`](#) [`startWith`](#) [`endWith`](#)
+    - [`match`](#) [`startWith`](#) [`endWith`](#) [`greaterThan`](#) [`greaterThanOrEqualTo`](#) [`lessThan`](#) [`lessThanOrEqualTo`](#)
   - **Command**
     - [`fails`](#) [`succeeds`](#)
   - **Files and Directories**

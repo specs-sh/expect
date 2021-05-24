@@ -1,6 +1,7 @@
 source vendor/run.sh
 source vendor/assert.sh
 source vendor/refute.sh
+source spec/messagesAndCodes.sh
 
 STDOUT= STDERR= EXITCODE=
 
@@ -10,7 +11,29 @@ e.g.() {
     assertionsLibrary="$1"; shift; shift
     [ -f "$assertionsLibrary.sh" ] && source "$assertionsLibrary.sh" || { echo "Could not load assertion library for example: $assertionsLibrary.sh"; exit 1; }
     run -p {{{ "$@" }}} || :
+    local typeUnderTest="${SPEC_FILE##*/}"; typeUnderTest="${typeUnderTest%%.*}"; typeUnderTest="$( echo "$typeUnderTest" | tr '[:lower:]' '[:upper:]' )"
+    local matcherUnderTest="${SPEC_FILE%/*}"; matcherUnderTest="${matcherUnderTest##*/}"; matcherUnderTest="$( echo "$matcherUnderTest" | tr '[:lower:]' '[:upper:]' )"
+    [[ "$SPEC_TEST" = *.fail ]] && assertFail || assertPass
+    local messageVariableName="${matcherUnderTest}_${typeUnderTest}_MESSAGE"
+    [[ "$SPEC_TEST" = *.not.fail ]] && messageVariableName="${matcherUnderTest}_${typeUnderTest}_NOT_MESSAGE"
+    [ -z "${!messageVariableName:-}" ] && { echo "Please set $messageVariableName to expected message" >&2; return 1; }
+    local exitCodeVariableName="${matcherUnderTest}_EXITCODE"
+    [ -z "${!exitCodeVariableName:-}" ] && { echo "Please set $exitCodeVariableName to expected exitcode" >&2; return 1; }
+    [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!exitCodeVariableName}" ] && assertExitcode "${!exitCodeVariableName}"
+    [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!messageVariableName}" ] && assertStderr "${!messageVariableName}"
+    assertEmptyStdout
   fi
+  return 0
+}
+
+assertPass() {
+  (( EXITCODE == 0 )) || { echo "Expected command to pass but failed ($EXITCODE)" >&2; return 1; }
+  return 0
+}
+
+assertFail() {
+  (( EXITCODE == 0 )) && { echo "Expected command to fail but passed ($EXITCODE)" >&2; return 1; }
+  (( $# > 0 )) && assertStderr "$@"
   return 0
 }
 

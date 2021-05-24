@@ -83,12 +83,20 @@ All running on top of the same core code which provides **_lovely_ assertion fai
   - [`assertThat` Assertions](#)
   - [`should` Assertions](#)
 - [⚗️ Filters](#)
+  - **Debugging**
+    - [`print`](#)
+  - **Common**
+    - [`inspect`](#) [`size`](#)
   - **Text**
-    - [`split`](#) [`uppercase`](#) [`lowercase`](#) [`array`](#) [`file`](#) [`path`](#) [`directory`](#)
+    - [`split`](#) [`uppercase`](#) [`lowercase`](#) [`lines`](#) [`chars`](#)
   - **Collections**
     - [`first`](#) [`last`](#) [`join`](#)
+  - **Number**
+    - [`+`](#) [`-`](#) [`/`](#) [`x`](#) [`bc`](#)
   - **Command**
-    - [`exitcode`](#) [`output`](#) [`stdout`](#) [`stderr`](#)
+    - [`exitcode`](#) [`output`](#) [`stdout`](#) [`stderr`](#) [`run`](#)
+  - **Conversion**
+    - [`array`](#) [`string`](#) [`num`](#) [`file`](#) [`path`](#) [`directory`](#) [`command`](#)
   - **Custom**
     - [Implementing Custom Filters](#)
 - [⚛️ Matchers](#)
@@ -100,6 +108,8 @@ All running on top of the same core code which provides **_lovely_ assertion fai
     - [`fails`](#) [`succeeds`](#)
   - **Files and Directories**
     - [`exist`](#) [`readable`](#) [`writeable`](#) [`executable`](#) [`newerThan`](#) [`olderThan`](#) [`pipe`](#) [`socket`](#) [`symlink`](#)
+  - **Custom**
+    - [Implementing Custom Matchers](#)
 
 ## ⬇️ Download / Install
 

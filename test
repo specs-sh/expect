@@ -2,8 +2,8 @@
 
 build=--dev
 
-[ "$1" = --dev ] && shift
-[ "$1" = --prod ] && { build=; shift; }
+[ "$1" = --dev ] && { build=--dev; shift; }
+[ "$1" = --prod ] && { build=--prod; shift; }
 
 ./scripts/compile.sh $build || exit $?
 

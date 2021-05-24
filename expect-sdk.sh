@@ -1,6 +1,7 @@
 # Rename to RUN.
 Expect.assert() {
   local -r EXPECT_VERSION="2.0.0"
+  (( $# == 1 )) && [ "$1" = --version ] && { echo "Expect version $EXPECT_VERSION"; return 0; }
 
   local -a EXPECT_ORIGINAL_ARGUMENTS=("$@") EXPECT_ARGUMENTS=("$@") EXPECT_PROVIDED=() EXPECT_ACTUAL=() EXPECT_COMMAND=() EXPECT_ACTUAL_ARRAY=()
 

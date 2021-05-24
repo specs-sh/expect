@@ -1,3 +1,5 @@
+ASSERTIONS_VERSION=2.0.0
+
 Assertions.assertExpectedAndActual() {
   case $# in
     0) echo "${FUNCNAME[1]} expected 2 arguments: [expected] [actual]" >&2; return 40 ;;

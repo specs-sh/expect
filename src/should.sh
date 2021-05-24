@@ -1,4 +1,7 @@
 {{() {
+  local -r SHOULD_VERSION=2.0.0
+  (( $# == 1 )) && [ "$1" = --version ] && { echo "Should version $SHOULD_VERSION"; return 0; }
+  
   local SHOULD_ACTUAL=
   local -a SHOULD_ACTUAL_LIST=()
   until (( $# == 0 )) || [ "$1" = }} ]; do
@@ -23,31 +26,43 @@
 
 # HIGHLY recommended and preferred for lists
 :[() {
+  local -r SHOULD_VERSION=2.0.0
+  (( $# == 1 )) && [ "$1" = --version ] && { echo "Should version $SHOULD_VERSION"; return 0; }
+
   local -a SHOULD_ACTUAL_LIST=()
   until (( $# == 0 )) || [ "$1" = ] ]; do
     SHOULD_ACTUAL_LIST+=("$1"); shift
   done
+  # errors here ...
   shift
 
   Expect.assert [ "${SHOULD_ACTUAL_LIST[@]}" ] "$@"
 }
 
-:{{() {
-  local -a SHOULD_COMMAND=()
-  until (( $# == 0 )) || [ "$1" = }} ]; do
-    SHOULD_COMMAND+=("$1"); shift
-  done
-  # errors here ...
-  shift
-  Expect.assert {{ "${SHOULD_COMMAND[@]}" }} "$@";
-}
-
 :{() {
+  local -r SHOULD_VERSION=2.0.0
+  (( $# == 1 )) && [ "$1" = --version ] && { echo "Should version $SHOULD_VERSION"; return 0; }
+
   local -a SHOULD_COMMAND=()
   until (( $# == 0 )) || [ "$1" = } ]; do
     SHOULD_COMMAND+=("$1"); shift
   done
   # errors here ...
   shift
+
   Expect.assert { "${SHOULD_COMMAND[@]}" } "$@";
+}
+
+:{{() {
+  local -r SHOULD_VERSION=2.0.0
+  (( $# == 1 )) && [ "$1" = --version ] && { echo "Should version $SHOULD_VERSION"; return 0; }
+
+  local -a SHOULD_COMMAND=()
+  until (( $# == 0 )) || [ "$1" = }} ]; do
+    SHOULD_COMMAND+=("$1"); shift
+  done
+  # errors here ...
+  shift
+
+  Expect.assert {{ "${SHOULD_COMMAND[@]}" }} "$@";
 }

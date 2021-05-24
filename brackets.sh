@@ -11,6 +11,8 @@ source expect-sdk.sh
 # brackets Version 2.0.0
 
 [:() {
+  local -r BRACKETS_VERSION=2.0.0
+  (( $# == 1 )) && [ "$1" = --version ] && { echo "Brackets version $BRACKETS_VERSION"; return 0; }
   local __brackets__leftHandSide="$1" __brackets__operator="$2" __brackets__rightHandSide="$3" __brackets__matcher=
   case "$__brackets__operator" in
     =) __brackets__matcher=equal ;;
@@ -21,6 +23,8 @@ source expect-sdk.sh
 }
 
 [[:() {
+  local -r BRACKETS_VERSION=2.0.0
+  (( $# == 1 )) && [ "$1" = --version ] && { echo "Brackets version $BRACKETS_VERSION"; return 0; }
   local __brackets__leftHandSide="$1" __brackets__operator="$2" __brackets__rightHandSide="$3" __brackets__matcher=
   case "$__brackets__operator" in
     =) __brackets__matcher=containPattern ;;

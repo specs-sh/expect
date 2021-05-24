@@ -2,6 +2,7 @@ source spec/helper.sh
 source matchers/contain.sh
 source matchers/split.sh
 source matchers/array.sh
+source matchers/join.sh
 
 CONTAIN_MESSAGE="Expected text value to contain"
 CONTAIN_NOT_MESSAGE="Expected text value not to contain"
@@ -132,6 +133,21 @@ example.text.split.to.list.fail.again() {
   assertEmptyStdout
   assertEmptyStderr
   assertExitcode 0
+}
+
+example.list.join.fail() {
+  e.g. assertThat : assertThat [ a b c ] join ":" contains "a:b:Z"
+  e.g. expect     : expect [ a b c ] join ":" to contain "a:b:Z"
+  e.g. should     : :[ a b c ] join ":" should contain "a:b:Z"
+  assertStderr "Expected text value to contain subtext" 'Actual: "a:b:c"' 'Expected: "a:b:Z"'
+}
+
+example.array.join.fail() {
+  items=( x y z )
+  e.g. assertThat : assertThat items array join ":" contains "a:b:Z"
+  e.g. expect     : expect items array join ":" to contain "a:b:Z"
+  e.g. should     : {{ items }} array join ":" should contain "a:b:Z"
+  assertStderr "Expected text value to contain subtext" 'Actual: "x:y:z"' 'Expected: "a:b:Z"'
 }
 
 runExamples

@@ -8,19 +8,37 @@ STDOUT= STDERR= EXITCODE=
 e.g.() {
   local assertionsLibrary
   if [ -n "$RUN_EXAMPLE" ] && [ "$RUN_EXAMPLE" = "$1" ]; then
+    
     assertionsLibrary="$1"; shift; shift
+    
     [ -f "$assertionsLibrary.sh" ] && source "$assertionsLibrary.sh" || { echo "Could not load assertion library for example: $assertionsLibrary.sh"; exit 1; }
+    
     run -p {{{ "$@" }}} || :
+    
     local typeUnderTest="${SPEC_FILE##*/}"; typeUnderTest="${typeUnderTest%%.*}"; typeUnderTest="$( echo "$typeUnderTest" | tr '[:lower:]' '[:upper:]' )"
     local matcherUnderTest="${SPEC_FILE%/*}"; matcherUnderTest="${matcherUnderTest##*/}"; matcherUnderTest="$( echo "$matcherUnderTest" | tr '[:lower:]' '[:upper:]' )"
+    
     [[ "$SPEC_TEST" = *.fail ]] && assertFail || assertPass
+    
     local messageVariableName="${matcherUnderTest}_${typeUnderTest}_MESSAGE"
     [[ "$SPEC_TEST" = *.not.fail ]] && messageVariableName="${matcherUnderTest}_${typeUnderTest}_NOT_MESSAGE"
-    [ -z "${!messageVariableName:-}" ] && { echo "Please set $messageVariableName to expected message" >&2; return 1; }
-    local exitCodeVariableName="${matcherUnderTest}_EXITCODE"
-    [ -z "${!exitCodeVariableName:-}" ] && { echo "Please set $exitCodeVariableName to expected exitcode" >&2; return 1; }
-    [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!exitCodeVariableName}" ] && assertExitcode "${!exitCodeVariableName}"
-    [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!messageVariableName}" ] && assertStderr "${!messageVariableName}"
+    [[ "$SPEC_TEST" = *.missingArgument.fail ]] && messageVariableName="${matcherUnderTest}_${typeUnderTest}_NO_ARGUMENT_MESSAGE"
+    if [ -z "${!messageVariableName:-}" ]; then
+      echo "Please set $messageVariableName to expected message" >&2
+      return 1
+    else
+      [[ "$SPEC_TEST" = *.fail ]] && assertStderr "${!messageVariableName}"
+    fi
+
+    if [[ "$SPEC_TEST" = *.missingArgument.fail ]]; then
+      assertExitcode 40
+    else
+      local exitCodeVariableName="${matcherUnderTest}_EXITCODE"
+      [ -z "${!exitCodeVariableName:-}" ] && { echo "Please set $exitCodeVariableName to expected exitcode" >&2; return 1; }
+      [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!exitCodeVariableName}" ] && assertExitcode "${!exitCodeVariableName}"
+      [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!messageVariableName}" ] && assertStderr "${!messageVariableName}"
+    fi
+
     assertEmptyStdout
   fi
   return 0

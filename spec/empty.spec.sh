@@ -9,6 +9,8 @@ EMPTY_EXITCODE=52
 example.empty.fail() {
   e.g. assertions : assertEmpty "Hello"
   e.g. assertThat : assertThat "Hello" is empty
+  e.g. brackets   : [: -z "Hello" ]
+  e.g. brackets   : [: ! -n "Hello" ]
   e.g. expect     : expect "Hello" to be empty
   e.g. should     : {{ "Hello" }} should be empty
   [[ "$STDERR" = *"$EMPTY_MESSAGE"* ]]
@@ -21,6 +23,8 @@ example.empty.fail() {
 example.empty.pass() {
   e.g. assertions : assertEmpty ""
   e.g. assertThat : assertThat "" is empty
+  e.g. brackets   : [: -z "" ]
+  e.g. brackets   : [: ! -n "" ]
   e.g. expect     : expect "" to be empty
   e.g. should     : {{ "" }} should be empty
   (( EXITCODE == 0 ))
@@ -31,6 +35,8 @@ example.empty.pass() {
 example.not.empty.fail() {
   e.g. assertions : assertNotEmpty ""
   e.g. assertThat : assertThat "" is not empty
+  e.g. brackets   : [: -n "" ]
+  e.g. brackets   : [: ! -z "" ]
   e.g. expect     : expect "" not to be empty
   e.g. should     : {{ "" }} should not be empty
   [[ "$STDERR" = *"$EMPTY_NOT_MESSAGE"* ]]
@@ -42,6 +48,8 @@ example.not.empty.fail() {
 example.not.empty.pass() {
   e.g. assertions : assertNotEmpty "Hello"
   e.g. assertThat : assertThat "Hello" is not empty
+  e.g. brackets   : [: -n "Hello" ]
+  e.g. brackets   : [: ! -z "Hello" ]
   e.g. expect     : expect "Hello" not to be empty
   e.g. should     : {{ "Hello" }} should not be empty
   (( EXITCODE == 0 ))

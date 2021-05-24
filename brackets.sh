@@ -21,6 +21,8 @@ source expect-sdk.sh
     -e) Expect.assert "$2" path $BRACKETS_NOT exists ;;
     -f) Expect.assert "$2" file $BRACKETS_NOT exists ;;
     -d) Expect.assert "$2" directory $BRACKETS_NOT exists ;;
+    -z) Expect.assert "$2" $BRACKETS_NOT empty ;;
+    -n) [ "$BRACKETS_NOT" = true ] && Expect.assert "$2" not empty || Expect.assert "$2" empty ;;
     *)
       case "${2:-}" in
         =) Expect.assert "$1" equal "${3:-}" ;;

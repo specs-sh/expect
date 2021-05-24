@@ -32,6 +32,7 @@ example.contain.fail() {
 example.contain.pass() {
   e.g. assertions : assertContains "Hello" "Hello, world!"
   e.g. assertThat : assertThat "Hello, world!" contains "Hello"
+  e.g. assertThat : assertThat "Hello, world!" containing "Hello"
   e.g. expect     : expect "Hello, world!" to contain "Hello"
   e.g. should     : {{ "Hello, world!" }} should contain "Hello"
   (( EXITCODE == 0 ))

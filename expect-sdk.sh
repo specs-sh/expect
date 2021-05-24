@@ -112,7 +112,11 @@ Expect.core.nextMatcher() {
       with) EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
       *) EXPECT_MATCHER+=".${EXPECT_ARGUMENTS[0]}"; EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}") ;;
     esac
-    declare -F "${EXPECT_MATCHER%s}.$EXPECT_ACTUAL_TYPE" &>/dev/null || declare -F "${EXPECT_MATCHER%s}.ANY" &>/dev/null && EXPECT_MATCHER="${EXPECT_MATCHER%s}"
+    if declare -F "${EXPECT_MATCHER%s}.$EXPECT_ACTUAL_TYPE" &>/dev/null || declare -F "${EXPECT_MATCHER%s}.ANY" &>/dev/null; then
+      EXPECT_MATCHER="${EXPECT_MATCHER%s}"
+    elif declare -F "${EXPECT_MATCHER%ing}.$EXPECT_ACTUAL_TYPE" &>/dev/null || declare -F "${EXPECT_MATCHER%ing}.ANY" &>/dev/null; then
+      EXPECT_MATCHER="${EXPECT_MATCHER%ing}"
+    fi
   done
   if declare -F "$EXPECT_MATCHER.$EXPECT_ACTUAL_TYPE" &>/dev/null; then
     EXPECT_MATCHER="$EXPECT_MATCHER.$EXPECT_ACTUAL_TYPE" 

@@ -1,5 +1,7 @@
 source spec/helper.sh
 source matchers/contain.sh
+source matchers/split.sh
+source matchers/array.sh
 
 CONTAIN_MESSAGE="Expected text value to contain"
 CONTAIN_NOT_MESSAGE="Expected text value not to contain"

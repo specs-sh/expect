@@ -1,8 +1,10 @@
 #! /usr/bin/env bash
 
-build=production
+# build=production
+build=development
 
 [ "$1" = --dev ] && { build=development; shift; }
+[ "$1" = --prod ] && { build=production; shift; }
 
 expectVersion="$( cat expect-sdk.sh | grep EXPECT_VERSION= | sed 's/.*EXPECT_VERSION=//' | sed 's/"//g' )"
 

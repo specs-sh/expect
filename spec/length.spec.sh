@@ -1,5 +1,6 @@
 source spec/helper.sh
 source matchers/length.sh
+source matchers/array.sh
 
 LENGTH_MESSAGE="Expected text value to have specified length"
 LENGTH_NOT_MESSAGE="Expected text value not to have specified length"

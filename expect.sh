@@ -5,10 +5,8 @@
 # In Development: use set -eEuo pipefail
 set -eEuo pipefail
 
-# Source Expect SDK
 source expect-sdk.sh
-
-# expect Version 2.0.0
+# expect Version 
 
 expect() { Expect.assert "$@"; }
 

@@ -5,10 +5,8 @@
 # In Development: use set -eEuo pipefail
 set -eEuo pipefail
 
-# Source Expect SDK
 source expect-sdk.sh
-
-# should Version 2.0.0
+# should Version 
 
 {{() {
   local -r SHOULD_VERSION=2.0.0

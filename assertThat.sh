@@ -5,10 +5,8 @@
 # In Development: use set -eEuo pipefail
 set -eEuo pipefail
 
-# Source Expect SDK
 source expect-sdk.sh
-
-# assertThat Version 2.0.0
+# assertThat Version 
 
 assertThat() {
   local -r ASSERTTHAT_VERSION=2.0.0

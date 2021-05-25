@@ -20,8 +20,6 @@ case "$build" in
     ;;
 esac
 
-exit 0
-
 expectVersion="$( cat expect-sdk.sh | grep EXPECT_VERSION= | sed 's/.*EXPECT_VERSION=//' | sed 's/"//g' )"
 
 for library in assertions assertThat brackets expect should; do

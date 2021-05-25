@@ -32,6 +32,8 @@ Brackets.single() {
 
   if (( ${#__brackets__argumentList[@]} == 2 )); then
     case "${__brackets__argumentList[0]}" in
+      -z) Expect.assert "${__brackets__argumentList[1]}" $BRACKETS_NOT empty ;;
+      -n) [ "$BRACKETS_NOT" = not ] && BRACKETS_NOT= || BRACKETS_NOT=not; Expect.assert "${__brackets__argumentList[1]}" $BRACKETS_NOT empty ;;
       *) printf "Brackets unknown operator: %s. Provided arguments: [: %s ]" "$( Expect.utils.inspect "${__brackets__argumentList[0]}" )" "$( Expect.utils.inspectArguments "${__brackets__argumentList[@]}" )"  >&2; return 46 ;;
     esac
   elif (( ${#__brackets__argumentList[@]} == 3 )); then

@@ -1,7 +1,7 @@
 source spec/helper.sh
 
+source types/nullable/array.sh
 source filters/print/array.sh
-source filters/conversion/nullable/array.sh
 
 example.noVariableDeclared() {
   e.g. assertThat : assertThat doesNotExist array? print

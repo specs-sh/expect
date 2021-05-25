@@ -1,7 +1,7 @@
 source spec/helper.sh
 
+source types/array.sh
 source matchers/equal/array.sh
-source filters/conversion/array.sh
 
 example.zeroArguments.fail() {
   words=( Hello )

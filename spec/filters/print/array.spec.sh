@@ -1,8 +1,8 @@
 source spec/helper.sh
 
+source types/array.sh
+source types/nullable/array.sh
 source filters/print/array.sh
-source filters/conversion/array.sh
-source filters/conversion/nullable/array.sh
 
 example.arrayDoesNotExist.nullable() {
   # items=( Hello World ) # <--- not defined

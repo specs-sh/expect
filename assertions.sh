@@ -5,10 +5,8 @@
 # In Development: use set -eEuo pipefail
 set -eEuo pipefail
 
-# Source Expect SDK
 source expect-sdk.sh
-
-# assertions Version 2.0.0
+# assertions Version 
 
 ASSERTIONS_VERSION=2.0.0
 

@@ -1,6 +1,4 @@
 ExpectMatcher.equal.LIST() {
-  (( ${#EXPECT_ACTUAL[@]} == 0 )) && { echo "Missing required list value(s) for list 'equal' matcher, none specified" &>2; return 40; }
-
   # The list equal matcher reads *everything* to the right hand side (unlike most matchers)
   # This means that no matchers can come *after* this (when using multiple assertions in one line)
   EXPECT_ARGUMENTS=()

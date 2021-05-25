@@ -1,5 +1,7 @@
 ExpectMatcher.equal.TEXT() {
   (( $# == 0 )) && { echo "Missing required text argument for text 'equal' matcher: [expected text]" >&2; return 40; }
+
+  # Shift off expected value argument
   EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
 
   if [ "${EXPECT_NOT:-}" = true ] && [ "$EXPECT_ACTUAL" = "$1" ]; then

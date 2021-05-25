@@ -90,18 +90,18 @@ All running on top of the same core code which provides **_lovely_ assertion fai
   - **Text**
     - [`split`](#) [`uppercase`](#) [`lowercase`](#) [`lines`](#) [`chars`](#)
   - **Collections**
-    - [`first`](#) [`last`](#) [`join`](#)
-  - **Number**
+    - [`first`](#) [`last`](#) [`join`](#) [`map`](#)
+  - **Integer / Number**
     - [`+`](#) [`-`](#) [`/`](#) [`x`](#) [`bc`](#)
   - **Command**
     - [`exitcode`](#) [`output`](#) [`stdout`](#) [`stderr`](#) [`run`](#)
   - **Conversion**
-    - [`array`](#) [`string`](#) [`num`](#) [`file`](#) [`path`](#) [`directory`](#) [`command`](#)
+    - [`array`](#) [`text`](#) [`integer`](#) [`number`](#) [`file`](#) [`path`](#) [`directory`](#) [`command`](#)
   - **Custom**
     - [Implementing Custom Filters](#)
 - [⚛️ Matchers](#)
   - **Common**
-    - [`equal`](#) [`empty`](#) [`length`](#) [`contain`](#) [`include`](#)
+    - [`equal`](#) [`empty`](#) [`length`](#) [`contain`](#) [`include`](#) [`truthy`](#) [`falsy`](#)
   - **Text**
     - [`match`](#) [`startWith`](#) [`endWith`](#) [`greaterThan`](#) [`greaterThanOrEqualTo`](#) [`lessThan`](#) [`lessThanOrEqualTo`](#)
   - **Command**

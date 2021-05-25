@@ -2,20 +2,37 @@ source spec/helper.sh
 
 source matchers/equal/list.sh
 
-# example.missingArgument.fail() {
-#   e.g. assertThat : assertThat Hello equals
-#   e.g. assertThat : assertThat Hello eq
-#   e.g. assertThat : assertThat Hello =
-#   e.g. assertThat : assertThat Hello ==
-#   e.g. expect     : expect Hello to equal
-#   e.g. expect     : expect Hello to eq
-#   e.g. expect     : expect Hello to =
-#   e.g. expect     : expect Hello to ==
-#   e.g. should     : {{ Hello }} should equal
-#   e.g. should     : {{ Hello }} should eq
-#   e.g. should     : {{ Hello }} should =
-#   e.g. should     : {{ Hello }} should ==
-# }
+example.zeroArguments.fail() {
+  e.g. assertThat : assertThat [ Hello ] equals
+  e.g. assertThat : assertThat [ Hello ] eq
+  e.g. assertThat : assertThat [ Hello ] =
+  e.g. assertThat : assertThat [ Hello ] ==
+  e.g. expect     : expect [ Hello ] to equal
+  e.g. expect     : expect [ Hello ] to eq
+  e.g. expect     : expect [ Hello ] to =
+  e.g. expect     : expect [ Hello ] to ==
+  e.g. should     : :[ Hello ] should equal
+  e.g. should     : :[ Hello ] should eq
+  e.g. should     : :[ Hello ] should =
+  e.g. should     : :[ Hello ] should ==
+  assertStderr 'Actual: ("Hello")'
+  assertStderr 'Expected: ()'
+}
+
+example.zeroArguments.pass() {
+  e.g. assertThat : assertThat [ ] equals
+  e.g. assertThat : assertThat [ ] eq
+  e.g. assertThat : assertThat [ ] =
+  e.g. assertThat : assertThat [ ] ==
+  e.g. expect     : expect [ ] to equal
+  e.g. expect     : expect [ ] to eq
+  e.g. expect     : expect [ ] to =
+  e.g. expect     : expect [ ] to ==
+  e.g. should     : :[ ] should equal
+  e.g. should     : :[ ] should eq
+  e.g. should     : :[ ] should =
+  e.g. should     : :[ ] should ==
+}
 
 example.fail() {
   e.g. assertThat : assertThat [ Hello World ] equals World

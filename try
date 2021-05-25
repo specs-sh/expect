@@ -6,10 +6,5 @@ source assertThat.sh
 source brackets.sh
 source expect.sh
 source should.sh
-for matcher in matchers/*; do
-  source $matcher
-done
-
-set +eEu
 
 run -p "$@" || :

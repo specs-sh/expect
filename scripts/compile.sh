@@ -1,10 +1,26 @@
 #! /usr/bin/env bash
 
-# build=production
-build=development
+build=production
 
 [ "$1" = --dev ] && { build=development; shift; }
 [ "$1" = --prod ] && { build=production; shift; }
+
+rm -f expect-sdk.sh
+case "$build" in
+  production)
+    cp src/_header.sh expect-sdk.sh
+    while read -rd '' file; do
+      echo >> expect-sdk.sh
+      cat "$file" >> expect-sdk.sh
+      echo >> expect-sdk.sh
+    done < <( find src/sdk -iname "*.sh" -print0 )
+    ;;
+  development)
+    cp src/_devSdkHeader.sh expect-sdk.sh
+    ;;
+esac
+
+exit 0
 
 expectVersion="$( cat expect-sdk.sh | grep EXPECT_VERSION= | sed 's/.*EXPECT_VERSION=//' | sed 's/"//g' )"
 
@@ -24,7 +40,7 @@ for library in assertions assertThat brackets expect should; do
       done
       echo                                        >> "$library.sh"
       echo "# Included Expect SDK $expectVersion" >> "$library.sh"
-      cat expect-sdk.sh                           >> "$library.sh"
+      cat expect-sdk.sh | tail -n +5              >> "$library.sh" # Without license header (already present)
       echo                                        >> "$library.sh"
       ;;
     development)

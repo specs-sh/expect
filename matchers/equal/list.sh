@@ -19,10 +19,10 @@ ExpectMatcher.equal.LIST() {
   fi
 
   if [ "${EXPECT_NOT:-}" != true ] && [ "$actualEqualsExpected" != true ]; then
-    printf "Expected list value(s) to equal provided value(s)\nActual: (%s)\nExpected: (%s)\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspectList "$@" )" >&2
+    printf "Expected list value(s) to equal provided value(s)\nActual: %s\nExpected: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspectList "$@" )" >&2
     return 50
   elif [ "${EXPECT_NOT:-}" = true ] && [ "$actualEqualsExpected" = true ]; then
-    printf "Expected list value(s) not to equal provided value(s)\nActual: (%s)\nExpected: (%s)\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspectList "$@" )" >&2
+    printf "Expected list value(s) not to equal provided value(s)\nValues: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" >&2
     return 50
   fi
 

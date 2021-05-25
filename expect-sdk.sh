@@ -127,6 +127,8 @@ Expect.core.nextMatcher() {
   fi
 }
 
+# TODO move utils into folders
+
 Expect.utils.inspect() {
   case "${EXPECT_INSPECT:-declare}" in 
     declare)
@@ -141,6 +143,12 @@ Expect.utils.inspect() {
 }
 
 Expect.utils.inspectList() {
+  printf '('
+  Expect.utils.inspectArguments "$@"
+  printf ')'
+}
+
+Expect.utils.inspectArguments() {
   while (( $# > 0 )); do
     Expect.utils.inspect "$1"
     shift

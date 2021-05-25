@@ -1,7 +1,7 @@
 source vendor/run.sh
 source vendor/assert.sh
 source vendor/refute.sh
-source spec/messagesAndCodes.sh
+source spec/MESSAGES_and_CODES.sh
 
 STDOUT= STDERR= EXITCODE=
 
@@ -17,29 +17,31 @@ e.g.() {
     
     local typeUnderTest="${SPEC_FILE##*/}"; typeUnderTest="${typeUnderTest%%.*}"; typeUnderTest="$( echo "$typeUnderTest" | tr '[:lower:]' '[:upper:]' )"
     local matcherUnderTest="${SPEC_FILE%/*}"; matcherUnderTest="${matcherUnderTest##*/}"; matcherUnderTest="$( echo "$matcherUnderTest" | tr '[:lower:]' '[:upper:]' )"
-    
-    [[ "$SPEC_TEST" = *.fail ]] && assertFail || assertPass
-    
-    local messageVariableName="${matcherUnderTest}_${typeUnderTest}_MESSAGE"
-    [[ "$SPEC_TEST" = *.not.fail ]] && messageVariableName="${matcherUnderTest}_${typeUnderTest}_NOT_MESSAGE"
-    [[ "$SPEC_TEST" = *.missingArgument.fail ]] && messageVariableName="${matcherUnderTest}_${typeUnderTest}_NO_ARGUMENT_MESSAGE"
-    if [ -z "${!messageVariableName:-}" ]; then
-      echo "Please set $messageVariableName to expected message" >&2
-      return 1
-    else
-      [[ "$SPEC_TEST" = *.fail ]] && assertStderr "${!messageVariableName}"
-    fi
 
-    if [[ "$SPEC_TEST" = *.missingArgument.fail ]]; then
-      assertExitcode 40
-    else
-      local exitCodeVariableName="${matcherUnderTest}_EXITCODE"
-      [ -z "${!exitCodeVariableName:-}" ] && { echo "Please set $exitCodeVariableName to expected exitcode" >&2; return 1; }
-      [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!exitCodeVariableName}" ] && assertExitcode "${!exitCodeVariableName}"
-      [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!messageVariableName}" ] && assertStderr "${!messageVariableName}"
-    fi
+    if [[ "$SPEC_TEST" = *.fail ]] || [[ "$SPEC_TEST" = *.pass ]]; then
+      [[ "$SPEC_TEST" = *.fail ]] && assertFail || assertPass
 
-    assertEmptyStdout
+      local messageVariableName="${matcherUnderTest}_${typeUnderTest}_MESSAGE"
+      [[ "$SPEC_TEST" = *.not.fail ]] && messageVariableName="${matcherUnderTest}_${typeUnderTest}_NOT_MESSAGE"
+      [[ "$SPEC_TEST" = *.missingArgument.fail ]] && messageVariableName="${matcherUnderTest}_${typeUnderTest}_NO_ARGUMENT_MESSAGE"
+      if [ -z "${!messageVariableName:-}" ]; then
+        echo "Please set $messageVariableName to expected message" >&2
+        return 1
+      else
+        [[ "$SPEC_TEST" = *.fail ]] && assertStderr "${!messageVariableName}"
+      fi
+
+      if [[ "$SPEC_TEST" = *.missingArgument.fail ]]; then
+        assertExitcode 40
+      else
+        local exitCodeVariableName="${matcherUnderTest}_EXITCODE"
+        [ -z "${!exitCodeVariableName:-}" ] && { echo "Please set $exitCodeVariableName to expected exitcode" >&2; return 1; }
+        [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!exitCodeVariableName}" ] && assertExitcode "${!exitCodeVariableName}"
+        [[ "$SPEC_TEST" = *.fail ]] && [ -n "${!messageVariableName}" ] && assertStderr "${!messageVariableName}"
+      fi
+
+      assertEmptyStdout
+    fi
   fi
   return 0
 }
@@ -50,8 +52,8 @@ assertPass() {
 }
 
 assertFail() {
-  (( EXITCODE == 0 )) && { echo "Expected command to fail but passed ($EXITCODE)" >&2; return 1; }
   (( $# > 0 )) && assertStderr "$@"
+  (( EXITCODE == 0 )) && { echo "Expected command to fail but passed ($EXITCODE)" >&2; return 1; }
   return 0
 }
 

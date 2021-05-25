@@ -29,10 +29,10 @@ ExpectMatcher.equal.ARRAY_NAME() {
   fi
 
   if [ "${EXPECT_NOT:-}" != true ] && [ "$actualEqualsExpected" != true ]; then
-    printf "Expected array elements(s) to equal provided value(s)\nArray: %s\nActual Elements: (%s)\nExpected Values: (%s)\n" "$EXPECT_ACTUAL" "$( Expect.utils.inspectList "${__the__expected__array__[@]}" )" "$( Expect.utils.inspectList "$@" )" >&2
+    printf "Expected array elements(s) to equal provided value(s)\nArray: %s\nActual Elements: %s\nExpected Values: %s\n" "$EXPECT_ACTUAL" "$( Expect.utils.inspectList "${__the__expected__array__[@]}" )" "$( Expect.utils.inspectList "$@" )" >&2
     return 50
   elif [ "${EXPECT_NOT:-}" = true ] && [ "$actualEqualsExpected" = true ]; then
-    printf "Expected array elements(s) not to equal provided value(s)\nArray: %s\nValues: (%s)\n" "$EXPECT_ACTUAL" "$( Expect.utils.inspectList "${__the__expected__array__[@]}" )" >&2
+    printf "Expected array elements(s) not to equal provided value(s)\nArray: %s\nValues: %s\n" "$EXPECT_ACTUAL" "$( Expect.utils.inspectList "${__the__expected__array__[@]}" )" >&2
     return 50
   fi
 

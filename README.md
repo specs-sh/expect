@@ -94,9 +94,9 @@ All running on top of the same core code which provides **_lovely_ assertion fai
   - **Integer / Number**
     - [`+`](#) [`-`](#) [`/`](#) [`x`](#) [`bc`](#)
   - **Command**
-    - [`exitcode`](#) [`output`](#) [`stdout`](#) [`stderr`](#) [`run`](#)
+    - [`exitcode`](#) [`output`](#) [`stdout`](#) [`stderr`](#)
   - **Conversion**
-    - [`array`](#) [`text`](#) [`integer`](#) [`number`](#) [`file`](#) [`path`](#) [`directory`](#) [`command`](#)
+    - [`array`](#) [`text`](#) [`integer`](#) [`number`](#) [`file`](#) [`path`](#) [`directory`](#)
   - **Custom**
     - [Implementing Custom Filters](#)
 - [⚛️ Matchers](#)

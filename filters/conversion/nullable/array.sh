@@ -1,4 +1,4 @@
-ExpectMatcher.array.ANY() {
+ExpectMatcher.array?.ANY() {
   EXPECT_ACTUAL_TYPE=ARRAY_NAME
 
   local variableDeclaration=
@@ -9,7 +9,7 @@ ExpectMatcher.array.ANY() {
       return 2
     fi
   else
-    printf "Expected array, but no variable declared: %s" "$EXPECT_ACTUAL" >&2
-    return 1
+    # No variable OK
+    return 0
   fi
 }

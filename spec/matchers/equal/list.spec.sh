@@ -47,8 +47,6 @@ example.fail() {
   e.g. should     : :[ Hello World ] should eq World
   e.g. should     : :[ Hello World ] should = World
   e.g. should     : :[ Hello World ] should == World
-  assertStderr 'Actual: ("Hello" "World")'
-  assertStderr 'Expected: ("World")'
 }
 
 example.pass() {
@@ -79,6 +77,7 @@ example.not.fail() {
   e.g. should     : :[ Hello World ] should not eq Hello World
   e.g. should     : :[ Hello World ] should not = Hello World
   e.g. should     : :[ Hello World ] should != Hello World
+  assertStderr 'Values: ("Hello" "World")'
 }
 
 example.not.pass() {

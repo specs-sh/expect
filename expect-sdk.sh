@@ -146,6 +146,7 @@ Expect.utils.inspectList() {
   printf '('
   Expect.utils.inspectArguments "$@"
   printf ')'
+  return 0
 }
 
 Expect.utils.inspectArguments() {
@@ -154,4 +155,5 @@ Expect.utils.inspectArguments() {
     shift
     (( $# > 0 )) && printf ' '
   done
+  return 0
 }

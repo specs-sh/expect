@@ -9,6 +9,7 @@ build=development
 expectVersion="$( cat expect-sdk.sh | grep EXPECT_VERSION= | sed 's/.*EXPECT_VERSION=//' | sed 's/"//g' )"
 
 for library in assertions assertThat brackets expect should; do
+  rm -f "$library.sh"
   case "$build" in
     production)
       cp src/_header.sh "$library.sh"

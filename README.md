@@ -2,6 +2,12 @@
 
 
 
+# 🚧 Under Construction
+
+> Check back soon for the first release of `Expect` `v2`
+
+---
+
 # 🧐 `Expect`
 
 > _Modern assertions for Shell Scripting in the 2020s_

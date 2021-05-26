@@ -69,4 +69,5 @@ sed -i 's/<i class="fad fa-download"><\/i>/⬇️/g' README.md
 sed -i 's/<i class="fad fa-flask"><\/i>/⚗️/g' README.md
 sed -i 's/<i class="fad fa-atom-alt"><\/i>/⚛️/g' README.md
 sed -i 's/<i class="fad fa-terminal"><\/i>/💻/g' README.md
+sed -i 's/<i class="fad fa-digging"><\/i>/🚧/g' README.md
 sed -i 's/<script.*//g' README.md

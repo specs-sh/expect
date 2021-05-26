@@ -27,3 +27,5 @@ CONTAIN_TEXT_NO_ARGUMENT_MESSAGE="Missing required text argument for 'contain' m
 CONTAIN_LIST_MESSAGE="Expected list to contain item with subtext"
 CONTAIN_LIST_NOT_MESSAGE="Expected list not to contain item with subtext"
 CONTAIN_LIST_NO_ARGUMENT_MESSAGE="Missing required argument for list 'contain' matcher: [expected text]"
+CONTAIN_ARRAY_MESSAGE="Expected array to contain item with subtext"
+CONTAIN_ARRAY_NOT_MESSAGE="Expected array not to contain item with subtext"

@@ -102,7 +102,7 @@ All running on top of the same core code which provides **_lovely_ assertion fai
     - [Implementing Custom Filters](#)
 - [<i class="fad fa-atom-alt"></i> Matchers](#)
   - **Common**
-    - [`equal`](#) [`empty`](#) [`length`](#) [`contain`](#) [`include`](#) [`truthy`](#) [`falsy`](#)
+    - [`equal`](#) [`empty`](#) [`length`](#) [`contain`](#) [`containAll`](#) [`containPattern`](#) [`include`](#) [`includeAll`](#) [`truthy`](#) [`falsy`](#)
   - **Text**
     - [`match`](#) [`startWith`](#) [`endWith`](#) [`greaterThan`](#) [`greaterThanOrEqualTo`](#) [`lessThan`](#) [`lessThanOrEqualTo`](#)
   - **Command**

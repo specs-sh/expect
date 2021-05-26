@@ -1,27 +1,5 @@
 
-ExpectMatcher.contain.LIST() {
-  (( $# == 0 )) && { echo "Missing required argument for 'contain' matcher: [expected]" >&2; return 40; }
-  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
 
-  local __expected__found=
-  local __expected__item=
-  for __expected__item in "${EXPECT_ACTUAL[@]}"; do
-    if [ "$EXPECT_NOT" = true ] && [[ "$__expected__item" = *$1* ]]; then
-      printf "Expected list not to contain item with subtext\nList: (%s)\nMatching item: %s\nUnexpected: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspect "$__expected__item" )" "$( Expect.utils.inspect "$1" )" >&2
-      return 51
-    elif [[ "$__expected__item" = *$1* ]]; then
-      __expected__found=true
-      break
-    fi
-  done
-
-  if [ "$EXPECT_NOT" != true ] && [ "$__expected__found" != true ]; then
-    printf "Expected list to contain item with subtext\nList: (%s)\nExpected: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspect "$1" )" >&2
-    return 51
-  fi
-
-  return 0
-}
 
 ExpectMatcher.contain.ARRAY_NAME() {
   (( $# == 0 )) && { echo "Missing required argument for 'contain' matcher: [expected]" >&2; return 40; }

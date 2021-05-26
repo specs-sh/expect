@@ -23,3 +23,7 @@ EMPTY_ARRAY_NOT_MESSAGE="Expected array not to be empty (no array elements)"
 CONTAIN_EXITCODE=52
 CONTAIN_TEXT_MESSAGE="Expected text value to contain subtext"
 CONTAIN_TEXT_NOT_MESSAGE="Expected text value not to contain subtext"
+CONTAIN_TEXT_NO_ARGUMENT_MESSAGE="Missing required text argument for 'contain' matcher: [expected text]"
+CONTAIN_LIST_MESSAGE="Expected list to contain item with subtext"
+CONTAIN_LIST_NOT_MESSAGE="Expected list not to contain item with subtext"
+CONTAIN_LIST_NO_ARGUMENT_MESSAGE="Missing required argument for list 'contain' matcher: [expected text]"

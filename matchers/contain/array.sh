@@ -1,5 +1,5 @@
 ExpectMatcher.contain.ARRAY_NAME() {
-  (( $# == 0 )) && { echo "Missing required argument for 'contain' matcher: [expected]" >&2; return 40; }
+  (( $# == 0 )) && { echo "Missing required argument for array 'contain' matcher: [expected text]" >&2; return 40; }
   EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
 
   if [ "$EXPECT_BASH_NAME_REFERENCES" = true ] && ! declare -p __the__expected__array__ &>/dev/null; then

@@ -3,13 +3,13 @@ source spec/helper.sh
 include types/array
 include matchers/contain/array
 
-# example.missingArgument.fail() {
-#   items=("Hello" "World")
+example.missingArgument.fail() {
+  items=("Hello" "World")
 
-#   e.g. assertThat : assertThat items array contains
-#   e.g. expect     : expect items array to contain
-#   e.g. should     : {{ items }} array should contain
-# }
+  e.g. assertThat : assertThat items array contains
+  e.g. expect     : expect items array to contain
+  e.g. should     : {{ items }} array should contain
+}
 
 xexample.noArray.fail() {
   :

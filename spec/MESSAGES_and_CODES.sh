@@ -19,3 +19,7 @@ EMPTY_LIST_MESSAGE="Expected list to be empty (zero-length)"
 EMPTY_LIST_NOT_MESSAGE="Expected list not to be empty (zero-length)"
 EMPTY_ARRAY_MESSAGE="Expected array to be empty (no array elements)"
 EMPTY_ARRAY_NOT_MESSAGE="Expected array not to be empty (no array elements)"
+
+CONTAIN_EXITCODE=52
+CONTAIN_TEXT_MESSAGE="Expected text value to contain subtext"
+CONTAIN_TEXT_NOT_MESSAGE="Expected text value not to contain subtext"

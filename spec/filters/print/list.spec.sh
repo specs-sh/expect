@@ -1,9 +1,8 @@
 source spec/helper.sh
 
-source filters/print/list.sh
-source filters/text/split.sh
-source filters/text/uppercase.sh
-source filters/collections/join.sh
+include filters/print/list
+include filters/text/split filters/text/uppercase
+include filters/collections/join
 
 example.print() {
   e.g. assertThat : assertThat [ Hello World ] print

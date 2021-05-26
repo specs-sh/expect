@@ -1,6 +1,6 @@
 source spec/helper.sh
 
-source matchers/contain/text.sh
+include matchers/contain/text
 
 example.assertContains.noArguments() {
   e.g. assertions : assertContains

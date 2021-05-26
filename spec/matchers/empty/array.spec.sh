@@ -1,7 +1,7 @@
 source spec/helper.sh
 
-source types/array.sh
-source matchers/empty/array.sh
+include types/array
+include matchers/empty/array
 
 example.fail() {
   words=("Hello")

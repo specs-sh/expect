@@ -1,7 +1,7 @@
 source spec/helper.sh
 
-source types/array.sh
-source matchers/contain/array.sh
+include types/array
+include matchers/contain/array
 
 # example.missingArgument.fail() {
 #   items=("Hello" "World")

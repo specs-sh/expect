@@ -1,6 +1,6 @@
 source spec/helper.sh
 
-source matchers/equal/list.sh
+include matchers/equal/list
 
 example.zeroArguments.fail() {
   e.g. assertThat : assertThat [ Hello ] equals

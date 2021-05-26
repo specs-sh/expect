@@ -1,6 +1,6 @@
 source spec/helper.sh
 
-source matchers/empty/list.sh
+include matchers/empty/list
 
 example.fail() {
   text="Hello"

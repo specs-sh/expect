@@ -10,8 +10,383 @@ assertThat() {
   Expect.assert "$@"; 
 }
 
-# Included matchers/* matcher
+# Included types/nullable/array
+ExpectMatcher.array?.ANY() {
+  EXPECT_ACTUAL_TYPE=ARRAY_NAME
 
+  local variableDeclaration=
+  if variableDeclaration="$( declare -p "$EXPECT_ACTUAL" 2>/dev/null )"; then
+    if [[ "$variableDeclaration" != "declare -a "* ]]; then
+      printf "Expected array, but variable %s is not an array.\nVariable %s declaration: %s" \
+        "$EXPECT_ACTUAL" "$EXPECT_ACTUAL" "$variableDeclaration" >&2
+      return 2
+    fi
+  else
+    # No variable OK
+    return 0
+  fi
+}
+
+
+# Included types/array
+ExpectMatcher.array.ANY() {
+  EXPECT_ACTUAL_TYPE=ARRAY_NAME
+
+  local variableDeclaration=
+  if variableDeclaration="$( declare -p "$EXPECT_ACTUAL" 2>/dev/null )"; then
+    if [[ "$variableDeclaration" != "declare -a "* ]]; then
+      printf "Expected array, but variable %s is not an array.\nVariable %s declaration: %s" \
+        "$EXPECT_ACTUAL" "$EXPECT_ACTUAL" "$variableDeclaration" >&2
+      return 2
+    fi
+  else
+    printf "Expected array, but no variable declared: %s" "$EXPECT_ACTUAL" >&2
+    return 1
+  fi
+}
+
+
+# Included filters/print/any
+ExpectMatcher.print.ANY() {
+  printf '%s\n' "${EXPECT_ACTUAL[*]}"
+}
+
+# Included filters/print/list
+ExpectMatcher.print.LIST() {
+  Expect.utils.inspectList "${EXPECT_ACTUAL[@]}"
+}
+
+# Included filters/print/array
+ExpectMatcher.print.ARRAY_NAME() {
+  [[ "$( declare -p "$EXPECT_ACTUAL" 2>/dev/null )" != "declare -a "* ]] && return 0 # Not variable (or not an array)
+  if [ "$EXPECT_BASH_NAME_REFERENCES" = true ] && ! declare -p __the__expected__array__ &>/dev/null; then
+    local -n __the__expected__array__="$EXPECT_ACTUAL"
+  else
+    eval "local -a __the__expected__array__=(\"\${$EXPECT_ACTUAL[@]}\")"
+  fi
+  printf '%s=' "$EXPECT_ACTUAL"
+  Expect.utils.inspectList "${__the__expected__array__[@]}"
+}
+
+# Included filters/collections/join
+ExpectMatcher.join.LIST() {
+  (( $# == 0 )) && { echo "Missing required argument for 'join': [separator]" >&2; return 40; }
+  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
+
+  local __expect__join__newValue=
+  local -i __expect__join__itemIndex=0
+  
+  for (( __expect__join__itemIndex=0; __expect__join__itemIndex < ${#EXPECT_ACTUAL[@]}; __expect__join__itemIndex++ )); do
+    if (( __expect__join__itemIndex == ${#EXPECT_ACTUAL[@]} - 1 )); then
+      __expect__join__newValue+="${EXPECT_ACTUAL[__expect__join__itemIndex]}"
+    else
+      __expect__join__newValue+="${EXPECT_ACTUAL[__expect__join__itemIndex]}$1"
+    fi
+  done
+
+  EXPECT_ACTUAL=("$__expect__join__newValue")
+  EXPECT_ACTUAL_TYPE=TEXT
+
+  return 0
+}
+
+ExpectMatcher.join.ARRAY_NAME() {
+  (( $# == 0 )) && { echo "Missing required argument for 'join': [separator]" >&2; return 40; }
+  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
+
+  if [ "$EXPECT_BASH_NAME_REFERENCES" = true ]; then
+    local -n __expected__array="${EXPECT_ACTUAL[0]}"
+  else
+    eval "local -a __expected__array=(\"\${$EXPECT_ACTUAL[@]}\")"
+  fi
+
+  local __expect__join__newValue=
+  local -i __expect__join__itemIndex=0
+  
+  for (( __expect__join__itemIndex=0; __expect__join__itemIndex < ${#__expected__array[@]}; __expect__join__itemIndex++ )); do
+    if (( __expect__join__itemIndex == ${#__expected__array[@]} - 1 )); then
+      __expect__join__newValue+="${__expected__array[__expect__join__itemIndex]}"
+    else
+      __expect__join__newValue+="${__expected__array[__expect__join__itemIndex]}$1"
+    fi
+  done
+
+  EXPECT_ACTUAL=("$__expect__join__newValue")
+  EXPECT_ACTUAL_TYPE=TEXT
+
+  return 0
+}
+
+# Included filters/text/split
+ExpectMatcher.split.TEXT() {
+  (( $# == 0 )) && { echo "Missing required argument for 'split': [separator]" >&2; return 40; }
+  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
+
+  local __expect__split__separator="$1"
+  local __expect__split__separatorLength="${#__expect__split__separator}"
+
+  if (( ${#EXPECT_ACTUAL[@]} > 0 )); then
+
+    local __expect__text="${EXPECT_ACTUAL[0]}"
+    EXPECT_ACTUAL=()
+
+    # Add elements between instances of the separator
+    local -i __expect__i=0
+    local -i __expect__lastMatch=0
+    while (( __expect__i < ${#__expect__text} - __expect__split__separatorLength + 1 )); do
+      if [ "${__expect__text:__expect__i:__expect__split__separatorLength}" = "$__expect__split__separator" ]; then
+        EXPECT_ACTUAL+=("${__expect__text:__expect__lastMatch:__expect__i-__expect__lastMatch}")
+        (( __expect__lastMatch = __expect__i + __expect__split__separatorLength ))
+        (( __expect__i = __expect__lastMatch + 1 ))
+      else
+        (( __expect__i = __expect__i + 1 ))
+      fi
+    done
+
+    # Add the last bit
+    if (( $__expect__lastMatch != ${#__expect__text} - 1 )); then
+      EXPECT_ACTUAL+=("${__expect__text:__expect__lastMatch:${#__expect__text}-__expect__lastMatch}")
+    fi
+  else
+    EXPECT_ACTUAL=("")
+  fi
+
+  EXPECT_ACTUAL_TYPE=LIST
+
+  return 0
+}
+
+# Included filters/text/uppercase
+ExpectMatcher.uppercase.TEXT() {
+  if [ "$EXPECT_BASH_UPPERLOWER" = true ]; then
+    EXPECT_ACTUAL=("${EXPECT_ACTUAL[0]^^}")
+  else
+    EXPECT_ACTUAL=("$( echo "${EXPECT_ACTUAL[0]}" | tr '[:lower:]' '[:upper:]' )")
+  fi
+  return 0
+}
+
+# Included matchers/contain/list
+ExpectMatcher.contain.LIST() {
+  (( $# == 0 )) && { echo "Missing required argument for list 'contain' matcher: [expected text]" >&2; return 40; }
+  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
+
+  local expectedPatternFound=
+  local actualItem=
+  for actualItem in "${EXPECT_ACTUAL[@]}"; do
+    if [ "$EXPECT_NOT" = true ] && [[ "$actualItem" = *$1* ]]; then
+      printf "Expected list not to contain item with subtext\nActual: %s\nMatching item: %s\nUnexpected: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspect "$actualItem" )" "$( Expect.utils.inspect "$1" )" >&2
+      return 52
+    elif [[ "$actualItem" = *$1* ]]; then
+      expectedPatternFound=true
+      break
+    fi
+  done
+
+  if [ "$EXPECT_NOT" != true ] && [ "$expectedPatternFound" != true ]; then
+    printf "Expected list to contain item with subtext\nActual: %s\nExpected: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspect "$1" )" >&2
+    return 52
+  fi
+
+  return 0
+}
+
+# Included matchers/contain/text
+ExpectMatcher.contain.TEXT() {
+  (( $# == 0 )) && { echo "Missing required text argument for 'contain' matcher: [expected text]" >&2; return 40; }
+  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
+
+  if [ "$EXPECT_NOT" = true ] && [[ "$EXPECT_ACTUAL" = *$1* ]]; then
+    printf "Expected text value not to contain subtext\nActual: %s\nUnexpected: %s\n" "$( Expect.utils.inspect "$EXPECT_ACTUAL" )" "$( Expect.utils.inspect "$1" )" >&2
+    return 52
+  elif [ "$EXPECT_NOT" != true ] && [[ "$EXPECT_ACTUAL" != *$1* ]]; then
+    printf "Expected text value to contain subtext\nActual: %s\nExpected: %s\n" "$( Expect.utils.inspect "$EXPECT_ACTUAL" )" "$( Expect.utils.inspect "$1" )" >&2
+    return 52
+  fi
+
+  return 0
+}
+
+# Included matchers/contain/array
+ExpectMatcher.contain.ARRAY_NAME() {
+  (( $# == 0 )) && { echo "Missing required argument for 'contain' matcher: [expected]" >&2; return 40; }
+  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
+
+  if [ "$EXPECT_BASH_NAME_REFERENCES" = true ] && ! declare -p __the__expected__array__ &>/dev/null; then
+    local -n __the__expected__array__="$EXPECT_ACTUAL"
+  else
+    eval "local -a __the__expected__array__=(\"\${$EXPECT_ACTUAL[@]}\")"
+  fi
+
+  local expectedPatternFound=
+  local actualItem=
+  for actualItem in "${__the__expected__array__[@]}"; do
+    if [ "$EXPECT_NOT" = true ] && [[ "$actualItem" = *$1* ]]; then
+      printf "Expected array not to contain item with subtext\nArray: %s\nActual: %s\nUnexpected: %s\n" "${EXPECT_ACTUAL[0]}" "$( Expect.utils.inspectList "${__the__expected__array__[@]}" )" "$( Expect.utils.inspect "$1" )" >&2
+      return 51
+    elif [[ "$actualItem" = *$1* ]]; then
+      expectedPatternFound=true
+      break
+    fi
+  done
+
+  if [ "$EXPECT_NOT" != true ] && [ "$expectedPatternFound" != true ]; then
+    printf "Expected array to contain item with subtext\nArray: %s\nActual: %s\nExpected: %s\n" "${EXPECT_ACTUAL[0]}" "$( Expect.utils.inspectList "${__the__expected__array__[@]}" )" "$( Expect.utils.inspect "$1" )" >&2
+    return 51
+  fi
+
+  return 0
+}
+
+
+# Included matchers/equal/list
+ExpectMatcher.equal.LIST() {
+  # The list equal matcher reads *everything* to the right hand side (unlike most matchers)
+  # This means that no matchers can come *after* this (when using multiple assertions in one line)
+  EXPECT_ARGUMENTS=()
+
+  local actualEqualsExpected=true
+  
+  if (( $# == ${#EXPECT_ACTUAL[@]} )); then
+    local -i index=0
+    local -a expectedList=("$@")
+    for (( index=0 ; index < $# ; index++ )); do
+      if [ "${expectedList[index]}" != "${EXPECT_ACTUAL[index]}" ]; then
+        actualEqualsExpected=
+        break
+      fi
+    done
+  else
+    actualEqualsExpected=
+  fi
+
+  if [ "${EXPECT_NOT:-}" != true ] && [ "$actualEqualsExpected" != true ]; then
+    printf "Expected list value(s) to equal provided value(s)\nActual: %s\nExpected: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" "$( Expect.utils.inspectList "$@" )" >&2
+    return 50
+  elif [ "${EXPECT_NOT:-}" = true ] && [ "$actualEqualsExpected" = true ]; then
+    printf "Expected list value(s) not to equal provided value(s)\nValues: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" >&2
+    return 50
+  fi
+
+  return 0
+}
+ExpectMatcher.eq.LIST() { ExpectMatcher.equal.LIST "$@"; }
+ExpectMatcher.=.LIST() { ExpectMatcher.equal.LIST "$@"; }
+ExpectMatcher.==.LIST() { ExpectMatcher.equal.LIST "$@"; }
+ExpectMatcher.!=.LIST() { EXPECT_NOT=true ExpectMatcher.equal.LIST "$@"; }
+
+# Included matchers/equal/text
+ExpectMatcher.equal.TEXT() {
+  (( $# == 0 )) && { echo "Missing required text argument for text 'equal' matcher: [expected text]" >&2; return 40; }
+
+  # Shift off expected value argument
+  EXPECT_ARGUMENTS=("${EXPECT_ARGUMENTS[@]:1}")
+
+  if [ "${EXPECT_NOT:-}" = true ] && [ "$EXPECT_ACTUAL" = "$1" ]; then
+    printf "Expected text not to equal provided value\nText: %s\n" "$( Expect.utils.inspect "$EXPECT_ACTUAL" )" >&2
+    return 50
+  elif [ "${EXPECT_NOT:-}" != true ] && [ "$EXPECT_ACTUAL" != "$1" ]; then
+    printf "Expected text to equal provided value\nActual: %s\nExpected: %s\n" "$( Expect.utils.inspect "$EXPECT_ACTUAL" )" "$( Expect.utils.inspect "$1" )" >&2
+    return 50
+  fi
+
+  return 0
+}
+ExpectMatcher.eq.TEXT() { ExpectMatcher.equal.TEXT "$@"; }
+ExpectMatcher.=.TEXT() { ExpectMatcher.equal.TEXT "$@"; }
+ExpectMatcher.==.TEXT() { ExpectMatcher.equal.TEXT "$@"; }
+ExpectMatcher.!=.TEXT() { EXPECT_NOT=true ExpectMatcher.equal.TEXT "$@"; }
+
+# Included matchers/equal/array
+ExpectMatcher.equal.ARRAY_NAME() {
+  # The list equal matcher reads *everything* to the right hand side (unlike most matchers)
+  # This means that no matchers can come *after* this (when using multiple assertions in one line)
+  EXPECT_ARGUMENTS=()
+
+  # Use name for expected array which is very very very unlikely to collide with real array name.
+  # To be doubly certain, we do not use a name reference if a variable with this name already exists
+  # otherwise a circular reference will be created resulting in the error:
+  # > "nameref variable self references not allowed"
+  if [ "$EXPECT_BASH_NAME_REFERENCES" = true ] && ! declare -p __the__expected__array__ &>/dev/null; then
+    local -n __the__expected__array__="$EXPECT_ACTUAL"
+  else
+    eval "local -a __the__expected__array__=(\"\${$EXPECT_ACTUAL[@]}\")"
+  fi
+
+  local actualEqualsExpected=true
+  
+  if (( $# == ${#__the__expected__array__[@]} )); then
+    local -i index=0
+    local -a expectedList=("$@")
+    for (( index=0 ; index < $# ; index++ )); do
+      if [ "${expectedList[index]}" != "${__the__expected__array__[index]}" ]; then
+        actualEqualsExpected=
+        break
+      fi
+    done
+  else
+    actualEqualsExpected=
+  fi
+
+  if [ "${EXPECT_NOT:-}" != true ] && [ "$actualEqualsExpected" != true ]; then
+    printf "Expected array elements(s) to equal provided value(s)\nArray: %s\nActual Elements: %s\nExpected Values: %s\n" "$EXPECT_ACTUAL" "$( Expect.utils.inspectList "${__the__expected__array__[@]}" )" "$( Expect.utils.inspectList "$@" )" >&2
+    return 50
+  elif [ "${EXPECT_NOT:-}" = true ] && [ "$actualEqualsExpected" = true ]; then
+    printf "Expected array elements(s) not to equal provided value(s)\nArray: %s\nValues: %s\n" "$EXPECT_ACTUAL" "$( Expect.utils.inspectList "${__the__expected__array__[@]}" )" >&2
+    return 50
+  fi
+
+  return 0
+}
+ExpectMatcher.eq.ARRAY_NAME() { ExpectMatcher.equal.ARRAY_NAME "$@"; }
+ExpectMatcher.=.ARRAY_NAME() { ExpectMatcher.equal.ARRAY_NAME "$@"; }
+ExpectMatcher.==.ARRAY_NAME() { ExpectMatcher.equal.ARRAY_NAME "$@"; }
+ExpectMatcher.!=.ARRAY_NAME() { EXPECT_NOT=true ExpectMatcher.equal.ARRAY_NAME "$@"; }
+
+# Included matchers/empty/list
+ExpectMatcher.empty.LIST() {
+  if [ "$EXPECT_NOT" != true ] && (( ${#EXPECT_ACTUAL[@]} > 0 )); then
+    printf "Expected list to be empty (zero-length)\nActual: %s\n" "$( Expect.utils.inspectList "${EXPECT_ACTUAL[@]}" )" >&2
+    return 51
+  elif [ "$EXPECT_NOT" = true ] && (( ${#EXPECT_ACTUAL[@]} == 0 )); then
+    printf "Expected list not to be empty (zero-length)\n" >&2
+    return 51
+  fi
+
+  return 0
+}
+
+# Included matchers/empty/text
+ExpectMatcher.empty.TEXT() {
+  if [ "$EXPECT_NOT" != true ] && [ -n "${EXPECT_ACTUAL[*]}" ]; then
+    printf "Expected text to be empty (zero-length)\nActual: %s\nExpected: \"\"\n" "$( Expect.utils.inspect "${EXPECT_ACTUAL[*]}" )" >&2
+    return 51
+  elif [ "$EXPECT_NOT" = true ] && [ -z "${EXPECT_ACTUAL[*]}" ]; then
+    printf "Expected text not to be empty (zero-length)\nActual: %s\n" "$( Expect.utils.inspect "${EXPECT_ACTUAL[*]}" )" >&2
+    return 51
+  fi
+  
+  return 0
+}
+
+# Included matchers/empty/array
+ExpectMatcher.empty.ARRAY_NAME() {
+  if [ "$EXPECT_BASH_NAME_REFERENCES" = true ] && ! declare -p __the__expected__array__ &>/dev/null; then
+    local -n __the__expected__array__="$EXPECT_ACTUAL"
+  else
+    eval "local -a __the__expected__array__=(\"\${$EXPECT_ACTUAL[@]}\")"
+  fi
+
+  if [ "$EXPECT_NOT" != true ] && (( ${#__the__expected__array__[@]} > 0 )); then
+    printf "Expected array to be empty (no array elements)\nActual: %s=%s\n" "$EXPECT_ACTUAL" "$( Expect.utils.inspectList "${__the__expected__array__[@]}" )" >&2
+    return 51
+  elif [ "$EXPECT_NOT" = true ] && (( ${#__the__expected__array__[@]} == 0 )); then
+    printf "Expected array not to be empty (no array elements)\nActual: %s=()\n" "$EXPECT_ACTUAL" >&2
+    return 51
+  fi
+
+  return 0
+}
 
 # Included Expect SDK 2.0.0
 

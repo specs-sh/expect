@@ -1,6 +1,6 @@
 source spec/helper.sh
 
-source matchers/empty/text.sh
+include matchers/empty/text
 
 example.fail() {
   text="Hello"

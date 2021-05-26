@@ -5,6 +5,15 @@ source spec/MESSAGES_and_CODES.sh
 
 STDOUT= STDERR= EXITCODE=
 
+include() {
+  [ "${EXPECT_BUILD:-}" = --prod ] && return 0
+  local import=
+  for import; do
+    [[ "$import" = *.sh ]] && source "$import" || source "$import.sh"
+  done
+  return 0
+}
+
 e.g.() {
   local assertionsLibrary
   if [ -n "$RUN_EXAMPLE" ] && [ "$RUN_EXAMPLE" = "$1" ]; then

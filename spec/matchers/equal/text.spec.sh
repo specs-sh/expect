@@ -1,6 +1,6 @@
 source spec/helper.sh
 
-source matchers/equal/text.sh
+include matchers/equal/text
 
 example.missingArgument.fail() {
   e.g. assertThat : assertThat Hello equals

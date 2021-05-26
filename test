@@ -1,11 +1,11 @@
 #! /usr/bin/env bash
 
-build=--dev
+export EXPECT_BUILD=--dev
 
-[ "$1" = --dev ] && { build=--dev; shift; }
-[ "$1" = --prod ] && { build=--prod; shift; }
+[ "$1" = --dev ] && { EXPECT_BUILD=--dev; shift; }
+[ "$1" = --prod ] && { EXPECT_BUILD=--prod; shift; }
 
-./scripts/compile.sh $build || exit $?
+./scripts/compile.sh $EXPECT_BUILD || exit $?
 
 if (( $# == 0 )); then
   find spec -type f -iname "*.spec.sh" | xargs ./vendor/microspec

@@ -30,11 +30,13 @@ for library in assertions assertThat brackets expect should; do
       echo                                     >> "$library.sh"
       echo "# $library Version $expectVersion" >> "$library.sh"
       cat "src/$library.sh"                    >> "$library.sh"
-      for matcher in matchers/*.sh; do
-        echo                                     >> "$library.sh"
-        echo "# Included ${matcher%.sh} matcher" >> "$library.sh"
-        cat "$matcher"                           >> "$library.sh" 
-        echo                                     >> "$library.sh"
+      for dir in types filters matchers; do
+        while read -rd '' file; do
+          echo >> "$library.sh"
+          echo "# Included ${file%.sh}" >> "$library.sh"
+          cat "$file" >> "$library.sh"
+          echo >> "$library.sh"
+        done < <( find "$dir" -iname "*.sh" -print0 )
       done
       echo                                        >> "$library.sh"
       echo "# Included Expect SDK $expectVersion" >> "$library.sh"

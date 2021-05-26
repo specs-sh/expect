@@ -1,6 +1,6 @@
 source spec/helper.sh
 
-source matchers/contain/list.sh
+include matchers/contain/list
 
 example.missingArgument.fail() {
   actual=("Hello" "World")

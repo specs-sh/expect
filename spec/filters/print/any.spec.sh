@@ -1,7 +1,7 @@
 source spec/helper.sh
 
-source filters/print/any.sh
-source filters/text/uppercase.sh
+include filters/print/any
+include filters/text/uppercase
 
 example.print() {
   e.g. assertThat : assertThat "Hello, world!" print

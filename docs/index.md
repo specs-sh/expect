@@ -7,6 +7,67 @@
 
 > Check back soon for the first release of `Expect` `v2`
 
+# `Expect` `v2` `TODO`
+
+> - [x] Checked means that it's done for text, list, int, number, array, path, file, and directory
+
+### Filters
+
+- [x] Print
+- [ ] Inspect
+- [ ] Size
+- [ ] Split
+- [ ] Join
+- [ ] First
+- [ ] Last
+- [ ] Lines
+- [ ] Chars
+- [ ] At Index
+- [ ] Uppercase
+- [ ] Lowercase
+- [ ] `+`
+- [ ] `-`
+- [ ] `/`
+- [ ] `x`
+- [ ] bc
+- [ ] output
+- [ ] exitcode
+- [ ] stdout
+- [ ] stderr
+
+### Matchers
+
+- [ ] Equal
+- [ ] Empty
+- [ ] Contains
+  - [ ] Wildcard on
+  - [ ] Exactly on
+  - [ ] Exactly off
+- [ ] Length
+- [ ] Truthy
+- [ ] Falsy
+- [ ] Match
+- [ ] Starts With
+- [ ] Ends With
+- [ ] Fails
+- [ ] Succeeds
+- [ ] Exists
+- [ ] Readable
+- [ ] Writeable
+- [ ] Executable
+- [ ] Newer Than
+- [ ] Older Than
+- [ ] Pipe
+- [ ] Socket
+- [ ] Symlink
+
+### Non-Goals for `v2`
+
+- `map` and `each` and `where` won't be supported
+- `all` and `any` won't be supported for asserting all or any items in a collection
+- Built-in support for `startWith` as `startingWith` or `startsWith` won't be available
+  > _No support for combined words, aliases need to be created manually for `v2`_
+
 ---
 
 # 🧐 `Expect`
@@ -97,7 +158,7 @@ All running on top of the same core code which provides **_lovely_ assertion fai
   - **Text**
     - [`split`](#) [`uppercase`](#) [`lowercase`](#) [`lines`](#) [`chars`](#)
   - **Collections**
-    - [`first`](#) [`last`](#) [`join`](#) [`map`](#)
+    - [`first`](#) [`last`](#) [`index`](#) [`join`](#)
   - **Integer / Number**
     - [`+`](#) [`-`](#) [`/`](#) [`x`](#) [`bc`](#)
   - **Command**
@@ -108,7 +169,7 @@ All running on top of the same core code which provides **_lovely_ assertion fai
     - [Implementing Custom Filters](#)
 - [<i class="fad fa-atom-alt"></i> Matchers](#)
   - **Common**
-    - [`equal`](#) [`empty`](#) [`length`](#) [`contain`](#) [`containAll`](#) [`containPattern`](#) [`include`](#) [`includeAll`](#) [`truthy`](#) [`falsy`](#)
+    - [`equal`](#) [`empty`](#) [`length`](#) [`contain`](#) [`truthy`](#) [`falsy`](#)
   - **Text**
     - [`match`](#) [`startWith`](#) [`endWith`](#) [`greaterThan`](#) [`greaterThanOrEqualTo`](#) [`lessThan`](#) [`lessThanOrEqualTo`](#)
   - **Command**

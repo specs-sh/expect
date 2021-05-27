@@ -51,9 +51,9 @@ assertNotListIncludes() { Assertions.assertExpectedForList "$@" || return $?; lo
 assertArrayIncludes()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array includes "$1"; }
 assertNotArrayIncludes() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" array not includes "$1"; }
 
-# Substring
-assertSubstring()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" substring "$1"; }
-assertNotSubstring() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not substring "$1"; }
+# Wildcard
+assertWildcard()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" wildcard "$1"; }
+assertNotWildcard() { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" not wildcard "$1"; }
 
 # Length
 assertLength()    { Assertions.assertExpectedAndActual "$@" || return $?; Expect.assert "$2" length "$1"; }

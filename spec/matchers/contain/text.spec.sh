@@ -2,21 +2,9 @@ source spec/helper.sh
 
 include matchers/contain/text
 
-example.assertContains.noArguments() {
+example.assertContains.wrongNumberOfArguments() {
   e.g. assertions : assertContains
-
-  assertStderr "assertContains expected 2 arguments: [expected] [actual]"
-  assertExitcode 40
-}
-
-example.assertContains.oneArgument() {
   e.g. assertions : assertContains "Foo"
-
-  assertStderr "assertContains expected 2 arguments: [expected] [actual]"
-  assertExitcode 40
-}
-
-example.assertContains.threeArguments() {
   e.g. assertions : assertContains "Foo" "Bar" "Baz"
 
   assertStderr "assertContains expected 2 arguments: [expected] [actual]"
@@ -77,22 +65,23 @@ example.not.pass() {
   e.g. should     : {{ "$actual" }} should not contain "$expected"
 }
 
+# UPDATE THIS SHOULD NOT WORK ANY LONGER, USE WILDCARD INSTEAD
 example.wildcard.fail() {
   expected="*world"
-  actual="Hi, Hello"
+  actual="Hello world"
 
   e.g. assertions : assertContains "$expected" "$actual"
   e.g. assertThat : assertThat "$actual" does contain "$expected"
   e.g. expect     : expect "$actual" to contain "$expected"
   e.g. should     : {{ "$actual" }} should contain "$expected"
 
-  assertStderr 'Actual: "Hi, Hello"'
+  assertStderr 'Actual: "Hello world"'
   assertStderr 'Expected: "*world"'
 }
 
 example.wildcard.pass() {
   expected="*world"
-  actual="Hi, Hello world, Foo"
+  actual="Hello *world" # Add the literal '*' character
 
   e.g. assertions : assertContains "$expected" "$actual"
   e.g. assertThat : assertThat "$actual" does contain "$expected"

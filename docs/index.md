@@ -7,6 +7,35 @@
 
 > Check back soon for the first release of `Expect` `v2`
 
+# `Expect` `v2` `Pre-Alpha` `TODO`
+
+> Text, List, Array only (no explicit support for numbers or files/paths/directories)
+
+### Filters
+
+- [x] Print
+- [ ] Inspect
+- [ ] Split
+- [ ] Join
+- [ ] First
+- [ ] Last
+- [ ] At Index
+- [ ] Output
+- [ ] Exitcode
+- [ ] Stdout
+- [ ] Stderr
+
+### Matchers
+
+- [x] Equal
+- [x] Empty
+- [ ] Contain
+- [ ] Wildcard
+- [ ] Length
+- [ ] Match
+- [ ] Fail
+- [ ] Succeed
+
 # `Expect` `v2` `TODO`
 
 > - [x] Checked means that it's done for text, list, int, number, array, path, file, and directory
@@ -20,9 +49,9 @@
 - [ ] Join
 - [ ] First
 - [ ] Last
+- [ ] At Index
 - [ ] Lines
 - [ ] Chars
-- [ ] At Index
 - [ ] Uppercase
 - [ ] Lowercase
 - [ ] `+`
@@ -30,19 +59,21 @@
 - [ ] `/`
 - [ ] `x`
 - [ ] bc
-- [ ] output
-- [ ] exitcode
-- [ ] stdout
-- [ ] stderr
+- [ ] Output
+- [ ] Exitcode
+- [ ] Stdout
+- [ ] Stderr
+- [ ] Files
+- [ ] Directories
+- [ ] Entries
+- [ ] File to Text
 
 ### Matchers
 
 - [ ] Equal
 - [ ] Empty
-- [ ] Contains
-  - [ ] Wildcard on
-  - [ ] Exactly on
-  - [ ] Exactly off
+- [ ] Contain
+- [ ] Wildcard
 - [ ] Length
 - [ ] Truthy
 - [ ] Falsy

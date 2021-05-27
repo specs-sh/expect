@@ -30,3 +30,8 @@ CONTAIN_LIST_NO_ARGUMENT_MESSAGE="Missing required argument for list 'contain' m
 CONTAIN_ARRAY_MESSAGE="Expected array to contain item with subtext"
 CONTAIN_ARRAY_NOT_MESSAGE="Expected array not to contain item with subtext"
 CONTAIN_ARRAY_NO_ARGUMENT_MESSAGE="Missing required argument for array 'contain' matcher: [expected text]"
+
+WILDCARD_EXITCODE=57
+WILDCARD_TEXT_MESSAGE="Expected text value to contain wildcard pattern"
+WILDCARD_TEXT_NOT_MESSAGE="Expected text value not to contain wildcard pattern"
+WILDCARD_TEXT_NO_ARGUMENT_MESSAGE="Missing required argument for 'wildcard' matcher: [expected pattern]"
